@@ -7,9 +7,7 @@ use App\Models\KategoriRapat;
 
 class KategoriRapatIndex extends Component
 {
-    public $statusUpdate = false;
-    public $kategori_delete_id;
-    public $kategori_rapat_old;
+    public $statusUpdate = false, $kategori_delete_id, $kategori_rapat_old;
     protected $listeners = [
         'kategoriStored' => 'handleStored',
         'kategoriUpdated' => 'handleUpdated'

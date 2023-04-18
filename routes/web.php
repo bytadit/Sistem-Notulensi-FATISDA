@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +17,22 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+Auth::routes();
+
+Route::group(['middleware' => ['auth'], 'prefix' => 'dashboard'], function(){
+    Route::get('/', function (){
+        return view('dashboard.index');
+    })->name('dashboard.index');
+    Route::prefix('admin')->group(function () {
+        Route::get('/kategori-rapat', function () {
+            return view('dashboard.admin.kategori-rapat');
+        })->name('kategori-rapat');
+        Route::get('/topik-rapat', function () {
+            return view('dashboard.admin.topik-rapat');
+        })->name('topik-rapat');
+        Route::get('/daftar-rapat', function () {
+            return view('dashboard.admin.daftar-rapat');
+        })->name('daftar-rapat');
+    });
 });

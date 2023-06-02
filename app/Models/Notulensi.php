@@ -10,4 +10,8 @@ class Notulensi extends Model
     use HasFactory;
     protected $guarded = ['id'];
     protected $table = 'notulensi';
+    public function rapat()
+    {
+        return $this->belongsTo(Rapat::class, 'id_rapat');
+    }
 }

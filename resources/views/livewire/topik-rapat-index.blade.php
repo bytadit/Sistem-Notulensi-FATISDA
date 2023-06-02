@@ -1,4 +1,15 @@
 <div class="col-12">
+    @section('title')
+        Topik Rapat
+    @endsection
+    @component('dashboard.layouts.breadcrumb')
+        @slot('li_1')
+            Menu Admin
+        @endslot
+        @slot('title')
+            Topik Rapat
+        @endslot
+    @endcomponent
     @if(session()->has('message'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             {{ session('message') }}
@@ -41,7 +52,28 @@
     <div class="row">
         @foreach ($topics as $topic)
             <div class="col-xxl-4 col-lg-4 col-sm-6">
-                <div class="card card-primary">
+                <div class="card card-dark">
+                    <div class="card-header">
+                        <span class="badge float-start text-bg-success">Success</span>
+                        <h5><span class="badge float-end badge-label
+                                    @if ($topic->priority == 1)
+                                        bg-warning
+                                    @elseif ($topic->priority == 2)
+                                        bg-secondary
+                                    @elseif ($topic->priority == 3)
+                                        bg-danger
+                                    @endif
+                                    ">
+                            <i class="mdi mdi-circle-medium"></i>
+                            @if($topic->priority == 1)
+                                Prioritas Rendah
+                            @elseif ($topic->priority == 2)
+                                Prioritas Sedang
+                            @elseif ($topic->priority == 3)
+                                Prioritas Tinggi
+                            @endif
+                        </span></h5>
+                    </div>
                     <div class="card-body m-3">
                         <div class="d-flex justify-content-center align-items-center">
                             <h6 class="card-title mb-0">{{ $topic->nama }}</h6>
@@ -77,24 +109,5 @@
         @endforeach
     </div>
 </div>
-@push('scripts')
-    <script>
-        window.addEventListener('close-create-modal', event =>{
-            $('#modalCreateTopik').modal('hide')
-        });
-        window.addEventListener('close-delete-modal', event =>{
-            $('#modalDeleteTopik').modal('hide')
-        });
-        window.addEventListener('close-edit-modal', event =>{
-            $('#modalEditTopik').modal('hide')
-        });
-        window.addEventListener('show-edit-modal', event =>{
-            $('#modalEditTopik').modal('show')
-        });
-        window.addEventListener('show-create-modal', event =>{
-            $('#modalCreateTopik').modal('show')
-        });
-    </script>
-@endpush
 
 

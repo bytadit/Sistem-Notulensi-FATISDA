@@ -10,4 +10,8 @@ class Dokumentasi extends Model
     use HasFactory;
     protected $guarded = ['id'];
     protected $table = 'dokumentasi';
+    public function rapat()
+    {
+        return $this->belongsTo(Rapat::class, 'id_rapat');
+    }
 }

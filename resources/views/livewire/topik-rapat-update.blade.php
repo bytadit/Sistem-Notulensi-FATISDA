@@ -18,13 +18,13 @@
                         </div>
                         <div class="col-xxl-6">
                             <div>
-                                <select wire:model="topik_rapat_weight" class="form-select mb-3" aria-label="Select Topik Rapat" id="topik_rapat_weight">
-                                    <option selected disabled>Pilih Urgensi Topik</option>
-                                    <option value="1">Low</option>
-                                    <option value="2">Average</option>
-                                    <option value="3">High</option>
+                                <select wire:model="topik_rapat_priority" class="form-select mb-3" aria-label="Select Prioritas Topik" id="topik_rapat_priority">
+                                    <option selected disabled>Pilih Prioritas Topik</option>
+                                    <option value="1">Rendah</option>
+                                    <option value="2">Sedang</option>
+                                    <option value="3">Tinggi</option>
                                 </select>
-                                @error('topik_rapat_weight')
+                                @error('topik_rapat_priority')
                                     <span class="text-danger text-sm">{{ $message }}</span>
                                 @enderror
                             </div>

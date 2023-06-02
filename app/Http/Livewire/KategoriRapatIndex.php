@@ -16,7 +16,7 @@ class KategoriRapatIndex extends Component
     {
         return view('livewire.kategori-rapat-index', [
             'categories' => KategoriRapat::latest()->get()
-        ]);
+        ])->layout('layouts.dashboard');
     }
     public function getKategoriRapat($id)
     {

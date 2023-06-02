@@ -5,5 +5,10 @@
 <script src="{{ URL::asset('assets/js/pages/plugins/lord-icon-2.1.0.min.js') }}"></script>
 <script src="{{ URL::asset('assets/js/plugins.min.js') }}"></script>
 <script src="{{ URL::asset('assets/js/custom.min.js') }}"></script>
+
+{{-- <script src="{{ URL::asset('assets/libs/@ckeditor/@ckeditor.min.js') }}"></script>
+<script src="{{ URL::asset('assets/libs/dropzone/dropzone.min.js') }}"></script>
+<script src="{{ URL::asset('assets/js/pages/project-create.init.js') }}"></script> --}}
+{{-- <script src="{{ URL::asset('assets/js/app.min.js') }}"></script> --}}
 @yield('script')
 @yield('script-bottom')

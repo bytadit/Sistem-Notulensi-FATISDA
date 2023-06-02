@@ -1,4 +1,4 @@
-@extends('dashboard.layouts.master')
+@extends('layouts.dashboard')
 @section('title')
 Halaman Dashboard
 @endsection

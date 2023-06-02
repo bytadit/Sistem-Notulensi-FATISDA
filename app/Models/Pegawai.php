@@ -12,6 +12,16 @@ class Pegawai extends Model
     protected $table = 'pegawai';
     public function jabatan()
     {
-        return $this->belongsToMany(Jabatan::class);
+        return $this->belongsToMany(Jabatan::class, 'id_jabatan')
+                    ->withPivot('id_user', 'nip', 'alamat', 'no_wa', 'path_photo');
+
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_user');
+    }
+    public function presensi()
+    {
+        return $this->hasMany(Presensi::class, 'id_pegawai');
     }
 }

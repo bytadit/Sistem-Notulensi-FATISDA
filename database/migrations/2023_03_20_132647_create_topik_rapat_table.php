@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('topik_rapat', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->tinyInteger('weight')->comment('1:low; 2:average: 3:high');
+            $table->tinyInteger('priority')->comment('1:rendah; 2:sedang: 3:tinggi');
             $table->timestamps();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();

@@ -10,4 +10,8 @@ class Topik extends Model
     use HasFactory;
     protected $guarded = ['id'];
     protected $table = 'topik_rapat';
+    public function rapat()
+    {
+        return $this->hasMany(Rapat::class, 'id_topik');
+    }
 }

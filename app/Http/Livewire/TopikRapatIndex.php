@@ -18,7 +18,7 @@ class TopikRapatIndex extends Component
     {
         return view('livewire.topik-rapat-index', [
             'topics' => Topik::latest()->get()
-        ]);
+        ])->layout('layouts.dashboard');
     }
     public function getTopikRapat($id)
     {

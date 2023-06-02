@@ -13,6 +13,7 @@ class Jabatan extends Model
 
     public function pegawai()
     {
-        return $this->belongsToMany(Pegawai::class);
+        return $this->belongsToMany(Pegawai::class, 'id_pegawai')
+                    ->withPivot('nama', 'created_by', 'updated_by', 'deleted_by');
     }
 }

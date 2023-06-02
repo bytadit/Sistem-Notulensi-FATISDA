@@ -1,19 +1,9 @@
 <?php
 
+namespace App\Http\Livewire;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
 Route::get('/', function () {
     return view('welcome');
@@ -21,18 +11,20 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::group(['middleware' => ['auth'], 'prefix' => 'dashboard'], function(){
-    Route::get('/', function (){
-        return view('dashboard.index');
-    })->name('dashboard.index');
+    Route::get('/', DashboardIndex::class)->name('dashboard.index');
     Route::prefix('admin')->group(function () {
-        Route::get('/kategori-rapat', function () {
-            return view('dashboard.admin.kategori-rapat');
-        })->name('kategori-rapat');
-        Route::get('/topik-rapat', function () {
-            return view('dashboard.admin.topik-rapat');
-        })->name('topik-rapat');
-        Route::get('/daftar-rapat', function () {
-            return view('dashboard.admin.daftar-rapat');
-        })->name('daftar-rapat');
+        // Route::get('/daftar-rapat/{id}', DaftarRapatShow::class)->name('daftar-rapat.show');
+        Route::get('/kategori-rapat', KategoriRapatIndex::class)->name('kategori-rapat');
+        Route::get('/topik-rapat', TopikRapatIndex::class)->name('topik-rapat');
+        Route::get('/daftar-rapat', DaftarRapatIndex::class)->name('daftar-rapat');
+        Route::get('/daftar-rapat/create', DaftarRapatCreate::class)->name('daftar-rapat.create');
+        Route::get('/daftar-rapat/{rapat:slug}', DaftarRapatShow::class)->name('daftar-rapat.show');
+        Route::get('/daftar-rapat/{rapat:slug}/edit', DaftarRapatEdit::class)->name('daftar-rapat.edit');
     });
 });
+// Administrator & SuperAdministrator Control Panel Routes
+// Route::group(['middleware' => ['auth', 'role:superadministrator'], 'prefix' => 'manage-users'], function () {
+//     // Route::resource('users', 'UsersController');
+//     // Route::resource('permission', 'PermissionController');
+//     // Route::resource('roles', 'RolesController');
+// });

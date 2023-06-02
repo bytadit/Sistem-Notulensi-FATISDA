@@ -36,6 +36,13 @@
                         <i class="mdi mdi-speedometer"></i> <span>Halaman Utama</span>
                     </a>
                 </li>
+                @role('superadministrator')
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::is('manage-users') ? 'active' : '' }} menu-link" href="/manage-users" role="button" aria-expanded="false" aria-controls="sidebarApps">
+                        <i class="mdi mdi-view-grid-plus-outline"></i> <span>Atur User</span>
+                    </a>
+                </li>
+                @endrole
                 <li class="menu-title"><span>MENU ADMIN</span></li>
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('dashboard/admin/daftar-rapat') ? 'active' : '' }} menu-link" href="{{ route('daftar-rapat') }}" role="button" aria-expanded="false" aria-controls="sidebarDashboards">
@@ -93,7 +100,6 @@
                         </ul>
                     </div> --}}
                 </li>
-
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('dashboard/admin/topik-rapat') ? 'active' : '' }} menu-link" href="{{ route('topik-rapat') }}" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
                         <i class="mdi mdi-view-carousel-outline"></i> <span>Topik Rapat</span>
@@ -117,25 +123,18 @@
                     <div class="collapse menu-dropdown" id="sidebarAuth">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="#sidebarSignIn" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarSignIn">@lang('translation.signin')
-
+                                <a href="#sidebarSignIn" class="nav-link" role="button" aria-expanded="false" aria-controls="sidebarSignIn">
+                                    Jadwal Rapat
                                 </a>
-                                <div class="collapse menu-dropdown" id="sidebarSignIn">
-                                    <ul class="nav nav-sm flex-column">
-                                        <li class="nav-item">
-                                            <a href="auth-signin-basic" class="nav-link">@lang('translation.basic')
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="auth-signin-cover" class="nav-link">@lang('translation.cover')
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
                             </li>
                             <li class="nav-item">
-                                <a href="#sidebarSignUp" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarSignUp">@lang('translation.signup')
-
+                                <a href="#sidebarSignIn" class="nav-link" role="button" aria-expanded="false" aria-controls="sidebarSignIn">
+                                    Riwayat Rapat
+                                </a>
+                            </li>
+                            {{-- <li class="nav-item">
+                                <a href="#sidebarSignUp" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarSignUp">
+                                    Riwayat Rapat
                                 </a>
                                 <div class="collapse menu-dropdown" id="sidebarSignUp">
                                     <ul class="nav nav-sm flex-column">
@@ -149,40 +148,15 @@
                                         </li>
                                     </ul>
                                 </div>
-                            </li>
+                            </li> --}}
                         </ul>
                     </div>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarPages" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarPages">
+                    <a class="nav-link menu-link" href="#sidebarPages"  role="button" aria-expanded="false" aria-controls="sidebarPages">
                         <i class="mdi mdi-sticker-text-outline"></i> <span>Statistik Rapat</span>
                     </a>
-                    <div class="collapse menu-dropdown" id="sidebarPages">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href="pages-starter" class="nav-link">@lang('translation.starter')
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#sidebarProfile" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarProfile">@lang('translation.profile')
-
-                                </a>
-                                <div class="collapse menu-dropdown" id="sidebarProfile">
-                                    <ul class="nav nav-sm flex-column">
-                                        <li class="nav-item">
-                                            <a href="pages-profile" class="nav-link">@lang('translation.simple-page')
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="pages-profile-settings" class="nav-link">@lang('translation.settings')
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
                 </li>
             </ul>
         </div>

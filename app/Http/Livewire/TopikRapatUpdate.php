@@ -7,7 +7,7 @@ use App\Models\Topik;
 
 class TopikRapatUpdate extends Component
 {
-    public $topik_rapat, $topik_rapat_id, $topik_rapat_weight;
+    public $topik_rapat, $topik_rapat_id, $topik_rapat_priority;
     protected $listeners = [
         'getTopikRapat' => 'showTopikRapat'
     ];
@@ -17,11 +17,11 @@ class TopikRapatUpdate extends Component
     }
     protected $messages = [
         'topik_rapat.required' => 'Input Topik Rapat tidak boleh kosong!',
-        'topik_rapat_weight.required' => 'Input Urgensi Topik tidak boleh kosong !'
+        'topik_rapat_priority.required' => 'Input Urgensi Topik tidak boleh kosong !'
     ];
     public function showTopikRapat($topikRapat){
         $this->topik_rapat = $topikRapat['nama'];
-        $this->topik_rapat_weight = $topikRapat['weight'];
+        $this->topik_rapat_priority = $topikRapat['priority'];
         $this->topik_rapat_id = $topikRapat['id'];
         $this->dispatchBrowserEvent('show-edit-modal');
     }
@@ -29,13 +29,13 @@ class TopikRapatUpdate extends Component
     {
         $this->validate([
             'topik_rapat' => 'required',
-            'topik_rapat_weight' => 'required'
+            'topik_rapat_priority' => 'required'
         ]);
         if($this->topik_rapat_id){
             $topikRapat = Topik::find($this->topik_rapat_id);
             $topikRapat->update([
                 'nama' => $this->topik_rapat,
-                'weight' => $this->topik_rapat_weight
+                'priority' => $this->topik_rapat_priority
             ]);
         }
         $this->resetInput();
@@ -45,7 +45,7 @@ class TopikRapatUpdate extends Component
     private function resetInput()
     {
         $this->topik_rapat = '';
-        $this->topik_rapat_weight = '';
+        $this->topik_rapat_priority = '';
         $this->topik_rapat_id = '';
     }
 }

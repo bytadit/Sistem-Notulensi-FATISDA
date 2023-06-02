@@ -1,4 +1,12 @@
 <div class="col-12">
+    @component('dashboard.layouts.breadcrumb')
+        @slot('li_1')
+            Menu Admin
+        @endslot
+        @slot('title')
+            Kategori Rapat
+        @endslot
+    @endcomponent
     @if(session()->has('message'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             {{ session('message') }}
@@ -77,24 +85,6 @@
         @endforeach
     </div>
 </div>
-@push('scripts')
-    <script>
-        window.addEventListener('close-create-modal', event =>{
-            $('#modalCreateKategori').modal('hide')
-        });
-        window.addEventListener('close-delete-modal', event =>{
-            $('#modalDeleteKategori').modal('hide')
-        });
-        window.addEventListener('close-edit-modal', event =>{
-            $('#modalEditKategori').modal('hide')
-        });
-        window.addEventListener('show-edit-modal', event =>{
-            $('#modalEditKategori').modal('show')
-        });
-        window.addEventListener('show-create-modal', event =>{
-            $('#modalCreateKategori').modal('show')
-        });
-    </script>
-@endpush
+
 
 

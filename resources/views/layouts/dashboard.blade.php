@@ -14,6 +14,15 @@
     <link href="{{ URL::asset('assets/libs/swiper/swiper.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('assets/libs/quill/quill.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+
+    <!--datatable css-->
+    <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+    <!--datatable responsive css-->
+    <link href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css" rel="stylesheet"
+        type="text/css" />
+    <link href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css" rel="stylesheet"
+        type="text/css" />
+
     <link href="{{ URL::asset('assets/css/app.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('assets/css/custom.min.css') }}" rel="stylesheet" type="text/css" />
     <script src="{{ URL::asset('assets/js/jquery.min.js') }}"></script>
@@ -41,64 +50,148 @@
     </div>
     @livewireScripts
 
-        <script src="{{ URL::asset('assets/libs/bootstrap/bootstrap.min.js') }}"></script>
-        <script src="{{ URL::asset('assets/libs/swiper/swiper.min.js') }}"></script>
-        <script src="{{ URL::asset('assets/libs/simplebar/simplebar.min.js') }}"></script>
-        <script src="{{ URL::asset('assets/libs/node-waves/node-waves.min.js') }}"></script>
-        <script src="{{ URL::asset('assets/libs/feather-icons/feather-icons.min.js') }}"></script>
-        <script src="{{ URL::asset('assets/js/pages/plugins/lord-icon-2.1.0.min.js') }}"></script>
-        {{-- <script src="{{ URL::asset('assets/js/custom.min.js') }}"></script> --}}
-        <script src='{{ URL::asset('assets/libs/choices.js/choices.js.min.js') }}'></script>
-        <script src='{{ URL::asset('assets/libs/flatpickr/flatpickr.min.js') }}'></script>
-        <script src="{{ URL::asset('assets/js/pages/form-editor.init.js') }}"></script>
-        {{-- <script src="{{ URL::asset('assets/libs/quill/quill.min.js') }}"></script> --}}
-        {{-- <script src="{{ URL::asset('/assets/libs/apexcharts/apexcharts.min.js') }}"></script> --}}
-        {{-- <script src="{{ URL::asset('/assets/libs/jsvectormap/jsvectormap.min.js') }}"></script> --}}
-        {{-- <script src="{{ URL::asset('assets/js/plugins.min.js') }}"></script> --}}
-        <script src="{{ URL::asset('assets/libs/@simonwep/@simonwep.min.js') }}"></script>
-        <script src="{{ URL::asset('assets/js/pages/form-pickers.init.js') }}"></script>
-        <script src="{{ URL::asset('assets/js/app.min.js') }}"></script>
-        @stack('scripts')
+    <script src="{{ URL::asset('assets/libs/bootstrap/bootstrap.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/libs/swiper/swiper.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/libs/simplebar/simplebar.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/libs/node-waves/node-waves.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/libs/feather-icons/feather-icons.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/js/pages/plugins/lord-icon-2.1.0.min.js') }}"></script>
+    {{-- <script src="{{ URL::asset('assets/js/custom.min.js') }}"></script> --}}
+    <script src='{{ URL::asset('assets/libs/choices.js/choices.js.min.js') }}'></script>
+    <script src='{{ URL::asset('assets/libs/flatpickr/flatpickr.min.js') }}'></script>
+    <script src="{{ URL::asset('assets/js/pages/form-editor.init.js') }}"></script>
+    {{-- <script src="{{ URL::asset('assets/libs/quill/quill.min.js') }}"></script> --}}
+    {{-- <script src="{{ URL::asset('/assets/libs/apexcharts/apexcharts.min.js') }}"></script> --}}
+    {{-- <script src="{{ URL::asset('/assets/libs/jsvectormap/jsvectormap.min.js') }}"></script> --}}
+    {{-- <script src="{{ URL::asset('assets/js/plugins.min.js') }}"></script> --}}
 
-        <script>
-            window.addEventListener('close-create-modal', event => {
-                $('#modalCreateTopik').modal('hide')
-            });
-            window.addEventListener('close-delete-modal', event => {
-                $('#modalDeleteTopik').modal('hide')
-            });
-            window.addEventListener('close-edit-modal', event => {
-                $('#modalEditTopik').modal('hide')
-            });
-            window.addEventListener('show-edit-modal', event => {
-                $('#modalEditTopik').modal('show')
-            });
-            window.addEventListener('show-create-modal', event => {
-                $('#modalCreateTopik').modal('show')
-            });
-        </script>
-        <script>
-            window.addEventListener('close-delete-modal', event => {
-                $('#modalDeleteRapat').modal('hide')
-            });
-        </script>
-        <script>
-            window.addEventListener('close-create-modal', event => {
-                $('#modalCreateKategori').modal('hide')
-            });
-            window.addEventListener('close-delete-modal', event => {
-                $('#modalDeleteKategori').modal('hide')
-            });
-            window.addEventListener('close-edit-modal', event => {
-                $('#modalEditKategori').modal('hide')
-            });
-            window.addEventListener('show-edit-modal', event => {
-                $('#modalEditKategori').modal('show')
-            });
-            window.addEventListener('show-create-modal', event => {
-                $('#modalCreateKategori').modal('show')
-            });
-        </script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+
+    <script src="{{ URL::asset('assets/js/pages/datatables.init.js') }}"></script>
+
+    {{-- <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script> --}}
+
+    <script src="{{ URL::asset('assets/libs/@simonwep/@simonwep.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/js/pages/form-pickers.init.js') }}"></script>
+    <script src="{{ URL::asset('assets/js/app.min.js') }}"></script>
+    @stack('scripts')
+
+    <script>
+        window.addEventListener('close-create-modal', event => {
+            $('#modalCreateTopik').modal('hide')
+        });
+        window.addEventListener('close-delete-modal', event => {
+            $('#modalDeleteTopik').modal('hide')
+        });
+        window.addEventListener('close-edit-modal', event => {
+            $('#modalEditTopik').modal('hide')
+        });
+        window.addEventListener('show-edit-modal', event => {
+            $('#modalEditTopik').modal('show')
+        });
+        window.addEventListener('show-create-modal', event => {
+            $('#modalCreateTopik').modal('show')
+        });
+    </script>
+    <script>
+        window.addEventListener('close-delete-modal', event => {
+            $('#modalDeleteRapat').modal('hide')
+        });
+    </script>
+    <script>
+        window.addEventListener('close-create-modal', event => {
+            $('#modalCreateKategori').modal('hide')
+        });
+        window.addEventListener('close-delete-modal', event => {
+            $('#modalDeleteKategori').modal('hide')
+        });
+        window.addEventListener('close-edit-modal', event => {
+            $('#modalEditKategori').modal('hide')
+        });
+        window.addEventListener('show-edit-modal', event => {
+            $('#modalEditKategori').modal('show')
+        });
+        window.addEventListener('show-create-modal', event => {
+            $('#modalCreateKategori').modal('show')
+        });
+    </script>
+
+    <script>
+        window.addEventListener('close-create-modal', event => {
+            $('#modalCreateUnit').modal('hide')
+        });
+        window.addEventListener('close-delete-modal', event => {
+            $('#modalDeleteUnit').modal('hide')
+        });
+        window.addEventListener('close-edit-modal', event => {
+            $('#modalEditUnit').modal('hide')
+        });
+        window.addEventListener('show-edit-modal', event => {
+            $('#modalEditUnit').modal('show')
+        });
+        window.addEventListener('show-create-modal', event => {
+            $('#modalCreateUnit').modal('show')
+        });
+    </script>
+    <script>
+        window.addEventListener('close-create-modal', event => {
+            $('#modalCreateJabatan').modal('hide')
+        });
+        window.addEventListener('close-delete-modal', event => {
+            $('#modalDeleteJabatan').modal('hide')
+        });
+        window.addEventListener('close-edit-modal', event => {
+            $('#modalEditJabatan').modal('hide')
+        });
+        window.addEventListener('show-edit-modal', event => {
+            $('#modalEditJabatan').modal('show')
+        });
+        window.addEventListener('show-create-modal', event => {
+            $('#modalCreateJabatan').modal('show')
+        });
+    </script>
+     <script>
+        window.addEventListener('close-create-modal', event => {
+            $('#modalCreateJabatanPegawai').modal('hide')
+        });
+        window.addEventListener('close-delete-modal', event => {
+            $('#modalDeleteJabatanPegawai').modal('hide')
+        });
+        window.addEventListener('close-edit-modal', event => {
+            $('#modalEditJabatanPegawai').modal('hide')
+        });
+        window.addEventListener('show-edit-modal', event => {
+            $('#modalEditJabatanPegawai').modal('show')
+        });
+        window.addEventListener('show-create-modal', event => {
+            $('#modalCreateJabatanPegawai').modal('show')
+        });
+    </script>
+    <script>
+        window.addEventListener('close-create-modal', event => {
+            $('#modalCreatePegawai').modal('hide')
+        });
+        window.addEventListener('close-delete-modal', event => {
+            $('#modalDeletePegawai').modal('hide')
+        });
+        window.addEventListener('close-edit-modal', event => {
+            $('#modalEditPegawai').modal('hide')
+        });
+        window.addEventListener('show-edit-modal', event => {
+            $('#modalEditPegawai').modal('show')
+        });
+        window.addEventListener('show-create-modal', event => {
+            $('#modalCreatePegawai').modal('show')
+        });
+    </script>
 </body>
 
 </html>

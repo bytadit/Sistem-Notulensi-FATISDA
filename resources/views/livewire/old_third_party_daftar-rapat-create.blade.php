@@ -165,7 +165,7 @@
                                 <optgroup
                                     label="{{ $jabatans->where('id', $single_penanggung_jawab->id_jabatan)->first()->nama }}">
                                     <option value="{{ $single_penanggung_jawab->id }}">
-                                        {{ $users->where('id', $pegawais->where('id', $single_penanggung_jawab->id_pegawai)->first()->id_user)->first()->nama_lengkap }}
+                                        {{ $users->where('id', $pegawais->where('id', $single_penanggung_jawab->id_pegawai)->first()->id_user)->first()->name }}
                                     </option>
                                 </optgroup>
                             @endforeach
@@ -183,7 +183,7 @@
                                 <optgroup
                                     label="{{ $jabatans->where('id', $single_notulis->id_jabatan)->first()->nama }}">
                                     <option value="{{ $single_notulis->id }}">
-                                        {{ $users->where('id', $pegawais->where('id', $single_notulis->id_pegawai)->first()->id_user)->first()->nama_lengkap }}
+                                        {{ $users->where('id', $pegawais->where('id', $single_notulis->id_pegawai)->first()->id_user)->first()->name }}
                                     </option>
                                 </optgroup>
                             @endforeach

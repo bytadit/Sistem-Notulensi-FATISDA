@@ -11,9 +11,14 @@ class Jabatan extends Model
     protected $guarded = ['id'];
     protected $table = 'jabatan';
 
-    public function pegawai()
+    // public function pegawai()
+    // {
+    //     return $this->belongsToMany(Pegawai::class, 'id_pegawai')
+    //                 ->withPivot('nama', 'created_by', 'updated_by', 'deleted_by');
+    // }
+    public function jabatanPegawai()
     {
-        return $this->belongsToMany(Pegawai::class, 'id_pegawai')
-                    ->withPivot('nama', 'created_by', 'updated_by', 'deleted_by');
+        return $this->hasMany(JabatanPegawai::class, 'id_jabatan');
     }
+
 }

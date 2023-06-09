@@ -46,54 +46,112 @@
 
     {{-- <button wire:click='showCreateModal()'type="button" class="btn btn-success mb-4" data-bs-toggle="modal" data-bs-target="#modalCreateRapat">Buat Baru +</button> --}}
     <button wire:click='createRapat()'type="button" class="btn btn-success mb-4 cursor-pointer">Buat Baru +</button>
+
     <div class="row">
-        @foreach ($meetings as $meeting)
-            <div class="col-xxl-4 col-lg-4 col-sm-6">
-                <div class="card card-secondary">
-                    <div class="card-body m-3">
-                        <div class="d-flex justify-content-center align-items-center">
-                            <h6 class="card-title mb-0">{{ $meeting->judul_rapat }}</h6>
-                        </div>
-                    </div>
-                    <div class="card-footer d-flex justify-content-center">
-                        <div class="align-items-center">
-                            <div class="float-end">
-                                <ul class="list-inline card-toolbar-menu float-end d-flex align-items-center mb-0">
-                                    <li class="list-inline-item">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Daftar Rapat</h5>
+                </div>
+                <div class="card-body">
+                    <table id="scroll-horizontal" class="table nowrap align-middle" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Prioritas</th>
+                                <th>Judul Rapat</th>
+                                <th>Kategori</th>
+                                <th>Topik</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($meetings as $meeting)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td><span class="badge
+                                                @if ($meeting->prioritas == 1)
+                                                    bg-success
+                                                @elseif ($meeting->prioritas == 2)
+                                                    bg-info
+                                                @elseif($meeting->prioritas == 3)
+                                                    bg-danger
+                                                @endif
+                                                ">
+                                                @if ($meeting->prioritas == 1)
+                                                    Rendah
+                                                @elseif ($meeting->prioritas == 2)
+                                                    Sedang
+                                                @elseif($meeting->prioritas == 3)
+                                                    Tinggi
+                                                @endif
+                                            </span>
+                                        </td>
+                                <td>{{ $meeting->judul_rapat }}</td>
+                                <td>{{ $meeting->kategoriRapat->nama }}</td>
+                                <td>{{ $meeting->topikRapat->nama }}</td>
+                                <td><span class="badge
+                                        @if ($meeting->status == 0)
+                                            badge-soft-primary
+                                        @elseif ($meeting->status == 1)
+                                            badge-soft-info
+                                        @elseif($meeting->status == 2)
+                                            badge-soft-danger
+                                        @endif
+                                        ">
+                                        @if ($meeting->status == 0)
+                                            Dijadwalkan
+                                        @elseif ($meeting->status == 1)
+                                            Berlangsung
+                                        @elseif($meeting->status == 2)
+                                            Selesai
+                                        @endif
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="d-flex gap-2">
+                                        {{-- <div class="edit">
+                                            <button class="btn btn-sm btn-success edit-item-btn"
+                                            data-bs-toggle="modal" data-bs-target="#showModal">Edit</button>
+                                        </div> --}}
                                         <span wire:click='deleteConfirmation({{ $meeting->id }})'
                                             class="cursor-pointer" data-bs-toggle="modal"
                                             data-bs-target="#modalDeleteRapat">
-                                            <a class="align-middle link-danger" data-toggle="delete"
+                                            <a class="btn btn-sm btn-danger edit-item-btn align-middle" data-toggle="delete"
                                                 data-bs-toggle="tooltip" data-bs-placement="left" title="Hapus Rapat">
                                                 <i class="mdi mdi-trash-can"></i>
+                                                Hapus
                                             </a>
                                         </span>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        {{-- <span class="cursor-pointer"> --}}
+
+                                        {{-- <div class="remove">
+                                            <button class="btn btn-sm btn-danger remove-item-btn" data-bs-toggle="modal" data-bs-target="#deleteRecordModal">Remove</button>
+                                        </div> --}}
                                         <span wire:click="getRapat({{ $meeting->id }})" class="cursor-pointer">
-                                            <a class="align-middle link-primary" data-bs-toggle="tooltip"
+                                            <a class="btn btn-sm btn-info edit-item-btn align-middle" data-bs-toggle="tooltip"
                                                 data-bs-placement="bottom" title="Lihat Rapat"
                                                 href="daftar-rapat/{{ $meeting->slug }}">
                                                 <i class="mdi mdi-eye"></i>
+                                                Lihat
                                             </a>
                                         </span>
-                                    </li>
-                                    <li class="list-inline-item">
                                         <span wire:click="editRapat({{ $meeting->id }})" class="cursor-pointer">
-                                            <a class="align-middle link-warning" data-bs-toggle="tooltip"
+                                            <a class="btn btn-sm btn-warning edit-item-btn align-middle" data-bs-toggle="tooltip"
                                                 data-bs-placement="right" title="Ubah Data"
                                                 href="daftar-rapat/{{ $meeting->slug }}/edit">
                                                 <i class="mdi mdi-pencil-box-multiple"></i>
+                                                Ubah
                                             </a>
                                         </span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        @endforeach
+        </div>
     </div>
 </div>

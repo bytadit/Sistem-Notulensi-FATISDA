@@ -22,7 +22,10 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             JabatanSeeder::class,
             PegawaiSeeder::class,
-            LaratrustSeeder::class
+            LaratrustSeeder::class,
+            UnitSeeder::class,
+            RoleUser::class,
+            PejabatSeeder::class
         ]);
     }
 }

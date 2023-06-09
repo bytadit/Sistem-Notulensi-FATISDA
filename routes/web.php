@@ -12,8 +12,8 @@ Auth::routes();
 
 Route::group(['middleware' => ['auth'], 'prefix' => 'dashboard'], function(){
     Route::get('/', DashboardIndex::class)->name('dashboard.index');
-    Route::prefix('admin')->group(function () {
-        // Route::get('/daftar-rapat/{id}', DaftarRapatShow::class)->name('daftar-rapat.show');
+    Route::group(['middleware' => ['role:administrator'], 'prefix' =>'admin'], function () {
+        Route::get('/manage-pejabat', JabatanPegawaiIndex::class)->name('manage-pejabat');
         Route::get('/kategori-rapat', KategoriRapatIndex::class)->name('kategori-rapat');
         Route::get('/topik-rapat', TopikRapatIndex::class)->name('topik-rapat');
         Route::get('/daftar-rapat', DaftarRapatIndex::class)->name('daftar-rapat');
@@ -21,10 +21,9 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'dashboard'], function(){
         Route::get('/daftar-rapat/{rapat:slug}', DaftarRapatShow::class)->name('daftar-rapat.show');
         Route::get('/daftar-rapat/{rapat:slug}/edit', DaftarRapatEdit::class)->name('daftar-rapat.edit');
     });
+    Route::group(['middleware' => ['role:superadministrator'], 'prefix' => 'superadmin'], function () {
+        Route::get('/manage-units', UnitIndex::class)->name('units');
+        Route::get('/manage-jabatan', JabatanIndex::class)->name('jabatan');
+    });
 });
 // Administrator & SuperAdministrator Control Panel Routes
-// Route::group(['middleware' => ['auth', 'role:superadministrator'], 'prefix' => 'manage-users'], function () {
-//     // Route::resource('users', 'UsersController');
-//     // Route::resource('permission', 'PermissionController');
-//     // Route::resource('roles', 'RolesController');
-// });

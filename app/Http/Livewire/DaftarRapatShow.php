@@ -22,8 +22,8 @@ class DaftarRapatShow extends Component
     {
         $this->rapat_id = $rapat->id;
         $this->judul_rapat = $rapat->judul_rapat;
-        $this->kategori_rapat = $rapat->id_kategori_rapat;
-        $this->topik_rapat = $rapat->id_topik;
+        $this->kategori_rapat = $rapat->kategoriRapat->nama;
+        $this->topik_rapat = $rapat->topikRapat->nama;
         $this->bentuk_rapat = $rapat->bentuk_rapat;
         $this->lokasi_rapat = $rapat->lokasi_rapat;
         $this->waktu_mulai = \Carbon\Carbon::parse($rapat->waktu_mulai)->format('d-m-Y h:i');

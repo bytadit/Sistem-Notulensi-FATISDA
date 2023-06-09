@@ -82,7 +82,7 @@
                                     <option selected value="">Pilih Penanggung Jawab Rapat</option>
                                     @foreach ($many_penanggung_jawab as $single_penanggung_jawab)
                                         <optgroup label="{{ $jabatans->where('id', $single_penanggung_jawab->id_jabatan)->first()->nama }}">
-                                            <option value="{{ $single_penanggung_jawab->id }}">{{ $users->where('id', $pegawais->where('id', $single_penanggung_jawab->id_pegawai)->first()->id_user)->first()->nama_lengkap }}</option>
+                                            <option value="{{ $single_penanggung_jawab->id }}">{{ $users->where('id', $pegawais->where('id', $single_penanggung_jawab->id_pegawai)->first()->id_user)->first()->name }}</option>
                                         </optgroup>
                                     @endforeach
                                 </select>
@@ -99,7 +99,7 @@
                                     <option selected value="">Pilih Notulis Rapat</option>
                                     @foreach ($many_notulis as $single_notulis)
                                         <optgroup label="{{ $jabatans->where('id', $single_notulis->id_jabatan)->first()->nama }}">
-                                            <option value="{{ $single_notulis->id }}">{{ $users->where('id', $pegawais->where('id', $single_notulis->id_pegawai)->first()->id_user)->first()->nama_lengkap }}</option>
+                                            <option value="{{ $single_notulis->id }}">{{ $users->where('id', $pegawais->where('id', $single_notulis->id_pegawai)->first()->id_user)->first()->name }}</option>
                                         </optgroup>
                                     @endforeach
                                 </select>

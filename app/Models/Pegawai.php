@@ -10,11 +10,15 @@ class Pegawai extends Model
     use HasFactory;
     protected $guarded = ['id'];
     protected $table = 'pegawai';
-    public function jabatan()
-    {
-        return $this->belongsToMany(Jabatan::class, 'id_jabatan')
-                    ->withPivot('id_user', 'nip', 'alamat', 'no_wa', 'path_photo');
+    // public function jabatan()
+    // {
+    //     return $this->belongsToMany(Jabatan::class, 'id_jabatan')
+    //                 ->withPivot('id_user', 'nip', 'alamat', 'no_wa', 'path_photo');
 
+    // }
+    public function jabatanPegawai()
+    {
+        return $this->hasMany(JabatanPegawai::class, 'id_pegawai');
     }
     public function user()
     {

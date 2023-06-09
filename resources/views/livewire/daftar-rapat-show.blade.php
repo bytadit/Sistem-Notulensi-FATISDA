@@ -49,39 +49,23 @@
                                                 {{-- <div class="vr"></div> --}}
                                                 {{-- <div>Waktu Selesai : <span class="fw-medium">{{ Carbon\Carbon::parse($waktu_selesai)->format('d F, Y h:i') . ' WIB' }}</span></div> --}}
                                                 <div class="vr"></div>
-                                                <div class="badge rounded-pill fs-12
-                                                    @if ($prioritas == 1)
-                                                        bg-success
-                                                    @elseif ($prioritas == 2)
-                                                        bg-warning
-                                                    @elseif ($prioritas == 3)
-                                                        bg-danger
-                                                    @endif
-                                                ">Prioritas
-                                                    @if ($prioritas == 1)
-                                                        Rendah
-                                                    @elseif ($prioritas == 2)
-                                                        Sedang
-                                                    @elseif ($prioritas == 3)
-                                                        Tinggi
-                                                    @endif
-                                                </div>
-                                                <div class="badge rounded-pill fs-12
-                                                    @if ($status_rapat == 0)
+                                                <div class="badge rounded-pill fs-12 bg-white text-dark
+                                                    {{-- @if ($status_rapat == 0)
                                                             bg-primary
                                                         @elseif ($status_rapat == 1)
                                                             bg-success
                                                         @elseif ($status_rapat == 2)
                                                             bg-dark
-                                                        @endif
+                                                        @endif --}}
                                                     ">
-                                                    @if ($status_rapat == 0)
+                                                    {{-- @if ($status_rapat == 0)
                                                         Dijadwalkan
                                                     @elseif ($status_rapat == 1)
                                                         Berlangsung
                                                     @elseif ($status_rapat == 2)
                                                         Selesai
-                                                    @endif
+                                                    @endif --}}
+                                                    {{ $kategori_rapat }}
                                                 </div>
                                             </div>
                                         </div>
@@ -150,35 +134,18 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="text-muted">
-                                        <h6 class="mb-3 fw-semibold text-uppercase">Summary</h6>
-                                        <p>It will be as simple as occidental in fact, it will be Occidental. To an
-                                            English
-                                            person, it will seem like simplified English, as a skeptical Cambridge
-                                            friend of
-                                            mine told me what Occidental is. The European languages are members of the
-                                            same
-                                            family. Their separate existence is a myth. For science, music, sport, etc,
-                                            Europe uses the same vocabulary. The languages only differ in their grammar,
-                                            their pronunciation and their most common words.</p>
-
-                                        <ul class="ps-4 vstack gap-2">
-                                            <li>Product Design, Figma (Software), Prototype</li>
-                                            <li>Four Dashboards : Ecommerce, Analytics, Project,etc.</li>
-                                            <li>Create calendar, chat and email app pages.</li>
-                                            <li>Add authentication pages.</li>
-                                            <li>Content listing.</li>
-                                        </ul>
-
-                                        <div>
+                                        <h6 class="mb-3 fw-semibold text-uppercase">Deskripsi Rapat</h6>
+                                        {!! $deskripsi !!}
+                                        {{-- <div>
                                             <button type="button"
                                                 class="btn btn-link link-success p-0 shadow-none">Read
                                                 more</button>
-                                        </div>
+                                        </div> --}}
 
                                         <div class="pt-3 border-top border-top-dashed mt-4">
                                             <div class="row">
 
-                                                <div class="col-lg-3 col-sm-6">
+                                                {{-- <div class="col-lg-3 col-sm-6">
                                                     <div>
                                                         <p class="mb-2 text-uppercase fw-medium">Create Date :</p>
                                                         <h5 class="fs-15 mb-0">15 Sep, 2021</h5>
@@ -189,23 +156,55 @@
                                                         <p class="mb-2 text-uppercase fw-medium">Due Date :</p>
                                                         <h5 class="fs-15 mb-0">29 Dec, 2021</h5>
                                                     </div>
-                                                </div>
+                                                </div> --}}
                                                 <div class="col-lg-3 col-sm-6">
                                                     <div>
-                                                        <p class="mb-2 text-uppercase fw-medium">Priority :</p>
-                                                        <div class="badge bg-danger fs-12">High</div>
+                                                        <p class="mb-2 text-uppercase fw-medium">Prioritas :</p>
+                                                        <div class="badge fs-12
+                                                            @if ($prioritas == 1)
+                                                                bg-success
+                                                            @elseif ($prioritas == 2)
+                                                                bg-warning
+                                                            @elseif ($prioritas == 3)
+                                                                bg-danger
+                                                            @endif
+                                                        ">
+                                                            @if ($prioritas == 1)
+                                                                Rendah
+                                                            @elseif ($prioritas == 2)
+                                                                Sedang
+                                                            @elseif ($prioritas == 3)
+                                                                Tinggi
+                                                            @endif
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-3 col-sm-6">
                                                     <div>
                                                         <p class="mb-2 text-uppercase fw-medium">Status :</p>
-                                                        <div class="badge bg-warning fs-12">Inprogess</div>
+                                                        <div class="badge fs-12
+                                                            @if ($status_rapat == 0)
+                                                                bg-primary
+                                                            @elseif ($status_rapat == 1)
+                                                                bg-success
+                                                            @elseif ($status_rapat == 2)
+                                                                bg-dark
+                                                            @endif
+                                                        ">
+                                                        @if ($status_rapat == 0)
+                                                            Dijadwalkan
+                                                        @elseif ($status_rapat == 1)
+                                                            Berlangsung
+                                                        @elseif ($status_rapat == 2)
+                                                            Selesai
+                                                        @endif
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div class="pt-3 border-top border-top-dashed mt-4">
+                                        {{-- <div class="pt-3 border-top border-top-dashed mt-4">
                                             <h6 class="mb-3 fw-semibold text-uppercase">Resources</h6>
                                             <div class="row g-3">
                                                 <div class="col-xxl-4 col-lg-6">
@@ -302,7 +301,7 @@
                                                 <!-- end col -->
                                             </div>
                                             <!-- end row -->
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                                 <!-- end card body -->
@@ -311,13 +310,13 @@
 
                             <div class="card">
                                 <div class="card-header align-items-center d-flex">
-                                    <h4 class="card-title mb-0 flex-grow-1">Comments</h4>
+                                    <h4 class="card-title mb-0 flex-grow-1">Komentar</h4>
                                     <div class="flex-shrink-0">
                                         <div class="dropdown card-header-dropdown">
                                             <a class="text-reset dropdown-btn" href="#"
                                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <span class="text-muted">Recent<i
-                                                        class="mdi mdi-chevron-down ms-1"></i></span>
+                                                {{-- <span class="text-muted">Recent<i
+                                                        class="mdi mdi-chevron-down ms-1"></i></span> --}}
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-end">
                                                 <a class="dropdown-item" href="#">Recent</a>
@@ -429,17 +428,15 @@
                                         <div class="row g-3">
                                             <div class="col-12">
                                                 <label for="exampleFormControlTextarea1"
-                                                    class="form-label text-body">Leave
-                                                    a Comments</label>
+                                                    class="form-label text-body">Berikan Komentar</label>
                                                 <textarea class="form-control bg-light border-light" id="exampleFormControlTextarea1" rows="3"
-                                                    placeholder="Enter your comment..."></textarea>
+                                                    placeholder="Masukkan komentar..."></textarea>
                                             </div>
                                             <div class="col-12 text-end">
                                                 <button type="button"
                                                     class="btn btn-ghost-secondary btn-icon waves-effect me-1 shadow-none"><i
                                                         class="ri-attachment-line fs-16"></i></button>
-                                                <a href="javascript:void(0);" class="btn btn-success">Post
-                                                    Comments</a>
+                                                <a href="javascript:void(0);" class="btn btn-success">Kirim</a>
                                             </div>
                                         </div>
                                     </form>
@@ -451,16 +448,49 @@
                         <!-- ene col -->
                         <div class="col-xl-3 col-lg-4">
                             <div class="card">
+                                <div class="card-header align-items-center d-flex border-bottom-dashed">
+                                    <h5 class="card-title mb-0 flex-grow-1">Topik Rapat</h5>
+                                </div>
                                 <div class="card-body">
-                                    <h5 class="card-title mb-4">Skills</h5>
+                                    {{-- <h5 class="card-title mb-4">Topik Rapat</h5> --}}
                                     <div class="d-flex flex-wrap gap-2 fs-16">
-                                        <div class="badge fw-medium badge-soft-secondary">UI/UX</div>
-                                        <div class="badge fw-medium badge-soft-secondary">Figma</div>
-                                        <div class="badge fw-medium badge-soft-secondary">HTML</div>
-                                        <div class="badge fw-medium badge-soft-secondary">CSS</div>
-                                        <div class="badge fw-medium badge-soft-secondary">Javascript</div>
-                                        <div class="badge fw-medium badge-soft-secondary">C#</div>
-                                        <div class="badge fw-medium badge-soft-secondary">Nodejs</div>
+                                        <h6 class="fw-medium">{{ $topik_rapat }}</h6>
+                                    </div>
+                                </div>
+                                <!-- end card body -->
+                            </div>
+                            <div class="card">
+                                <div class="card-header align-items-center d-flex border-bottom-dashed">
+                                    <h5 class="card-title mb-0 flex-grow-1">Lokasi Rapat</h5>
+                                </div>
+                                <div class="card-body">
+                                    {{-- <h5 class="card-title mb-4">Topik Rapat</h5> --}}
+                                    <div class="d-flex flex-wrap gap-2 fs-16">
+                                        <h6 class="fw-medium">{{ $lokasi_rapat }}</h6>
+                                    </div>
+                                </div>
+                                <!-- end card body -->
+                            </div>
+                            <div class="card">
+                                <div class="card-header align-items-center d-flex border-bottom-dashed">
+                                    <h5 class="card-title mb-0 flex-grow-1">Penganggung Jawab Rapat</h5>
+                                </div>
+                                <div class="card-body">
+                                    {{-- <h5 class="card-title mb-4">Topik Rapat</h5> --}}
+                                    <div class="d-flex flex-wrap gap-2 fs-16">
+                                        <h6 class="fw-medium">{{ $users->where('id', $pegawais->where('id', $penanggung_jawab)->first()->id_user)->first()->name }}</h6>
+                                    </div>
+                                </div>
+                                <!-- end card body -->
+                            </div>
+                            <div class="card">
+                                <div class="card-header align-items-center d-flex border-bottom-dashed">
+                                    <h5 class="card-title mb-0 flex-grow-1">Notulis Rapat</h5>
+                                </div>
+                                <div class="card-body">
+                                    {{-- <h5 class="card-title mb-4">Topik Rapat</h5> --}}
+                                    <div class="d-flex flex-wrap gap-2 fs-16">
+                                        <h6 class="fw-medium">{{ $users->where('id', $pegawais->where('id', $notulis)->first()->id_user)->first()->name }}</h6>
                                     </div>
                                 </div>
                                 <!-- end card body -->
@@ -469,11 +499,11 @@
 
                             <div class="card">
                                 <div class="card-header align-items-center d-flex border-bottom-dashed">
-                                    <h4 class="card-title mb-0 flex-grow-1">Members</h4>
+                                    <h4 class="card-title mb-0 flex-grow-1">Anggota</h4>
                                     <div class="flex-shrink-0">
                                         <button type="button" class="btn btn-soft-danger btn-sm shadow-none"
                                             data-bs-toggle="modal" data-bs-target="#inviteMembersModal"><i
-                                                class="ri-share-line me-1 align-bottom"></i> Invite Member</button>
+                                                class="ri-share-line me-1 align-bottom"></i> Tambah Anggota</button>
                                     </div>
                                 </div>
 
@@ -728,8 +758,8 @@
                                 <!-- end card body -->
                             </div>
                             <!-- end card -->
-
-                            <div class="card">
+{{-- attach,ment card --}}
+                            {{-- <div class="card">
                                 <div class="card-header align-items-center d-flex border-bottom-dashed">
                                     <h4 class="card-title mb-0 flex-grow-1">Attachments</h4>
                                     <div class="flex-shrink-0">
@@ -914,7 +944,7 @@
                                     </div>
                                 </div>
                                 <!-- end card body -->
-                            </div>
+                            </div> --}}
                             <!-- end card -->
                         </div>
                         <!-- end col -->

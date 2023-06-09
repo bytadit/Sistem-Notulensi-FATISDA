@@ -37,13 +37,30 @@
                     </a>
                 </li>
                 @role('superadministrator')
+                <li class="menu-title"><span>MENU SUPER ADMIN</span></li>
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('manage-users') ? 'active' : '' }} menu-link" href="/manage-users" role="button" aria-expanded="false" aria-controls="sidebarApps">
                         <i class="mdi mdi-view-grid-plus-outline"></i> <span>Atur User</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::is('manage-units') ? 'active' : '' }} menu-link" href="/dashboard/superadmin/manage-units" role="button" aria-expanded="false" aria-controls="sidebarApps">
+                        <i class="mdi mdi-view-grid-plus-outline"></i> <span>Atur Unit</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::is('manage-jabatan') ? 'active' : '' }} menu-link" href="/dashboard/superadmin/manage-jabatan" role="button" aria-expanded="false" aria-controls="sidebarApps">
+                        <i class="mdi mdi-view-grid-plus-outline"></i> <span>Atur Jabatan</span>
+                    </a>
+                </li>
                 @endrole
+                @role('administrator')
                 <li class="menu-title"><span>MENU ADMIN</span></li>
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::is('dashboard/admin/manage-pejabat') ? 'active' : '' }} menu-link" href="{{ route('manage-pejabat') }}" role="button" aria-expanded="false" aria-controls="sidebarDashboards">
+                        <i class="mdi mdi-view-grid-plus-outline"></i> <span>Atur Pejabat</span>
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('dashboard/admin/daftar-rapat') ? 'active' : '' }} menu-link" href="{{ route('daftar-rapat') }}" role="button" aria-expanded="false" aria-controls="sidebarDashboards">
                         <i class="mdi mdi-speedometer"></i> <span>Daftar Rapat</span>
@@ -113,7 +130,8 @@
                         </ul>
                     </div> --}}
                 </li> <!-- end Dashboard Menu -->
-
+                @endrole
+                @role('user')
                 <li class="menu-title"><i class="ri-more-fill"></i> <span>MENU ANGGOTA</span></li>
 
                 <li class="nav-item">
@@ -158,6 +176,7 @@
                         <i class="mdi mdi-sticker-text-outline"></i> <span>Statistik Rapat</span>
                     </a>
                 </li>
+                @endrole
             </ul>
         </div>
         <!-- Sidebar -->

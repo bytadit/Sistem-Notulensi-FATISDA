@@ -17,6 +17,7 @@ class JabatanPegawaiCreate extends Component
         return view('livewire.jabatan-pegawai-create', [
             // 'units' => Unit::latest()->get(),
             'units' => Unit::whereIn('id', JabatanPegawai::where('id_pegawai', Pegawai::where('id_user', auth()->user()->id)->first()->id)->pluck('id_unit'))->get(),
+            // 'units' => Unit::where('kode', 'like', )
             'jabatans' => Jabatan::latest()->get(),
             'pegawais' => Pegawai::latest()->get(),
             'users' => User::latest()->get()

@@ -39,7 +39,7 @@ class JabatanPegawaiIndex extends Component
         if($id){
             $this->jabatan_pegawai_delete_id = $id;
             $jabatanPegawai = JabatanPegawai::find($this->jabatan_pegawai_delete_id);
-            $this->jabatan_pegawai_old = User::where('id', Pegawai::where('id', $jabatanPegawai->id_pegawai)->first()->id_user)->first()->nama;
+            $this->jabatan_pegawai_old = User::where('id', Pegawai::where('id', $jabatanPegawai->id_pegawai)->first()->id_user)->first()->name;
         }
     }
     public function showCreateModal(){

@@ -23,7 +23,7 @@
                     </a>
                 </div>
                 {{-- Hamburger Hide Sidebar --}}
-                <button type="button" class="btn btn-sm px-3 fs-16 header-item vertical-menu-btn topnav-hamburger " id="topnav-hamburger-icon">
+                <button type="button" class="btn shadow-none btn-sm px-3 fs-16 header-item vertical-menu-btn topnav-hamburger " id="topnav-hamburger-icon">
                     <span class="hamburger-icon">
                         <span></span>
                         <span></span>
@@ -35,15 +35,15 @@
             <div class="d-flex align-items-center">
 
                 <div class="ms-1 header-item d-none d-sm-flex">
-                    <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle">
+                    {{-- <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle">
                         <i class='bx bx-moon fs-22'></i>
                     </button>
-                    {{-- <div class="toggle-mode"> --}}
+                    <div class="toggle-mode">
                         <input type="checkbox" name="data-layout-mode" value="dark" id="mode-switcher">
                         <label id="mode-label" for="mode-switcher" class="toggle-mode btn btn-icon btn-topbar btn-ghost-secondary rounded-circle">
                             <i id="mode-icon" class='bx bx-moon fs-22'></i>
                         </label>
-                    {{-- </div> --}}
+                    </div> --}}
                     {{-- <label for="layout-mode-dark">
                         <input type="radio" name="data-layout-mode" id="layout-mode-dark"
                         value="dark">
@@ -364,7 +364,7 @@
                 </div>
 
                 <div class="dropdown ms-sm-3 header-item topbar-user">
-                    <button type="button" class="btn " id="page-header-user-dropdown" data-bs-toggle="dropdown"
+                    <button type="button" class="btn shadow-none" id="page-header-user-dropdown" data-bs-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         <span class="d-flex align-items-center">
                             <img class="rounded-circle header-profile-user" src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }}@endif"
@@ -378,16 +378,16 @@
                     <div class="dropdown-menu dropdown-menu-end">
                         <!-- item-->
                         <h6 class="dropdown-header">Halo, {{ Auth::user()->name }}</h6>
-                        <a class="dropdown-item" href="ubah-profil"><i
+                        <a class="dropdown-item" href="{{ route('profil-saya') }}"><i
                                 class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i> <span
-                                class="align-middle">Ubah Profil</span></a>
-                        <a class="dropdown-item" href="pesan"><i
+                                class="align-middle">Profil Saya</span></a>
+                        {{-- <a class="dropdown-item" href="pesan"><i
                                 class="mdi mdi-message-text-outline text-muted fs-16 align-middle me-1"></i> <span
                                 class="align-middle">Pesan</span></a>
                         <a class="dropdown-item" href="bantuan"><i
                                 class="mdi mdi-lifebuoy text-muted fs-16 align-middle me-1"></i> <span
                                 class="align-middle">Bantuan</span></a>
-                        <div class="dropdown-divider"></div>
+                        <div class="dropdown-divider"></div> --}}
                         <a class="dropdown-item " href="javascript:void();"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             <i class="bx bx-power-off font-size-16 align-middle me-1"></i>

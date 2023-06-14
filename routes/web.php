@@ -12,6 +12,9 @@ Auth::routes();
 
 Route::group(['middleware' => ['auth'], 'prefix' => 'dashboard'], function(){
     Route::get('/', DashboardIndex::class)->name('dashboard.index');
+    Route::get('/profil-saya', ProfilIndex::class)->name('profil-saya');
+    Route::get('/profil-saya/ubah', ProfilEdit::class)->name('ubah-profil');
+
     Route::group(['middleware' => ['role:administrator'], 'prefix' =>'admin'], function () {
         Route::get('/manage-pejabat', JabatanPegawaiIndex::class)->name('manage-pejabat');
         Route::get('/kategori-rapat', KategoriRapatIndex::class)->name('kategori-rapat');

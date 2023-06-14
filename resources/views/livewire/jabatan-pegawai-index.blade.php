@@ -43,7 +43,7 @@
                         <div class="hstack gap-2 justify-content-end">
                             <button wire:click='cancel()'type="button" class="btn btn-light"
                                 data-bs-dismiss="modal">Batal</button>
-                            <button wire:click='deleteRapat()'type="submit" class="btn btn-primary">Yakin</button>
+                            <button wire:click='deleteJabatanPegawai()'type="submit" class="btn btn-primary">Yakin</button>
                         </div>
                     </div>
                 </div>
@@ -97,18 +97,25 @@
                                             {{-- <div class="remove">
                                                 <button class="btn btn-sm btn-danger remove-item-btn" data-bs-toggle="modal" data-bs-target="#deleteRecordModal">Remove</button>
                                             </div> --}}
-                                            <span wire:click="getJabatanPegawai({{ $jabatanPegawai->id }})" class="cursor-pointer">
+                                            {{-- <span wire:click="getJabatanPegawai({{ $jabatanPegawai->id }})" class="cursor-pointer">
                                                 <a class="btn btn-sm btn-info edit-item-btn align-middle" data-bs-toggle="tooltip"
                                                     data-bs-placement="bottom" title="Lihat Pejabat"
                                                     href="pejabat/{{ $jabatanPegawai->id }}">
                                                     <i class="mdi mdi-eye"></i>
                                                     Lihat
                                                 </a>
-                                            </span>
-                                            <span wire:click="editJabatanPegawai({{ $jabatanPegawai->id }})" class="cursor-pointer">
+                                            </span> --}}
+                                            {{-- <span wire:click="editJabatanPegawai({{ $jabatanPegawai->id }})" class="cursor-pointer">
                                                 <a class="btn btn-sm btn-warning edit-item-btn align-middle" data-bs-toggle="tooltip"
                                                     data-bs-placement="right" title="Ubah Pejabat"
                                                     href="pejabat/{{ $jabatanPegawai->id }}/edit">
+                                                    <i class="mdi mdi-pencil-box-multiple"></i>
+                                                    Ubah
+                                                </a>
+                                            </span> --}}
+                                            <span wire:click="getJabatanPegawai({{ $jabatanPegawai->id }})" class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#modalEditJabatanPegawai">
+                                                <a class="btn btn-sm btn-warning edit-item-btn align-middle" data-bs-toggle="tooltip"
+                                                    data-bs-placement="right" title="Ubah Data">
                                                     <i class="mdi mdi-pencil-box-multiple"></i>
                                                     Ubah
                                                 </a>

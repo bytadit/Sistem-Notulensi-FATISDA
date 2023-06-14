@@ -13,4 +13,9 @@ class Unit extends Model
     {
         return $this->hasMany(JabatanPegawai::class, 'id_unit');
     }
+    public function rapat()
+    {
+        return $this->hasMany(Rapat::class, 'id_unit');
+    }
+
 }

@@ -18,8 +18,8 @@
                         </div>
                         <div class="col-xxl-6">
                             <div>
-                                <input wire:model="unit_nama" type="text" class="form-control" id="unit_nama" placeholder="Masukkan Unit ..." autofocus>
-                                @error('unit_nama')
+                                <input wire:model="team_nama" type="text" class="form-control" id="team_nama" placeholder="Masukkan Unit ..." autofocus>
+                                @error('team_nama')
                                     <span class="text-danger text-sm">{{ $message }}</span>
                                 @enderror
                             </div>

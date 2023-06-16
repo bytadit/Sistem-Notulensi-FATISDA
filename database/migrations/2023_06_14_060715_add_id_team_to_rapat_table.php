@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('rapat', function (Blueprint $table) {
-            $table->unsignedBigInteger('id_unit');
-            $table->foreign('id_unit')->references('id')->on('units')->onDelete('cascade');
+            $table->unsignedBigInteger('id_team');
+            $table->foreign('id_team')->references('id')->on('teams')->onDelete('cascade');
         });
     }
 

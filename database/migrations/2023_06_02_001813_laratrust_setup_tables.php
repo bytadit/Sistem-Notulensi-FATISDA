@@ -36,6 +36,8 @@ class LaratrustSetupTables extends Migration
             $table->bigIncrements('id');
             $table->string('name')->unique();
             $table->string('display_name')->nullable();
+            $table->unsignedBigInteger('teamable_id');
+            $table->string('teamable_type');
             $table->string('description')->nullable();
             $table->timestamps();
         });

@@ -14,15 +14,17 @@ class ProfilIndex extends Component
     public function render()
     {
         // $pegawai = Pegawai::where('id_user', 1)->get();
+        $pegawai = Pegawai::where('id_user', auth()->user()->id)->get();
         // return dd($pegawai);
         return view('livewire.profil-index', [
             'user' => auth()->user(),
-            'pegawai' => Pegawai::where('id_user', 1)->get()
+            'old_path' => $pegawai->first()->path_photo,
+            'pegawai' => Pegawai::where('id_user', auth()->user()->id)->get()
         ])->layout('layouts.dashboard');
     }
     protected $listeners = [
-        'userStored' => 'handleStored',
-        'userUpdated' => 'handleUpdated'
+        'profilStored' => 'handleStored',
+        'profilUpdated' => 'handleUpdated'
     ];
     public function getUser($id)
     {
@@ -46,7 +48,7 @@ class ProfilIndex extends Component
     {
         $user = User::find($this->user_delete_id);
         $user->delete();
-        session()->flash('message', 'Data User ' . $this->user_rapat_old . ' Berhasil Dihapus !');
+        session()->flash('message', 'Data User ' . $this->user_old . ' Berhasil Dihapus !');
         $this->user_delete_id = '';
         $this->user_old = '';
         $this->dispatchBrowserEvent('close-delete-modal');
@@ -61,6 +63,6 @@ class ProfilIndex extends Component
     }
     public function handleUpdated($user)
     {
-        session()->flash('message', 'Data User Rapat Berhasil Diubah !');
+        session()->flash('message', 'Data User Berhasil Diubah !');
     }
 }

@@ -24,8 +24,9 @@ class DatabaseSeeder extends Seeder
             PegawaiSeeder::class,
             LaratrustSeeder::class,
             UnitSeeder::class,
+            TeamSeeder::class,
             RoleUser::class,
-            PejabatSeeder::class
+            PejabatSeeder::class,
         ]);
     }
 }

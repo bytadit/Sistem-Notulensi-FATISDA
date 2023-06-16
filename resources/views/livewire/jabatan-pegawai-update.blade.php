@@ -10,13 +10,13 @@
                     <div class="row g-3">
                         <div class="col-xxl-6">
                             <div>
-                                <select wire:model="unit_nama" class="form-select mb-3" aria-label="Select Unit" id="unit_nama">
+                                <select wire:model="team_nama" class="form-select mb-3" aria-label="Select Unit" id="team_nama">
                                     <option selected value="">Pilih Unit Pejabat</option>
                                     @foreach ($units as $unit)
                                         <option value="{{ $unit->id }}">{{ $unit->nama }}</option>
                                     @endforeach
                                 </select>
-                                @error('unit_nama')
+                                @error('team_nama')
                                     <span class="text-danger text-sm">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -38,7 +38,7 @@
                                         <option value="{{ $pegawai->id }}">{{ $users->where('id', $pegawai->id_user)->first()->name }}</option>
                                     @endforeach
                                 </select>
-                                @error('unit_nama')
+                                @error('team_nama')
                                     <span class="text-danger text-sm">{{ $message }}</span>
                                 @enderror
                             </div>

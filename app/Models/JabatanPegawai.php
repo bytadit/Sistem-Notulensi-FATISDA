@@ -30,8 +30,12 @@ class JabatanPegawai extends Model
     {
         return $this->belongsTo(Jabatan::class, 'id_jabatan');
     }
-    public function unit()
+    // public function unit()
+    // {
+    //     return $this->belongsTo(Unit::class, 'id_unit');
+    // }
+    public function team()
     {
-        return $this->belongsTo(Unit::class, 'id_unit');
+        return $this->belongsTo(Team::class, 'id_team');
     }
 }

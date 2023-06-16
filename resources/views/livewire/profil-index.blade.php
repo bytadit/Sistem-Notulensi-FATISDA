@@ -1,21 +1,21 @@
 <div class="col-12">
     @section('title')
-        Ubah Profil
+        Profil Saya
     @endsection
     @component('dashboard.layouts.breadcrumb')
         @slot('li_1')
             Menu User
         @endslot
         @slot('title')
-            Ubah Profil
+            Profil Saya
         @endslot
     @endcomponent
-    @if(session()->has('message'))
+    {{-- @if(session()->has('message'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             {{ session('message') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-    @endif
+    @endif --}}
     {{-- modals --}}
     @if($statusUpdate)
     {{-- modal update --}}
@@ -27,6 +27,7 @@
 
 
     <div class="profile-foreground position-relative mx-n4 mt-n4">
+
         <div class="profile-wid-bg">
             {{-- <img src="{{ URL::asset('assets/images/profile-bg.jpg') }}" alt="" class="profile-wid-img" /> --}}
         </div>
@@ -35,7 +36,7 @@
         <div class="row g-4">
             <div class="col-auto">
                 <div class="avatar-lg">
-                    <img src="@if (Auth::user()->avatar != '') {{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }} @endif" alt="user-img" class="img-thumbnail rounded-circle" />
+                    <img src="@if ($old_path != '') {{ Storage::url($old_path) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }} @endif" alt="user-img" class="img-thumbnail rounded-circle" />
                 </div>
             </div>
             <!--end col-->

@@ -49,4 +49,13 @@ class User extends Authenticatable implements LaratrustUser
     {
         return $this->hasMany(Pegawai::class, 'id_user');
     }
+
+    // public function teams()
+    // {
+    //     return $this->belongsToMany(Team::class, 'role_user')
+    //                 ->using(RoleUser::class)
+    //                 // ->withPivot('app_id', 'user_type', 'team_id')
+    //                 ->withPivot('app_id', 'user_type')
+    //                 ->withTimestamps();
+    // }
 }

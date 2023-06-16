@@ -16,7 +16,7 @@ class PejabatSeeder extends Seeder
     public function run(): void
     {
         DB::table('jabatan_pegawai')->insert([
-            'id_unit' => 1,
+            'id_team' => 1,
             'id_jabatan' => 2,
             'id_pegawai' => 2
         ]);

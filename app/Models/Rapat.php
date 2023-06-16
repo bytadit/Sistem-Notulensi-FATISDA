@@ -56,8 +56,13 @@ class Rapat extends Model
             ]
         ];
     }
-    public function unit()
+    // public function unit()
+    // {
+    //     return $this->belongsTo(Unit::class, 'id_unit');
+    // }
+
+    public function team()
     {
-        return $this->belongsTo(Unit::class, 'id_unit');
+        return $this->belongsTo(Unit::class, 'id_team');
     }
 }

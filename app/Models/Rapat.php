@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
 
 
 class Rapat extends Model
@@ -36,10 +38,10 @@ class Rapat extends Model
     {
         return $this->hasMany(Notulensi::class, 'id_rapat');
     }
-    public function presensi()
-    {
-        return $this->hasMany(Presensi::class, 'id_rapat');
-    }
+    // public function presensi()
+    // {
+    //     return $this->hasMany(Presensi::class, 'id_rapat');
+    // }
     public function penanggungJawab()
     {
         return $this->belongsTo(JabatanPegawai::class, 'id_penanggung_jawab');
@@ -64,5 +66,13 @@ class Rapat extends Model
     public function team()
     {
         return $this->belongsTo(Unit::class, 'id_team');
+    }
+
+    public function pegawai(): BelongsToMany
+    {
+        return $this->belongsToMany(Pegawai::class, 'presensi', 'id_rapat', 'id_pegawai')
+                    ->withPivot(['jabatan_peserta', 'status_konfirmasi', 'detail_konfirmasi', 'status_kehadiran', 'detail_kehadiran'])
+                    ->using(Presensi::class)
+                    ->withTimestamps();
     }
 }

@@ -7,7 +7,11 @@ use App\Models\Topik;
 
 class TopikRapatCreate extends Component
 {
-    public $topik_rapat, $topik_rapat_priority;
+    public $topik_rapat, $topik_rapat_priority, $team;
+    public function mount()
+    {
+        $this->team = request()->team;
+    }
     protected $messages = [
         'topik_rapat.required' => 'Input Topik Rapat tidak boleh kosong !',
         'topik_rapat_priority.required' => 'Input Urgensi Topik tidak boleh kosong !'
@@ -32,7 +36,8 @@ class TopikRapatCreate extends Component
         ]);
         $topik_rapat = Topik::create([
             'nama' => $this->topik_rapat,
-            'priority' => $this->topik_rapat_priority
+            'priority' => $this->topik_rapat_priority,
+            'id_team' => $this->team
         ]);
         $this->resetInput();
         $this->emit('topikStored', $topik_rapat);

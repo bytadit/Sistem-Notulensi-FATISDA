@@ -19,10 +19,10 @@
      {{-- modals --}}
      @if($statusUpdate)
      {{-- modal update --}}
-         <livewire:jabatan-pegawai-update></livewire:jabatan-pegawai-update>
+         <livewire:jabatan-pegawai-update :team_id="$team_id"></livewire:jabatan-pegawai-update>
      @else
      {{-- modal create --}}
-         <livewire:jabatan-pegawai-create></livewire:jabatan-pegawai-create>
+         <livewire:jabatan-pegawai-create :team_id="$team_id"></livewire:jabatan-pegawai-create>
      @endif
     {{-- modals --}}
     {{-- <livewire:daftar-rapat-create></livewire:daftar-rapat-create> --}}
@@ -75,7 +75,7 @@
                                 @foreach ($jabatanPegawais as $jabatanPegawai)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $jabatanPegawai->unit->nama }}</td>
+                                    <td>{{ $jabatanPegawai->team->display_name }}</td>
                                     <td>{{ $jabatanPegawai->jabatan->nama }}</td>
                                     <td>{{ $users->where('id', $pegawais->where('id', $jabatanPegawai->id_pegawai)->first()->id_user)->first()->name }}</td>
                                     <td>

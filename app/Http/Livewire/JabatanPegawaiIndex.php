@@ -8,21 +8,26 @@ use App\Models\Jabatan;
 use App\Models\Pegawai;
 use App\Models\Unit;
 use App\Models\User;
+use App\Models\Team;
 
 class JabatanPegawaiIndex extends Component
 {
     public $statusUpdate = false;
     public $jabatan_pegawai_delete_id;
-    public $jabatan_pegawai_old;
+    public $jabatan_pegawai_old, $team_id;
     public function render()
     {
         return view('livewire.jabatan-pegawai-index', [
             'units' => Unit::latest()->get(),
             'pegawais' => Pegawai::latest()->get(),
             'jabatans' => Jabatan::latest()->get(),
-            'jabatanPegawais' => JabatanPegawai::latest()->get(),
+            'jabatanPegawais' => JabatanPegawai::whereIn('id_team', Team::where('name', 'like', Team::where('id', $this->team_id)->first()->name . '%')->pluck('id'))->get(),
             'users' => User::latest()->get()
         ])->layout('layouts.dashboard');
+    }
+    public function mount()
+    {
+        $this->team_id = request()->team;
     }
     protected $listeners = [
         'jabatanPegawaiStored' => 'handleStored',
@@ -34,6 +39,12 @@ class JabatanPegawaiIndex extends Component
         $jabatanPegawai = JabatanPegawai::find($id);
         $this->emit('getJabatanPegawai', $jabatanPegawai);
     }
+    public function getTeam()
+    {
+        $team_id = $this->team_id;
+        $this->emit('getTeam', $team_id);
+    }
+
     public function deleteConfirmation($id)
     {
         if($id){

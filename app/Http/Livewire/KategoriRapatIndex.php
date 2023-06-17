@@ -4,10 +4,11 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\KategoriRapat;
+use App\Models\Team;
 
 class KategoriRapatIndex extends Component
 {
-    public $statusUpdate = false, $kategori_delete_id, $kategori_rapat_old;
+    public $statusUpdate = false, $kategori_delete_id, $kategori_rapat_old, $team;
     protected $listeners = [
         'kategoriStored' => 'handleStored',
         'kategoriUpdated' => 'handleUpdated'
@@ -15,8 +16,12 @@ class KategoriRapatIndex extends Component
     public function render()
     {
         return view('livewire.kategori-rapat-index', [
-            'categories' => KategoriRapat::latest()->get()
+            'categories' => KategoriRapat::whereIn('id_team', Team::where('name', 'like', Team::where('id', $this->team)->first()->name . '%')->pluck('id'))->get()
         ])->layout('layouts.dashboard');
+    }
+    public function mount()
+    {
+        $this->team = request()->team;
     }
     public function getKategoriRapat($id)
     {

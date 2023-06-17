@@ -10,6 +10,8 @@ use App\Models\Pegawai;
 use App\Models\JabatanPegawai;
 use App\Models\Jabatan;
 use App\Models\User;
+use App\Models\Presensi;
+use App\Models\Team;
 
 class DaftarRapatEdit extends Component
 {
@@ -21,7 +23,7 @@ class DaftarRapatEdit extends Component
     public $judul_rapat, $kategori_rapat, $topik_rapat,
     $bentuk_rapat, $lokasi_rapat, $waktu_mulai, $waktu_selesai,
     $notulis, $penanggung_jawab, $prioritas, $deskripsi, $old_judul_rapat,
-    $status_rapat, $rapat_id;
+    $status_rapat, $rapat_id, $team, $members = [];
 
 protected $messages = [
     'judul_rapat.required' => 'Judul Rapat tidak boleh kosong!',
@@ -55,6 +57,9 @@ public function mount(Rapat $rapat)
     $this->prioritas = $rapat->prioritas;
     $this->deskripsi = $rapat->deskripsi;
     $this->status_rapat = $rapat->status;
+    $this->team = request()->team;
+    $this->members = Presensi::where('id_rapat', $rapat->id)->pluck('id_pegawai');
+
 }
 public function updated($fields)
 {
@@ -128,20 +133,33 @@ public function updateRapat()
     }
     $this->resetInput();
     $this->emit('rapatStored', $this_rapat);
-    return redirect()->route('daftar-rapat')->with('message', 'Data Rapat ' . $this->old_judul_rapat . ' berhasil diubah!');
+    return redirect()->route('daftar-rapat', ['team' => $this->team])->with('message', 'Data Rapat ' . $this->old_judul_rapat . ' berhasil diubah!');
 // $this->dispatchBrowserEvent('close-create-modal');
+}
+
+public function storeMembers()
+{
+    $members = $this->members;
+    $rapat_presen = Rapat::findOrFail($this->rapat_id);
+    if (!empty($this->members)) {
+        $rapat_presen->pegawai()->sync($members);
+    } else {
+        $rapat_presen->pegawai()->detach();
+    }
+    $this->dispatchBrowserEvent('close-members-modal');
 }
 
 public function render()
     {
     return view('livewire.daftar-rapat-edit', [
-            'categories' => KategoriRapat::latest()->get(),
-            'topics' => Topik::latest()->get(),
-            'many_notulis' => JabatanPegawai::all(),
-            'many_penanggung_jawab' => JabatanPegawai::all(),
+            'categories' => KategoriRapat::whereIn('id_team', Team::where('name', 'like', Team::where('id', $this->team)->first()->name . '%')->pluck('id'))->get(),
+            'topics' => Topik::whereIn('id_team', Team::where('name', 'like', Team::where('id', $this->team)->first()->name . '%')->pluck('id'))->get(),
+            'many_notulis' => JabatanPegawai::whereIn('id_team', Team::where('name', 'like', Team::where('id', $this->team)->first()->name . '%')->pluck('id'))->get(),
+            'many_penanggung_jawab' => JabatanPegawai::whereIn('id_team', Team::where('name', 'like', Team::where('id', $this->team)->first()->name . '%')->pluck('id'))->get(),
             'jabatans' => Jabatan::all(),
             'pegawais' => Pegawai::all(),
-            'users' => User::all()
+            'users' => User::all(),
+            'presensis' => Presensi::all()
             // 'jabatans' => Jabatan::with('pegawai')->get(),
             // 'pegawais' => Pegawai::with('jabatan')->get(),
         ])->layout('layouts.dashboard');

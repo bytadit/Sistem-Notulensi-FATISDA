@@ -3,17 +3,22 @@
 namespace App\Http\Livewire;
 use App\Models\Rapat;
 use Livewire\Component;
+use App\Models\Team;
 
 class DaftarRapatIndex extends Component
 {
-    public $daftar_rapat_delete_id, $daftar_rapat_old, $daftar_rapat_show_id;
+    public $daftar_rapat_delete_id, $daftar_rapat_old, $daftar_rapat_show_id, $team;
     protected $listeners = [
         'rapatStored' => 'handleStored',
     ];
+    public function mount()
+    {
+        $this->team = request()->team;
+    }
     public function render()
     {
         return view('livewire.daftar-rapat-index', [
-            'meetings' => Rapat::latest()->get()
+            'meetings' => Rapat::whereIn('id_team', Team::where('name', 'like', Team::where('id', $this->team)->first()->name . '%')->pluck('id'))->get()
         ])->layout('layouts.dashboard');
     }
     public function getRapat($id)
@@ -26,7 +31,7 @@ class DaftarRapatIndex extends Component
     }
     public function createRapat()
     {
-        return redirect()->route('daftar-rapat.create');
+        return redirect()->route('daftar-rapat.create', ['team' => $this->team]);
     }
     public function deleteConfirmation($id)
     {

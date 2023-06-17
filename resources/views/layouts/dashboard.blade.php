@@ -195,6 +195,13 @@
             $('#modalCreatePegawai').modal('show')
         });
     </script>
+
+<script>
+    window.addEventListener('close-members-modal', event => {
+        $('#inviteMembersModal').modal('hide')
+    });
+
+</script>
 </body>
 
 </html>

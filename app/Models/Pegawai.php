@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
 
 class Pegawai extends Model
 {
@@ -24,8 +26,16 @@ class Pegawai extends Model
     {
         return $this->belongsTo(User::class, 'id_user');
     }
-    public function presensi()
+    // public function presensi()
+    // {
+    //     return $this->hasMany(Presensi::class, 'id_pegawai');
+    // }
+
+    public function rapat(): BelongsToMany
     {
-        return $this->hasMany(Presensi::class, 'id_pegawai');
+        return $this->belongsToMany(Rapat::class, 'presensi', 'id_pegawai', 'id_rapat')
+                    ->withPivot(['jabatan_peserta', 'status_konfirmasi', 'detail_konfirmasi', 'status_kehadiran', 'detail_kehadiran'])
+                    ->using(Presensi::class)
+                    ->withTimestamps();
     }
 }

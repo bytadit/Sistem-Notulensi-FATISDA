@@ -7,13 +7,17 @@ use Livewire\Component;
 class KategoriRapatUpdate extends Component
 {
     public $kategori_rapat;
-    public $kategori_rapat_id;
+    public $kategori_rapat_id, $team;
     protected $listeners = [
         'getKategoriRapat' => 'showKategoriRapat'
     ];
     public function render()
     {
         return view('livewire.kategori-rapat-update');
+    }
+    public function mount()
+    {
+        $this->team = request()->team;
     }
     protected $messages = [
         'kategori_rapat.required' => 'Input Kategori Rapat tidak boleh kosong!',

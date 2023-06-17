@@ -12,8 +12,8 @@
                             <div>
                                 <select wire:model="team_nama" class="form-select mb-3" aria-label="Select Unit" id="team_nama">
                                     <option selected value="">Pilih Unit Pejabat</option>
-                                    @foreach ($units as $unit)
-                                        <option value="{{ $unit->id }}">{{ $unit->nama }}</option>
+                                    @foreach ($teams as $team)
+                                        <option value="{{ $team->id }}">{{ $team->display_name }}</option>
                                     @endforeach
                                 </select>
                                 @error('team_nama')

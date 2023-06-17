@@ -10,7 +10,7 @@
             Daftar Rapat
         @endslot
         @slot('li_2_link')
-            {{ route('daftar-rapat') }}
+            {{ route('daftar-rapat', ['team' => $team]) }}
         @endslot
         @slot('title')
             Ubah {{ $judul_rapat }}
@@ -188,9 +188,8 @@
                             <span class="text-danger text-sm">{{ $message }}</span>
                         @enderror
                     </div>
-                    {{-- members --}}
-                    {{-- <div>
-                            <label class="form-label">Notulis</label>
+                   {{-- <div>
+                            <label class="form-label">Anggota Rapat</label>
                             <div class="avatar-group">
                                 <a href="javascript: void(0);" class="avatar-group-item shadow"
                                     data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top"
@@ -241,27 +240,27 @@
         </div>
         </div>
     </form>
-    <!-- end card -->
-    {{-- <div class="modal fade" id="inviteMembersModal" tabindex="-1" aria-labelledby="inviteMembersModalLabel"
+
+    <div class="modal fade" id="inviteMembersModal" tabindex="-1" aria-labelledby="inviteMembersModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
+        <form wire:submit.prevent="storeMembers">
         <div class="modal-content">
             <div class="modal-header p-3 ps-4 bg-soft-success">
-                <h5 class="modal-title" id="inviteMembersModalLabel">Members</h5>
+                <h5 class="modal-title" id="inviteMembersModalLabel">Anggota Rapat</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body p-4">
                 <div class="search-box mb-3">
                     <input type="text" class="form-control bg-light border-light"
-                        placeholder="Search here...">
+                        placeholder="Search here....">
                     <i class="ri-search-line search-icon"></i>
                 </div>
-
                 <div class="mb-4 d-flex align-items-center">
-                    <div class="me-2">
-                        <h5 class="mb-0 fs-13">Members :</h5>
-                    </div>
-                    <div class="avatar-group justify-content-center">
+                    {{-- <div class="me-2">
+                        <h5 class="mb-0 fs-13">Anggota :</h5>
+                    </div> --}}
+                    {{-- <div class="avatar-group justify-content-center">
                         <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip"
                             data-bs-trigger="hover" data-bs-placement="top" title="Brent Gonzalez">
                             <div class="avatar-xs">
@@ -284,111 +283,53 @@
                                     class="rounded-circle img-fluid">
                             </div>
                         </a>
+                    </div> --}}
+                </div>
+
+                    <div class="mx-n4 px-4" data-simplebar style="max-height: 225px;">
+                        <div class="vstack gap-3">
+
+                            {{-- @foreach ($jabatanPengadaans as $jabatanPengadaan)
+                                <div class="d-flex align-items-center">
+                                    <input type="checkbox" class="non-table form-check-input" name="id_jabatan_pengadaan[]"
+                                        value={{ $jabatanPengadaan->id }} id="jabatanPengadaan{{ $jabatanPengadaan->id }}">
+                                    <label for="jabatanPengadaan{{ $jabatanPengadaan->id }}" class="ms-2">{{ $jabatanPengadaan->nama }}</label>
+                                    <br>
+                                </div>
+                            @endforeach --}}
+
+                            @foreach ($users as $user)
+                                <div class="d-flex align-items-center">
+                                        <div class="avatar-xs flex-shrink-0 me-3">
+                                            <img src="{{ URL::asset('assets/images/users/avatar-2.jpg') }}"
+                                                alt="" class="img-fluid rounded-circle">
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <label for="member{{ $user->id }}" class="form-check-label fs-13 mb-0">
+                                                    {{ $user->name }}
+                                            </label>
+                                        </div>
+                                        <div class="flex-shrink-0">
+                                            <input wire:model.defer="members" class="form-check-input" type="checkbox" id="member{{ $user->id }}" value={{ $pegawais->where('id_user',$user->id)->first()->id }}
+                                            {{ $presensis->where('id_rapat', $rapat_id)->pluck('id_pegawai')->contains(2) ? 'checked': '' }}>
+                                            {{-- <button type="button" class="btn btn-light btn-sm">Add</button> --}}
+                                        </div>
+                                    {{-- </div> --}}
+                                </div>
+                            @endforeach
+                            <!-- end member item -->
+                        </div>
+                        <!-- end list -->
                     </div>
                 </div>
-                <div class="mx-n4 px-4" data-simplebar style="max-height: 225px;">
-                    <div class="vstack gap-3">
-                        <div class="d-flex align-items-center">
-                            <div class="avatar-xs flex-shrink-0 me-3">
-                                <img src="{{ URL::asset('assets/images/users/avatar-2.jpg') }}" alt=""
-                                    class="img-fluid rounded-circle">
-                            </div>
-                            <div class="flex-grow-1">
-                                <h5 class="fs-13 mb-0"><a href="#" class="text-body d-block">Nancy
-                                        Martino</a>
-                                </h5>
-                            </div>
-                            <div class="flex-shrink-0">
-                                <button type="button" class="btn btn-light btn-sm">Add</button>
-                            </div>
-                        </div>
-                        <!-- end member item -->
-                        <div class="d-flex align-items-center">
-                            <div class="avatar-xs flex-shrink-0 me-3">
-                                <div class="avatar-title bg-soft-danger text-danger rounded-circle">
-                                    HB
-                                </div>
-                            </div>
-                            <div class="flex-grow-1">
-                                <h5 class="fs-13 mb-0"><a href="#" class="text-body d-block">Henry
-                                        Baird</a></h5>
-                            </div>
-                            <div class="flex-shrink-0">
-                                <button type="button" class="btn btn-light btn-sm">Add</button>
-                            </div>
-                        </div>
-                        <!-- end member item -->
-                        <div class="d-flex align-items-center">
-                            <div class="avatar-xs flex-shrink-0 me-3">
-                                <img src="{{ URL::asset('assets/images/users/avatar-3.jpg') }}" alt=""
-                                    class="img-fluid rounded-circle">
-                            </div>
-                            <div class="flex-grow-1">
-                                <h5 class="fs-13 mb-0"><a href="#" class="text-body d-block">Frank Hook</a>
-                                </h5>
-                            </div>
-                            <div class="flex-shrink-0">
-                                <button type="button" class="btn btn-light btn-sm">Add</button>
-                            </div>
-                        </div>
-                        <!-- end member item -->
-                        <div class="d-flex align-items-center">
-                            <div class="avatar-xs flex-shrink-0 me-3">
-                                <img src="{{ URL::asset('assets/images/users/avatar-4.jpg') }}" alt=""
-                                    class="img-fluid rounded-circle">
-                            </div>
-                            <div class="flex-grow-1">
-                                <h5 class="fs-13 mb-0"><a href="#" class="text-body d-block">Jennifer
-                                        Carter</a>
-                                </h5>
-                            </div>
-                            <div class="flex-shrink-0">
-                                <button type="button" class="btn btn-light btn-sm">Add</button>
-                            </div>
-                        </div>
-                        <!-- end member item -->
-                        <div class="d-flex align-items-center">
-                            <div class="avatar-xs flex-shrink-0 me-3">
-                                <div class="avatar-title bg-soft-success text-success rounded-circle">
-                                    AC
-                                </div>
-                            </div>
-                            <div class="flex-grow-1">
-                                <h5 class="fs-13 mb-0"><a href="#" class="text-body d-block">Alexis
-                                        Clarke</a>
-                                </h5>
-                            </div>
-                            <div class="flex-shrink-0">
-                                <button type="button" class="btn btn-light btn-sm">Add</button>
-                            </div>
-                        </div>
-                        <!-- end member item -->
-                        <div class="d-flex align-items-center">
-                            <div class="avatar-xs flex-shrink-0 me-3">
-                                <img src="{{ URL::asset('assets/images/users/avatar-7.jpg') }}" alt=""
-                                    class="img-fluid rounded-circle">
-                            </div>
-                            <div class="flex-grow-1">
-                                <h5 class="fs-13 mb-0"><a href="#" class="text-body d-block">Joseph
-                                        Parker</a>
-                                </h5>
-                            </div>
-                            <div class="flex-shrink-0">
-                                <button type="button" class="btn btn-light btn-sm">Add</button>
-                            </div>
-                        </div>
-                        <!-- end member item -->
-                    </div>
-                    <!-- end list -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light w-xs" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-success w-xs">Simpan</button>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light w-xs" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-success w-xs">Invite</button>
-            </div>
+            </form>
         </div>
     </div>
-</div> --}}
+</div>
 @push('scripts')
 <script>
     ClassicEditor

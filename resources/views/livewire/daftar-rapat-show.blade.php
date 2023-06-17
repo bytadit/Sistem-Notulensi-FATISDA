@@ -10,7 +10,7 @@
             Daftar Rapat
         @endslot
         @slot('li_2_link')
-            {{ route('daftar-rapat') }}
+            {{ route('daftar-rapat', ['team' => $team]) }}
         @endslot
         @slot('title')
             {{ $judul_rapat }}
@@ -42,7 +42,7 @@
                                         <div>
                                             <h4 class="fw-bold">{{ $judul_rapat }}</h4>
                                             <div class="hstack gap-3 flex-wrap">
-                                                <div><i class="ri-building-line align-bottom me-1"></i> FATISDA
+                                                <div><i class="ri-building-line align-bottom me-1"></i> {{ $team_nama }}
                                                 </div>
                                                 <div class="vr"></div>
                                                 <div><span class="fw-medium">{{ Carbon\Carbon::parse($waktu_mulai)->format('d F, Y h:i') . ' WIB - ' . Carbon\Carbon::parse($waktu_selesai)->format('d F, Y h:i') . ' WIB'  }}</span></div>
@@ -78,10 +78,10 @@
                                     data-toggle="favorite" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Tandai Rapat">
                                         <i class="ri-star-fill"></i>
                                     </button>
-                                    <button type="button" class="btn py-0 fs-16 text-body shadow-none"
+                                    <a type="button" href="{{ route('daftar-rapat.edit', ['team'=>$team, 'rapat'=>$rapat_id]) }}" class="btn py-0 fs-16 text-body shadow-none"
                                         data-toggle="edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ubah Rapat">
                                         <i class="ri-edit-box-fill"></i>
-                                    </button>
+                                    </a>
                                     <button type="button" class="btn py-0 fs-16 text-body shadow-none"
                                         data-toggle="delete" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus Rapat">
                                         <i class="ri-delete-bin-fill"></i>
@@ -478,7 +478,7 @@
                                 <div class="card-body">
                                     {{-- <h5 class="card-title mb-4">Topik Rapat</h5> --}}
                                     <div class="d-flex flex-wrap gap-2 fs-16">
-                                        <h6 class="fw-medium">{{ $users->where('id', $pegawais->where('id', $penanggung_jawab)->first()->id_user)->first()->name }}</h6>
+                                        <h6 class="fw-medium">{{ $users->where('id',$pegawais->where('id',$jabatan_pegawais->where('id', $penanggung_jawab)->first()->id_pegawai)->first()->id_user)->first()->name }}</h6>
                                     </div>
                                 </div>
                                 <!-- end card body -->
@@ -490,7 +490,7 @@
                                 <div class="card-body">
                                     {{-- <h5 class="card-title mb-4">Topik Rapat</h5> --}}
                                     <div class="d-flex flex-wrap gap-2 fs-16">
-                                        <h6 class="fw-medium">{{ $users->where('id', $pegawais->where('id', $notulis)->first()->id_user)->first()->name }}</h6>
+                                        <h6 class="fw-medium">{{ $users->where('id',$pegawais->where('id',$jabatan_pegawais->where('id', $notulis)->first()->id_pegawai)->first()->id_user)->first()->name }}</h6>
                                     </div>
                                 </div>
                                 <!-- end card body -->

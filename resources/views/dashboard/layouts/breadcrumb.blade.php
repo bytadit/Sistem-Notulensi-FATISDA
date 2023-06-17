@@ -14,6 +14,9 @@
                     @if(isset($title))
                         <li class="breadcrumb-item active">{{ $title }}</li>
                     @endif
+                    @if(isset($subtitle))
+                        <li class="breadcrumb-item active">{{ $subtitle }}</li>
+                    @endif
                 </ol>
             </div>
 

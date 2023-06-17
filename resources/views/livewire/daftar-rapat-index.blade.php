@@ -119,7 +119,7 @@
                                             class="cursor-pointer" data-bs-toggle="modal"
                                             data-bs-target="#modalDeleteRapat">
                                             <a class="btn btn-sm btn-danger edit-item-btn align-middle" data-toggle="delete"
-                                                data-bs-toggle="tooltip" data-bs-placement="left" title="Hapus Rapat">
+                                                data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus Rapat">
                                                 <i class="mdi mdi-trash-can"></i>
                                                 Hapus
                                             </a>
@@ -130,7 +130,7 @@
                                         </div> --}}
                                         <span wire:click="getRapat({{ $meeting->id }})" class="cursor-pointer">
                                             <a class="btn btn-sm btn-info edit-item-btn align-middle" data-bs-toggle="tooltip"
-                                                data-bs-placement="bottom" title="Lihat Rapat"
+                                                data-bs-placement="top" title="Lihat Rapat"
                                                 href="daftar-rapat/{{ $meeting->slug }}">
                                                 <i class="mdi mdi-eye"></i>
                                                 Lihat
@@ -138,10 +138,18 @@
                                         </span>
                                         <span wire:click="editRapat({{ $meeting->id }})" class="cursor-pointer">
                                             <a class="btn btn-sm btn-warning edit-item-btn align-middle" data-bs-toggle="tooltip"
-                                                data-bs-placement="right" title="Ubah Data"
+                                                data-bs-placement="top" title="Ubah Data"
                                                 href="daftar-rapat/{{ $meeting->slug }}/edit">
                                                 <i class="mdi mdi-pencil-box-multiple"></i>
                                                 Ubah
+                                            </a>
+                                        </span>
+                                        <span wire:click="addMembers({{ $meeting->id }})" class="cursor-pointer">
+                                            <a class="btn btn-sm btn-success edit-item-btn align-middle" data-bs-toggle="tooltip"
+                                                data-bs-placement="top" title="Atur Anggota"
+                                                href="{{ route('members.create', ['team' => $team, 'rapat' => $meeting->slug]) }}">
+                                                <i class="mdi mdi-account-group"></i>
+                                                Atur Anggota
                                             </a>
                                         </span>
                                     </div>

@@ -4,12 +4,13 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Topik;
+use App\Models\Team;
 
 class TopikRapatIndex extends Component
 {
     public $statusUpdate = false;
     public $topik_delete_id;
-    public $topik_rapat_old;
+    public $topik_rapat_old, $team;
     protected $listeners = [
         'topikStored' => 'handleStored',
         'topikUpdated' => 'handleUpdated'
@@ -17,8 +18,12 @@ class TopikRapatIndex extends Component
     public function render()
     {
         return view('livewire.topik-rapat-index', [
-            'topics' => Topik::latest()->get()
+            'topics' => Topik::whereIn('id_team', Team::where('name', 'like', Team::where('id', $this->team)->first()->name . '%')->pluck('id'))->get()
         ])->layout('layouts.dashboard');
+    }
+    public function mount()
+    {
+        $this->team = request()->team;
     }
     public function getTopikRapat($id)
     {

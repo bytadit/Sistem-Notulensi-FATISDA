@@ -13,7 +13,7 @@
             Daftar Rapat
         @endslot
         @slot('li_2_link')
-            {{ route('daftar-rapat') }}
+            {{ route('daftar-rapat', ['team' => $team]) }}
         @endslot
         @slot('title')
             Buat Rapat Baru
@@ -159,6 +159,8 @@
                     </div>
                 </div>
             </div>
+
+            {{-- start Peserta Rapat --}}
             <div class="col-lg-4">
                 <div class="card">
                     <div class="card-header">
@@ -201,8 +203,10 @@
                                 <span class="text-danger text-sm">{{ $message }}</span>
                             @enderror
                         </div>
-                        {{-- members --}}
-                        <div>
+
+
+                        {{-- start members avatar--}}
+                        {{-- <div>
                             <label class="form-label">Anggota Rapat</label>
                             <div class="avatar-group">
                                 <a href="javascript: void(0);" class="avatar-group-item shadow"
@@ -242,7 +246,7 @@
                                     </div>
                                 </a>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                     <!-- end card body -->
                 </div>
@@ -269,7 +273,7 @@
                 <div class="modal-body p-4">
                     <div class="search-box mb-3">
                         <input type="text" class="form-control bg-light border-light"
-                            placeholder="Search here...">
+                            placeholder="Search here....">
                         <i class="ri-search-line search-icon"></i>
                     </div>
                     <div class="mb-4 d-flex align-items-center">
@@ -301,38 +305,41 @@
                             </a>
                         </div> --}}
                     </div>
-                    <div class="mx-n4 px-4" data-simplebar style="max-height: 225px;">
-                        <div class="vstack gap-3">
-                            @foreach ($users as $user)
-                                <div class="d-flex align-items-center">
-                                    {{-- <div class="form-check form-check-info mb-3"> --}}
-                                        {{-- <input class="form-check-input" type="checkbox" id="member11"
-                                            checked="">
-                                        <label class="form-check-label" for="member11">
-                                            Checkbox Info
-                                        </label> --}}
 
-                                        <div class="avatar-xs flex-shrink-0 me-3">
-                                            <img src="{{ URL::asset('assets/images/users/avatar-2.jpg') }}"
-                                                alt="" class="img-fluid rounded-circle">
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <label for="member{{ $user->id }}" class="form-check-label fs-13 mb-0">
-                                                    {{ $user->name }}
-                                            </label>
-                                        </div>
-                                        <div class="flex-shrink-0">
-                                            <input class="form-check-input" type="checkbox" id="member{{ $user->id }}"
-                                            >
-                                            {{-- <button type="button" class="btn btn-light btn-sm">Add</button> --}}
-                                        </div>
-                                    {{-- </div> --}}
-                                </div>
-                            @endforeach
-                            <!-- end member item -->
+                    <form wire:submit.prevent="storeMembers">
+                        <div class="mx-n4 px-4" data-simplebar style="max-height: 225px;">
+                            <div class="vstack gap-3">
+                                @foreach ($users as $user)
+                                    <div class="d-flex align-items-center">
+                                        {{-- <div class="form-check form-check-info mb-3"> --}}
+                                            {{-- <input class="form-check-input" type="checkbox" id="member11"
+                                                checked="">
+                                            <label class="form-check-label" for="member11">
+                                                Checkbox Info
+                                            </label> --}}
+
+                                            <div class="avatar-xs flex-shrink-0 me-3">
+                                                <img src="{{ URL::asset('assets/images/users/avatar-2.jpg') }}"
+                                                    alt="" class="img-fluid rounded-circle">
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <label for="member{{ $user->id }}" class="form-check-label fs-13 mb-0">
+                                                        {{ $user->name }}
+                                                </label>
+                                            </div>
+                                            <div class="flex-shrink-0">
+                                                <input class="form-check-input" type="checkbox" id="member{{ $user->id }}"
+                                                >
+                                                {{-- <button type="button" class="btn btn-light btn-sm">Add</button> --}}
+                                            </div>
+                                        {{-- </div> --}}
+                                    </div>
+                                @endforeach
+                                <!-- end member item -->
+                            </div>
+                            <!-- end list -->
                         </div>
-                        <!-- end list -->
-                    </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light w-xs" data-bs-dismiss="modal">Cancel</button>

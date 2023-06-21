@@ -19,7 +19,7 @@
                     {{route('manage-users.team', ['user' => $user_id ])}}
                 @endslot
         @slot('subtitle')
-            {{$team_name}}
+            {{ $team_name }}
         @endslot
     @endcomponent
     @if (session()->has('message'))

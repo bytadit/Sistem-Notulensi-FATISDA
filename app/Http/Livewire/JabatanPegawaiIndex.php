@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Role;
 use Livewire\Component;
 use App\Models\JabatanPegawai;
 use App\Models\Jabatan;
@@ -9,12 +10,13 @@ use App\Models\Pegawai;
 use App\Models\Unit;
 use App\Models\User;
 use App\Models\Team;
+use App\Models\RoleUser;
 
 class JabatanPegawaiIndex extends Component
 {
     public $statusUpdate = false;
     public $jabatan_pegawai_delete_id;
-    public $jabatan_pegawai_old, $team_id;
+    public $jabatan_pegawai_old, $team_id, $user_id;
     public function render()
     {
         return view('livewire.jabatan-pegawai-index', [
@@ -60,7 +62,13 @@ class JabatanPegawaiIndex extends Component
     public function deleteJabatanPegawai()
     {
         $jabatanPegawai = JabatanPegawai::find($this->jabatan_pegawai_delete_id);
+        $this->user_id = Pegawai::where('id', $jabatanPegawai->id_pegawai)->first()->id_user;
         $jabatanPegawai->delete();
+        $role_id = Role::where('name', 'user')->first()->id;
+        $roleUser = RoleUser::where('team_id', $this->team_id)->where('role_id', $role_id)->where('user_id', $this->user_id);
+        if($roleUser != null){
+            $roleUser->delete();
+        }
         session()->flash('message', 'Pejabat ' . $this->jabatan_pegawai_old . ' Berhasil Dihapus !');
         $this->jabatan_pegawai_delete_id = '';
         $this->jabatan_pegawai_old = '';

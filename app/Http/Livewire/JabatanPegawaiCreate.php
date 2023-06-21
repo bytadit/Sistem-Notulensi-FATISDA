@@ -7,12 +7,14 @@ use App\Models\JabatanPegawai;
 use App\Models\User;
 use App\Models\Pegawai;
 use App\Models\Jabatan;
+use App\Models\RoleUser;
 use App\Models\Unit;
+use App\Models\Role;
 use App\Models\Team;
 
 class JabatanPegawaiCreate extends Component
 {
-    public $pegawai_nama, $team_nama, $jabatan_nama, $team_id;
+    public $pegawai_nama, $team_nama, $jabatan_nama, $team_id, $role_id;
     public function render()
     {
         return view('livewire.jabatan-pegawai-create', [
@@ -61,6 +63,14 @@ class JabatanPegawaiCreate extends Component
             'id_pegawai' => $this->pegawai_nama,
             'id_jabatan' => $this->jabatan_nama
         ]);
+        if($jabatanPegawai != null){
+            RoleUser::create([
+                'role_id' => Role::where('name', 'user')->first()->id,
+                'user_id' => Pegawai::where('id', $jabatanPegawai->id_pegawai)->first()->id_user,
+                'user_type' => 'App\Models\User',
+                'team_id' => $jabatanPegawai->id_team
+            ]);
+        }
         $this->resetInput();
         $this->emit('jabatanPegawaiStored', $jabatanPegawai);
         $this->dispatchBrowserEvent('close-create-modal');

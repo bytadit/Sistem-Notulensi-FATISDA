@@ -9,6 +9,7 @@ class PermissionUser extends Pivot
 {
     protected $table = 'permission_user';
     protected $guarded = ['id'];
+    public $timestamps = false;
 
     public function team(): BelongsToMany
     {

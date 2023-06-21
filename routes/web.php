@@ -30,7 +30,8 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'dashboard'], function(){
         Route::get('/manage-units', UnitIndex::class)->name('units');
         Route::get('/manage-jabatan', JabatanIndex::class)->name('jabatan');
         Route::get('/manage-users', ManageUserIndex::class)->name('manage-users');
-        Route::get('/manage-users/{user:id}/edit', ManageUserEdit::class)->name('manage-users.edit');
+        Route::get('/manage-users/{user:id}/teams', ManageUserTeam::class)->name('manage-users.team');
+        Route::get('/manage-users/{user:id}/teams/{team:id}/edit', ManageUserEdit::class)->name('manage-users.edit');
         Route::get('/manage-roles', RolesIndex::class)->name('manage-roles');
         Route::get('/manage-roles/create', RolesCreate::class)->name('manage-roles.create');
         Route::get('/manage-roles/{role:name}/edit', RolesEdit::class)->name('manage-roles.edit');

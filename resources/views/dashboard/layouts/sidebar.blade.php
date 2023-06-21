@@ -53,16 +53,16 @@
                         </a>
                         <div class="collapse menu-dropdown" id="menuSuperAdmin{{ Auth::user()->id . 'superadmin' }}">
                             <ul class="nav nav-sm flex-column">
-                                <li class="nav-item">
-                                    <a class="nav-link menu-link" href="/manage-users" role="button"
-                                        aria-expanded="false" aria-controls="sidebarApps">
-                                        <i class="mdi mdi-view-grid-plus-outline"></i> <span>Atur User</span>
-                                    </a>
-                                </li>
+{{--                                <li class="nav-item">--}}
+{{--                                    <a class="nav-link menu-link" href="/manage-users" role="button"--}}
+{{--                                        aria-expanded="false" aria-controls="sidebarApps">--}}
+{{--                                        <i class="mdi mdi-view-grid-plus-outline"></i> <span>Atur User</span>--}}
+{{--                                    </a>--}}
+{{--                                </li>--}}
                                 <li class="nav-item">
                                     <a class="nav-link menu-link" href="/dashboard/superadmin/manage-users" role="button"
                                        aria-expanded="false" aria-controls="sidebarApps">
-                                        <i class="mdi mdi-view-grid-plus-outline"></i> <span>Atur User 2</span>
+                                        <i class="mdi mdi-view-grid-plus-outline"></i> <span>Atur User</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">

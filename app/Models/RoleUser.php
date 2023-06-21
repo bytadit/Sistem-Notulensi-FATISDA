@@ -9,6 +9,7 @@ class RoleUser extends Pivot
 {
     protected $table = 'role_user';
     protected $guarded = ['id'];
+    public $timestamps = false;
     public function teams(): BelongsToMany
     {
         return $this->belongsTo(Team::class, 'team_id');

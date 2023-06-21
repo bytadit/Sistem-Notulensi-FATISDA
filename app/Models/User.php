@@ -10,6 +10,8 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Laratrust\Contracts\LaratrustUser;
 use Laratrust\Traits\HasRolesAndPermissions;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
+
 
 class User extends Authenticatable implements LaratrustUser
 {
@@ -71,5 +73,10 @@ class User extends Authenticatable implements LaratrustUser
 //        return $this->belongsToMany(Permission::class, 'permission_user', 'user_id', 'permission_id')
 //            ->withPivot(['team_id', 'user_type'])
 //            ->using(PermissionUser::class);
+//    }
+
+//    public function teams(): MorphToMany
+//    {
+//        return $this->morphToMany(Team::class, 'role_user');
 //    }
 }

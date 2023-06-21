@@ -195,6 +195,40 @@
             $('#modalCreatePegawai').modal('show')
         });
     </script>
+    <script>
+        window.addEventListener('close-create-modal', event => {
+            $('#modalCreatePermission').modal('hide')
+        });
+        window.addEventListener('close-delete-modal', event => {
+            $('#modalDeletePermission').modal('hide')
+        });
+        window.addEventListener('close-edit-modal', event => {
+            $('#modalEditPermission').modal('hide')
+        });
+        window.addEventListener('show-edit-modal', event => {
+            $('#modalEditPermission').modal('show')
+        });
+        window.addEventListener('show-create-modal', event => {
+            $('#modalCreatePermission').modal('show')
+        });
+    </script>
+    <script>
+        window.addEventListener('close-create-modal', event => {
+            $('#modalCreateRole').modal('hide')
+        });
+        window.addEventListener('close-delete-modal', event => {
+            $('#modalDeleteRole').modal('hide')
+        });
+        window.addEventListener('close-edit-modal', event => {
+            $('#modalEditRole').modal('hide')
+        });
+        window.addEventListener('show-edit-modal', event => {
+            $('#modalEditRole').modal('show')
+        });
+        window.addEventListener('show-create-modal', event => {
+            $('#modalCreateRole').modal('show')
+        });
+    </script>
 
 <script>
     window.addEventListener('close-members-modal', event => {

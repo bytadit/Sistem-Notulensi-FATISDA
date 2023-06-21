@@ -11,13 +11,14 @@ use App\Models\JabatanPegawai;
 use App\Models\Jabatan;
 use App\Models\User;
 use App\Models\Team;
+use App\Models\Presensi;
 
 class DaftarRapatShow extends Component
 {
     public $judul_rapat, $kategori_rapat, $topik_rapat,
     $bentuk_rapat, $lokasi_rapat, $waktu_mulai, $waktu_selesai,
     $notulis, $penanggung_jawab, $prioritas, $deskripsi, $old_judul_rapat,
-    $status_rapat, $rapat_id, $team, $team_nama;
+    $status_rapat, $rapat_id, $team, $team_nama, $rapat_slug;
 
     public function mount(Rapat $rapat)
     {
@@ -36,7 +37,7 @@ class DaftarRapatShow extends Component
         $this->status_rapat = $rapat->status;
         $this->team = request()->team;
         $this->team_nama = Team::where('id', $this->team)->first()->display_name;
-
+        $this->rapat_slug = Rapat::where('id', $this->rapat_id)->first()->slug;
     }
 
     // protected $listeners = [
@@ -55,7 +56,8 @@ class DaftarRapatShow extends Component
             'jabatans' => Jabatan::all(),
             'pegawais' => Pegawai::all(),
             'jabatan_pegawais' => JabatanPegawai::all(),
-            'users' => User::all()
+            'users' => User::all(),
+            'members' => Presensi::where('id_rapat', $this->rapat_id)->take(5)->get()
             // 'jabatans' => Jabatan::with('pegawai')->get(),
             // 'pegawais' => Pegawai::with('jabatan')->get(),
         ])->layout('layouts.dashboard');

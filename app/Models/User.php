@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -58,4 +59,17 @@ class User extends Authenticatable implements LaratrustUser
     //                 ->withPivot('app_id', 'user_type')
     //                 ->withTimestamps();
     // }
+
+//    public function roles(): BelongsToMany
+//    {
+//        return $this->belongsToMany(Role::class, 'role_user', 'user_id', 'role_id')
+//            ->withPivot(['team_id', 'user_type'])
+//            ->using(RoleUser::class);
+//    }
+//    public function permissions(): BelongsToMany
+//    {
+//        return $this->belongsToMany(Permission::class, 'permission_user', 'user_id', 'permission_id')
+//            ->withPivot(['team_id', 'user_type'])
+//            ->using(PermissionUser::class);
+//    }
 }

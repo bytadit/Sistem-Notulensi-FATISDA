@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>@yield('title') | Minute - Sistem Notulensi Rapat FATISDA UNS</title>
+    <title>@yield('title') | Minot - Sistem Notulensi Rapat FATISDA UNS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />

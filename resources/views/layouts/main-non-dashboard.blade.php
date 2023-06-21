@@ -3,7 +3,7 @@
 
     <head>
     <meta charset="utf-8" />
-    <title>@yield('title') | Minute - Sistem Notulensi Rapat FATISDA UNS</title>
+    <title>@yield('title') | Minot - Sistem Notulensi Rapat FATISDA UNS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @livewireStyles
     <link rel="shortcut icon" href="{{ URL::asset('assets/images/favicon.ico')}}">

@@ -1,57 +1,56 @@
 <div class="col-12">
-    @section('title')
-        Daftar Rapat
-    @endsection
     @component('dashboard.layouts.breadcrumb')
         @slot('li_1')
-            Menu Admin
+            Menu User
         @endslot
         @slot('title')
-            Daftar Rapat
+            Jadwal Rapat
         @endslot
     @endcomponent
-    @if (session()->has('message'))
+    @if(session()->has('message'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             {{ session('message') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
     {{-- modals --}}
-    {{-- <livewire:daftar-rapat-create></livewire:daftar-rapat-create> --}}
+    @if($statusUpdate)
+    {{-- modal update --}}
+        {{-- <livewire:jadwal-rapat-update></livewire:jadwal-rapat-update> --}}
+    @else
+    {{-- modal create --}}
+        {{-- <livewire:jadwal-rapat-create></livewire:jadwal-rapat-create> --}}
+    @endif
     {{-- modal delete --}}
-    <div wire:ignore.self class="modal fade" id="modalDeleteRapat" tabindex="-1" aria-labelledby="modalDeleteRapatLabel"
-        aria-modal="true">
+    {{-- <div wire:ignore.self class="modal fade" id="modalDeleteKategori" tabindex="-1" aria-labelledby="modalDeleteKategoriLabel" aria-modal="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalDeleteRapatLabel">Konfirmasi Penghapusan</h5>
+                    <h5 class="modal-title" id="modalDeleteKategoriLabel">Konfirmasi Penghapusan</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body py-4">
-                    <h6>Apakah yakin ingin menghapus Rapat <strong>{{ $daftar_rapat_old }}</strong> ?</h6>
+                    <h6>Apakah yakin ingin menghapus <strong>{{ $kategori_rapat_old }}</strong> ?</h6>
                 </div>
                 <div class="modal-footer">
                     <div class="col-lg-12">
                         <div class="hstack gap-2 justify-content-end">
-                            <button wire:click='cancel()'type="button" class="btn btn-light"
-                                data-bs-dismiss="modal">Batal</button>
-                            <button wire:click='deleteRapat()'type="submit" class="btn btn-primary">Yakin</button>
+                            <button wire:click='cancel()'type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
+                            <button wire:click='deleteKategoriRapat()'type="submit" class="btn btn-primary">Yakin</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     {{-- end modal delete --}}
 
-    {{-- <button wire:click='showCreateModal()'type="button" class="btn btn-success mb-4" data-bs-toggle="modal" data-bs-target="#modalCreateRapat">Buat Baru +</button> --}}
-    <button wire:click='createRapat()'type="button" class="btn btn-success mb-4 cursor-pointer">Buat Baru +</button>
-
+    {{-- <button wire:click='showCreateModal()'type="button" class="btn btn-success mb-4" data-bs-toggle="modal" data-bs-target="#modalCreateKategori">Buat Baru +</button> --}}
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title mb-0">Daftar Rapat</h5>
+                    <h5 class="card-title mb-0">Jadwal Rapat</h5>
                 </div>
                 <div class="card-body">
                     <table id="scroll-horizontal" class="table nowrap align-middle" style="width:100%">
@@ -67,44 +66,44 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($meetings as $meeting)
+                            @foreach ($rapats as $rapat)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td><span class="badge
-                                                @if ($meeting->prioritas == 1)
+                                                @if ($rapat->prioritas == 1)
                                                     bg-success
-                                                @elseif ($meeting->prioritas == 2)
+                                                @elseif ($rapat->prioritas == 2)
                                                     bg-info
-                                                @elseif($meeting->prioritas == 3)
+                                                @elseif($rapat->prioritas == 3)
                                                     bg-danger
                                                 @endif
                                                 ">
-                                                @if ($meeting->prioritas == 1)
+                                                @if ($rapat->prioritas == 1)
                                                     Rendah
-                                                @elseif ($meeting->prioritas == 2)
+                                                @elseif ($rapat->prioritas == 2)
                                                     Sedang
-                                                @elseif($meeting->prioritas == 3)
+                                                @elseif($rapat->prioritas == 3)
                                                     Tinggi
                                                 @endif
                                             </span>
                                         </td>
-                                <td>{{ $meeting->judul_rapat }}</td>
-                                <td>{{ $meeting->kategoriRapat->nama }}</td>
-                                <td>{{ $meeting->topikRapat->nama }}</td>
+                                <td>{{ $rapat->judul_rapat }}</td>
+                                <td>{{ $rapat->kategoriRapat->nama }}</td>
+                                <td>{{ $rapat->topikRapat->nama }}</td>
                                 <td><span class="badge
-                                        @if ($meeting->status == 0)
+                                        @if ($rapat->status == 0)
                                             badge-soft-primary
-                                        @elseif ($meeting->status == 1)
+                                        @elseif ($rapat->status == 1)
                                             badge-soft-info
-                                        @elseif($meeting->status == 2)
+                                        @elseif($rapat->status == 2)
                                             badge-soft-danger
                                         @endif
                                         ">
-                                        @if ($meeting->status == 0)
+                                        @if ($rapat->status == 0)
                                             Dijadwalkan
-                                        @elseif ($meeting->status == 1)
+                                        @elseif ($rapat->status == 1)
                                             Berlangsung
-                                        @elseif($meeting->status == 2)
+                                        @elseif($rapat->status == 2)
                                             Selesai
                                         @endif
                                     </span>
@@ -115,7 +114,7 @@
                                             <button class="btn btn-sm btn-success edit-item-btn"
                                             data-bs-toggle="modal" data-bs-target="#showModal">Edit</button>
                                         </div> --}}
-                                        <span wire:click='deleteConfirmation({{ $meeting->id }})'
+                                        {{-- <span wire:click='deleteConfirmation({{ $rapat->id }})'
                                             class="cursor-pointer" data-bs-toggle="modal"
                                             data-bs-target="#modalDeleteRapat">
                                             <a class="btn btn-sm btn-danger edit-item-btn align-middle" data-toggle="delete"
@@ -123,35 +122,35 @@
                                                 <i class="mdi mdi-trash-can"></i>
                                                 Hapus
                                             </a>
-                                        </span>
+                                        </span> --}}
 
                                         {{-- <div class="remove">
                                             <button class="btn btn-sm btn-danger remove-item-btn" data-bs-toggle="modal" data-bs-target="#deleteRecordModal">Remove</button>
                                         </div> --}}
-                                        <span wire:click="getRapat({{ $meeting->id }})" class="cursor-pointer">
+                                        <span class="cursor-pointer">
                                             <a class="btn btn-sm btn-info edit-item-btn align-middle" data-bs-toggle="tooltip"
                                                 data-bs-placement="top" title="Lihat Rapat"
-                                                href="daftar-rapat/{{ $meeting->slug }}">
+                                                href="{{ route('daftar-rapat.show', ['team' => $team, 'rapat' => $rapat->slug]) }}">
                                                 <i class="mdi mdi-eye"></i>
                                                 Lihat
                                             </a>
                                         </span>
-                                        <span wire:click="editRapat({{ $meeting->id }})" class="cursor-pointer">
+                                        {{-- <span wire:click="editRapat({{ $rapat->id }})" class="cursor-pointer">
                                             <a class="btn btn-sm btn-warning edit-item-btn align-middle" data-bs-toggle="tooltip"
                                                 data-bs-placement="top" title="Ubah Data"
-                                                href="daftar-rapat/{{ $meeting->slug }}/edit">
+                                                href="daftar-rapat/{{ $rapat->slug }}/edit">
                                                 <i class="mdi mdi-pencil-box-multiple"></i>
                                                 Ubah
                                             </a>
-                                        </span>
-                                        <span wire:click="addMembers({{ $meeting->id }})" class="cursor-pointer">
+                                        </span> --}}
+                                        {{-- <span wire:click="addMembers({{ $rapat->id }})" class="cursor-pointer">
                                             <a class="btn btn-sm btn-success edit-item-btn align-middle" data-bs-toggle="tooltip"
                                                 data-bs-placement="top" title="Atur Anggota"
-                                                href="{{ route('rapat-members', ['team' => $team, 'rapat' => $meeting->slug]) }}">
+                                                href="{{ route('rapat-members', ['team' => $team, 'rapat' => $rapat->slug]) }}">
                                                 <i class="mdi mdi-account-group"></i>
                                                 Atur Anggota
                                             </a>
-                                        </span>
+                                        </span> --}}
                                     </div>
                                 </td>
                             </tr>

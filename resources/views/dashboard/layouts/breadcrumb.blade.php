@@ -12,7 +12,13 @@
                         <li class="breadcrumb-item"><a href="{{ $li_2_link }}">{{ $li_2 }}</a></li>
                     @endif
                     @if(isset($title))
-                        <li class="breadcrumb-item active">{{ $title }}</li>
+                        <li class="breadcrumb-item active">
+                            @if(isset($title_link))
+                                <a href="{{ $title_link }}">{{ $title }}</a>
+                            @else
+                                {{ $title }}
+                            @endif
+                        </li>
                     @endif
                     @if(isset($subtitle))
                         <li class="breadcrumb-item active">{{ $subtitle }}</li>

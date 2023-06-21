@@ -189,7 +189,7 @@
                         <div class="text-center">
                             <script>
                                 document.write(new Date().getFullYear())
-                            </script> Minute. Dibuat dengan <i
+                            </script> Minot. Dibuat dengan <i
                                     class="mdi mdi-heart text-danger"></i> oleh IT Squad FATISDA UNS</p>
                         </div>
                     </div>

@@ -114,7 +114,7 @@ Masuk Akun
             <div class="row">
                 <div class="col-lg-12">
                     <div class="text-center">
-                        <p class="mb-0 text-muted">&copy; <script>document.write(new Date().getFullYear())</script> Minute. Dibuat dengan <i class="mdi mdi-heart text-danger"></i> oleh IT Squad FATISDA</p>
+                        <p class="mb-0 text-muted">&copy; <script>document.write(new Date().getFullYear())</script> Minot. Dibuat dengan <i class="mdi mdi-heart text-danger"></i> oleh IT Squad FATISDA</p>
                     </div>
                 </div>
             </div>

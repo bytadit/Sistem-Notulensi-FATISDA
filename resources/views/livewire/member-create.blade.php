@@ -18,6 +18,9 @@
         @slot('title')
             {{ $judul_rapat }}
         @endslot
+        @slot('title_link')
+            {{ route('daftar-rapat.show', ['team' => $team, 'rapat' => $rapat_slug]) }}
+        @endslot
         @slot('subtitle')
             Daftar Anggota
         @endslot
@@ -156,7 +159,7 @@
                                         <span wire:click="addMembers({{ $rapat->id }})" class="cursor-pointer">
                                             <a class="btn btn-sm btn-success edit-item-btn align-middle" data-bs-toggle="tooltip"
                                                 data-bs-placement="top" title="Atur Anggota"
-                                                href="{{ route('members.create', ['team' => $team, 'rapat' => $rapat->slug]) }}">
+                                                href="{{ route('rapat-members', ['team' => $team, 'rapat' => $rapat->slug]) }}">
                                                 <i class="mdi mdi-account-group"></i>
                                                 Atur Anggota
                                             </a>

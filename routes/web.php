@@ -23,13 +23,22 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'dashboard'], function(){
         Route::get('/{team}/daftar-rapat/create', DaftarRapatCreate::class)->name('daftar-rapat.create');
         Route::get('/{team}/daftar-rapat/{rapat:slug}', DaftarRapatShow::class)->name('daftar-rapat.show');
         Route::get('/{team}/daftar-rapat/{rapat:slug}/edit', DaftarRapatEdit::class)->name('daftar-rapat.edit');
-        Route::get('/{team}/daftar-rapat/{rapat:slug}/members-create', MemberCreate::class)->name('members.create');
+        Route::get('/{team}/daftar-rapat/{rapat:slug}/members', MemberCreate::class)->name('rapat-members');
         Route::get('/{team}/daftar-rapat/{rapat:slug}/members-edit', MemberEdit::class)->name('members.edit');
-
     });
     Route::group(['middleware' => ['role:superadministrator'], 'prefix' => 'superadmin'], function () {
         Route::get('/manage-units', UnitIndex::class)->name('units');
         Route::get('/manage-jabatan', JabatanIndex::class)->name('jabatan');
+        Route::get('/manage-users', ManageUserIndex::class)->name('manage-users');
+        Route::get('/manage-users/{user:id}/edit', ManageUserEdit::class)->name('manage-users.edit');
+        Route::get('/manage-roles', RolesIndex::class)->name('manage-roles');
+        Route::get('/manage-roles/{role:name}/edit', RolesEdit::class)->name('manage-roles.edit');
+        Route::get('/manage-permissions', PermissionsIndex::class)->name('manage-permissions');
+
+    });
+    Route::group( ['prefix' => 'user'], function () {
+        Route::get('/{team}/jadwal-rapat', JadwalRapatIndex::class)->name('jadwal-rapat');
+        // Route::get('/manage-jabatan', JabatanIndex::class)->name('jabatan');
     });
 });
 // Administrator & SuperAdministrator Control Panel Routes

@@ -31,13 +31,13 @@ class RoleUser extends Seeder
             'role_id' => 2,
             'user_id' => 2,
             'user_type' => 'App\Models\User',
-            'team_id' => 3
+            'team_id' => 1
         ]);
         DB::table('role_user')->insert([
             'role_id' => 3,
             'user_id' => 2,
             'user_type' => 'App\Models\User',
-            'team_id' => 3
+            'team_id' => 1
         ]);
 
     }

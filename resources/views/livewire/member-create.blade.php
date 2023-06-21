@@ -246,7 +246,7 @@
                                             <input wire:model.defer="members" class="form-check-input" type="checkbox"
                                                 id="member{{ $user->id }}"
                                                 value={{ $pegawais->where('id_user', $user->id)->first()->id }}
-                                                {{ $presensis->where('id_rapat', $rapat_id)->pluck('id_pegawai')->contains(2)? 'checked': '' }}>
+                                                {{ $presensis->where('id_rapat', $rapat_id)->pluck('id_pegawai')->contains($pegawais->where('id_user', $user->id)->first()->id)? 'checked': '' }}>
                                             {{-- <button type="button" class="btn btn-light btn-sm">Add</button> --}}
                                         </div>
                                         {{-- </div> --}}

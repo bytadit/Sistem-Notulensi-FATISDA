@@ -16,12 +16,11 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
-    @if($statusUpdate)
-        <livewire:roles-update></livewire:roles-update>
-    @else
-        <livewire:roles-create></livewire:roles-create>
-    @endif
-     modal delete
+{{--    @if($statusUpdate)--}}
+{{--        <livewire:roles-update></livewire:roles-update>--}}
+{{--    @else--}}
+{{--        <livewire:roles-create></livewire:roles-create>--}}
+{{--    @endif--}}
     <div wire:ignore.self class="modal fade" id="modalDeleteRole" tabindex="-1" aria-labelledby="modalDeleteRoleLabel" aria-modal="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -44,7 +43,7 @@
         </div>
     </div>
     {{-- end modal delete --}}
-    <button wire:click='showCreateModal()'type="button" class="btn btn-success mb-4" data-bs-toggle="modal" data-bs-target="#modalCreateRole">Buat Baru +</button>
+        <button wire:click='createRole()'type="button" class="btn btn-success mb-4 cursor-pointer">Buat Baru +</button>
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
@@ -79,18 +78,10 @@
                                                 Hapus
                                             </a>
                                         </span>
-{{--                                    <span wire:click="getRole({{ $role->id }})" class="cursor-pointer">--}}
-{{--                                            <a class="btn btn-sm btn-info edit-item-btn align-middle" data-bs-toggle="tooltip"--}}
-{{--                                               data-bs-placement="top" title="Lihat Role"--}}
-{{--                                               href="{{route('manage-roles.edit', ['role' => $role->id])}}">--}}
-{{--                                                <i class="mdi mdi-eye"></i>--}}
-{{--                                                Lihat--}}
-{{--                                            </a>--}}
-{{--                                        </span>--}}
                                     <span wire:click="editRole({{ $role->id }})" class="cursor-pointer">
                                             <a class="btn btn-sm btn-warning edit-item-btn align-middle" data-bs-toggle="tooltip"
                                                data-bs-placement="top" title="Ubah Role"
-                                               href="{{route('manage-roles.edit', ['role' => $role->id])}}">
+                                               href="{{route('manage-roles.edit', ['role' => $role->name])}}">
                                                 <i class="mdi mdi-pencil-box-multiple"></i>
                                                 Ubah
                                             </a>

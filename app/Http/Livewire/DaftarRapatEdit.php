@@ -132,7 +132,7 @@ public function updateRapat()
         ]);
     }
     $this->resetInput();
-    $this->emit('rapatStored', $this_rapat);
+    $this->emit('rapatUpdated', $this_rapat);
     return redirect()->route('daftar-rapat', ['team' => $this->team])->with('message', 'Data Rapat ' . $this->old_judul_rapat . ' berhasil diubah!');
 // $this->dispatchBrowserEvent('close-create-modal');
 }

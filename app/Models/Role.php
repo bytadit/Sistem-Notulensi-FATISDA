@@ -2,12 +2,24 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Laratrust\Models\Role as RoleModel;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class Role extends RoleModel
 {
+
     public $guarded = ['id'];
+    use HasFactory, Sluggable;
+    public function sluggable(): array
+    {
+        return [
+            'name' => [
+                'source' => 'display_name'
+            ]
+        ];
+    }
 //    public function users(): BelongsToMany
 //    {
 //        return $this->belongsToMany(User::class, 'role_user', 'role_id', 'user_id')

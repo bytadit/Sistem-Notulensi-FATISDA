@@ -11,7 +11,7 @@ use Livewire\Component;
 
 class RolesIndex extends Component
 {
-    public $role_delete_id, $role_old, $role_show_id, $team;
+    public $statusUpdate = false, $role_delete_id, $role_old, $role_show_id, $team;
     public function render()
     {
         return view('livewire.roles-index', [
@@ -29,11 +29,13 @@ class RolesIndex extends Component
     }
     public function getRole($id)
     {
+//        $this->statusUpdate = true;
         return redirect()->route('manage-roles.edit', ['role' => $id]);
     }
     public function editRole($id)
     {
-        return redirect()->route('manage-roles.edit', ['role' => $id]);
+        $role_name = Role::where('id', $id)->first()->name;
+        return redirect()->route('manage-roles.edit', ['role' => $role_name]);
     }
     public function createRole()
     {
@@ -48,6 +50,7 @@ class RolesIndex extends Component
         }
     }
     public function showCreateModal(){
+//        $this->statusUpdate = false;
         $this->dispatchBrowserEvent('show-create-modal');
     }
     public function deleteRole()

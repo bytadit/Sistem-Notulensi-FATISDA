@@ -66,6 +66,18 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
+                                    <a class="nav-link menu-link" href="/dashboard/superadmin/manage-roles" role="button"
+                                       aria-expanded="false" aria-controls="sidebarApps">
+                                        <i class="mdi mdi-view-grid-plus-outline"></i> <span>Atur Role</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link menu-link" href="/dashboard/superadmin/manage-permissions" role="button"
+                                       aria-expanded="false" aria-controls="sidebarApps">
+                                        <i class="mdi mdi-view-grid-plus-outline"></i> <span>Atur Permission</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link  menu-link" href="/dashboard/superadmin/manage-units"
                                         role="button" aria-expanded="false" aria-controls="sidebarApps">
                                         <i class="mdi mdi-view-grid-plus-outline"></i> <span>Atur Unit</span>

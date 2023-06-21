@@ -32,6 +32,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'dashboard'], function(){
         Route::get('/manage-users', ManageUserIndex::class)->name('manage-users');
         Route::get('/manage-users/{user:id}/edit', ManageUserEdit::class)->name('manage-users.edit');
         Route::get('/manage-roles', RolesIndex::class)->name('manage-roles');
+        Route::get('/manage-roles/create', RolesCreate::class)->name('manage-roles.create');
         Route::get('/manage-roles/{role:name}/edit', RolesEdit::class)->name('manage-roles.edit');
         Route::get('/manage-permissions', PermissionsIndex::class)->name('manage-permissions');
 

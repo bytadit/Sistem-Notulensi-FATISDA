@@ -17,6 +17,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'dashboard'], function(){
 
     Route::group(['prefix' =>'admin'], function () {
         Route::get('/{team}/manage-pejabat', JabatanPegawaiIndex::class)->name('manage-pejabat');
+        Route::get('/{team}/manage-pejabat/{pejabat}/permission', JabatanPegawaiPermission::class)->name('manage-pejabat.permission');
         Route::get('/{team}/kategori-rapat', KategoriRapatIndex::class)->name('kategori-rapat');
         Route::get('/{team}/topik-rapat', TopikRapatIndex::class)->name('topik-rapat');
         Route::get('/{team}/daftar-rapat', DaftarRapatIndex::class)->name('daftar-rapat');

@@ -10,6 +10,7 @@
                     <div class="row g-3">
                         <div class="col-xxl-6">
                             <div>
+                                <label class="form-label" for="name">Name</label>
                                 <input wire:model="name" type="text" class="form-control" id="name" value="" placeholder="Slug Permission" disabled>
                                 @error('name')
                                 <span class="text-danger text-sm">{{ $message }}</span>
@@ -18,6 +19,7 @@
                         </div>
                         <div class="col-xxl-6">
                             <div>
+                                <label class="form-label" for="display_name">Display Name</label>
                                 <input wire:model="display_name" wire:keyup='generateSlug' type="text" class="form-control" id="display_name" placeholder="Masukkan Nama Permission ..." autofocus>
                                 @error('display_name')
                                 <span class="text-danger text-sm">{{ $message }}</span>
@@ -26,6 +28,7 @@
                         </div>
                         <div class="col-xxl-6">
                             <div>
+                                <label class="form-label" for="description">Deskripsi</label>
                                 <input wire:model="description" type="text" class="form-control" id="description" placeholder="Masukkan Deskripsi Permission ...">
                                 @error('description')
                                 <span class="text-danger text-sm">{{ $message }}</span>

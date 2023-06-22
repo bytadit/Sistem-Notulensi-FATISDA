@@ -172,13 +172,22 @@
                             <select wire:model="penanggung_jawab" class="form-control" id="penanggung_jawab"
                                 data-placeholder="Select Penanggung Jawab" name="penanggung_jawab">
                                 <option selected value="">Pilih Penanggung Jawab</option>
-                                @foreach ($many_penanggung_jawab as $single_penanggung_jawab)
-                                    <optgroup
-                                        label="{{ $jabatans->where('id', $single_penanggung_jawab->id_jabatan)->first()->nama }}">
-                                        <option value="{{ $single_penanggung_jawab->id }}">
-                                            {{ $users->where('id', $pegawais->where('id', $single_penanggung_jawab->id_pegawai)->first()->id_user)->first()->name }}
-                                        </option>
-                                    </optgroup>
+{{--                                @foreach ($many_penanggung_jawab as $single_penanggung_jawab)--}}
+{{--                                    <optgroup--}}
+{{--                                        label="{{ $jabatans->where('id', $single_penanggung_jawab->id_jabatan)->first()->nama }}">--}}
+{{--                                        <option value="{{ $single_penanggung_jawab->id }}">--}}
+{{--                                            {{ $users->where('id', $pegawais->where('id', $single_penanggung_jawab->id_pegawai)->first()->id_user)->first()->name }}--}}
+{{--                                        </option>--}}
+{{--                                    </optgroup>--}}
+{{--                                @endforeach--}}
+                                @foreach($users as $user)
+                                    @if($user->hasRole('penanggung-jawab', $this_team))
+                                        <optgroup label="{{$jabatans->where('id', $pejabats->where('id_team', $team)->where('id_pegawai', $pegawais->where('id_user', $user->id)->first()->id)->first()->id_jabatan)->first()->nama}}">
+                                            <option value="{{ $pejabats->where('id_team', $team)->where('id_pegawai', $pegawais->where('id_user', $user->id)->first()->id)->first()->id }}">
+                                                {{ $user->name }}
+                                            </option>
+                                        </optgroup>
+                                    @endif
                                 @endforeach
                             </select>
                             @error('penanggung_jawab')
@@ -190,13 +199,22 @@
                             <select wire:model="notulis" class="form-control" id="notulis"
                                 data-placeholder="Select Notulis" name="notulis">
                                 <option selected value="">Pilih Notulis Rapat</option>
-                                @foreach ($many_notulis as $single_notulis)
-                                    <optgroup
-                                        label="{{ $jabatans->where('id', $single_notulis->id_jabatan)->first()->nama }}">
-                                        <option value="{{ $single_notulis->id }}">
-                                            {{ $users->where('id', $pegawais->where('id', $single_notulis->id_pegawai)->first()->id_user)->first()->name }}
-                                        </option>
-                                    </optgroup>
+{{--                                @foreach ($many_notulis as $single_notulis)--}}
+{{--                                    <optgroup--}}
+{{--                                        label="{{ $jabatans->where('id', $single_notulis->id_jabatan)->first()->nama }}">--}}
+{{--                                        <option value="{{ $single_notulis->id }}">--}}
+{{--                                            {{ $users->where('id', $pegawais->where('id', $single_notulis->id_pegawai)->first()->id_user)->first()->name }}--}}
+{{--                                        </option>--}}
+{{--                                    </optgroup>--}}
+{{--                                @endforeach--}}
+                                @foreach($users as $user)
+                                    @if($user->hasRole('notulis', $this_team))
+                                        <optgroup label="{{$jabatans->where('id', $pejabats->where('id_team', $team)->where('id_pegawai', $pegawais->where('id_user', $user->id)->first()->id)->first()->id_jabatan)->first()->nama}}">
+                                            <option value="{{ $pejabats->where('id_team', $team)->where('id_pegawai', $pegawais->where('id_user', $user->id)->first()->id)->first()->id }}">
+                                                {{ $user->name }}
+                                            </option>
+                                        </optgroup>
+                                    @endif
                                 @endforeach
                             </select>
                             @error('notulis')

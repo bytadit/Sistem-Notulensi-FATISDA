@@ -44,7 +44,7 @@
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label class="form-label" for="description">Display Name</label>
+                            <label class="form-label" for="description">Deskripsi</label>
                             <input wire:model='description' type="text" class="form-control" id="description"
                                    placeholder="Masukkan Deskripsi Role">
                             @error('description')

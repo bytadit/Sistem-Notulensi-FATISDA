@@ -23,7 +23,8 @@ class ManageUserTeam extends Component
             'roles' => Role::all(),
             'permissions' => Permission::all(),
             'role_users' => RoleUser::all(),
-            'permission_users' => PermissionUser::whereNotIn('user_id', RoleUser::where('role_id', 1)->pluck('user_id'))->get(),
+            'permission_users' => PermissionUser::all(),
+//            'permission_users' => PermissionUser::whereNotIn('user_id', RoleUser::where('role_id', 1)->pluck('user_id'))->get(),
             'permission_roles' => PermissionRole::all()
         ])->layout('layouts.dashboard');
     }

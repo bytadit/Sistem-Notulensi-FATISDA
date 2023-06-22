@@ -19,7 +19,7 @@ class DaftarRapatCreate extends Component
     public $judul_rapat, $kategori_rapat, $topik_rapat,
             $bentuk_rapat, $lokasi_rapat, $waktu_mulai, $waktu_selesai,
             $notulis, $penanggung_jawab, $prioritas, $deskripsi, $old_judul_rapat,
-            $status_rapat, $team;
+            $status_rapat, $team, $petinggis = [], $notulis_pegawai, $penanggung_jawab_pegawai;
 
     public function mount()
     {
@@ -78,6 +78,9 @@ class DaftarRapatCreate extends Component
     }
     public function storeRapat(Request $request)
     {
+        $this->notulis_pegawai = JabatanPegawai::where('id', $this->notulis)->where('id_team', $this->team)->first()->id_pegawai;
+        $this->penanggung_jawab_pegawai = JabatanPegawai::where('id', $this->penanggung_jawab)->where('id_team', $this->team)->first()->id_pegawai;
+        $this->petinggis = [$this->notulis_pegawai, $this->penanggung_jawab_pegawai];
         $this->validate([
             'bentuk_rapat' => 'required',
             'prioritas' => 'required',
@@ -106,8 +109,23 @@ class DaftarRapatCreate extends Component
             'id_notulis' => $this->notulis,
             'deskripsi' => $this->deskripsi,
             'id_team' => $this->team
-
         ]);
+        $petinggis = $this->petinggis;
+        $data = [];
+        $num = 0;
+        $jabatanPeserta = ['Notulis', 'Penanggung Jawab'];
+//        $rapat_presen = Rapat::findOrFail($daftar_rapat->id);
+        if (!empty($this->petinggis)) {
+            foreach ($petinggis as $petinggi) {
+                $data[$petinggi] = ['jabatan_peserta' => $jabatanPeserta[$num]];
+                $num+=1;
+            }
+            $daftar_rapat->pegawai()->sync($data);
+            $data = [];
+            $num = 0;
+        } else {
+            $daftar_rapat->pegawai()->detach();
+        }
         $this->resetInput();
         $this->emit('rapatStored', $daftar_rapat);
         return redirect()->route('daftar-rapat', ['team' => $this->team])->with('message', 'Rapat ' . $this->old_judul_rapat . ' telah ditambahkan !');
@@ -121,7 +139,9 @@ class DaftarRapatCreate extends Component
             'many_notulis' => JabatanPegawai::whereIn('id_team', Team::where('name', 'like', Team::where('id', $this->team)->first()->name . '%')->pluck('id'))->get(),
             'many_penanggung_jawab' => JabatanPegawai::whereIn('id_team', Team::where('name', 'like', Team::where('id', $this->team)->first()->name . '%')->pluck('id'))->get(),
             'jabatans' => Jabatan::all(),
+            'pejabats' => JabatanPegawai::all(),
             'pegawais' => Pegawai::all(),
+            'this_team' => Team::find($this->team),
             'users' => User::all()
             // 'jabatans' => Jabatan::with('pegawai')->get(),
             // 'pegawais' => Pegawai::with('jabatan')->get(),

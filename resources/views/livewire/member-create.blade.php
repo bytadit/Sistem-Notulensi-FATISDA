@@ -38,7 +38,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title mb-0">Anggota Rapat {{ $judul_rapat }}</h5>
+                    <h5 class="card-title mb-0">Peserta Rapat {{ $judul_rapat }}</h5>
                 </div>
                 <div class="card-body">
                     <table id="scroll-horizontal" class="table nowrap align-middle" style="width:100%">
@@ -176,7 +176,7 @@
     </div>
     <div class="modal fade" id="inviteMembersModal" tabindex="-1" aria-labelledby="inviteMembersModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog">
             <form wire:submit.prevent="storeMembers">
                 <div class="modal-content">
                     <div class="modal-header p-3 ps-4 bg-soft-success">
@@ -184,6 +184,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body p-4">
+
                         <div class="search-box mb-3">
                             <input type="text" class="form-control bg-light border-light"
                                 placeholder="Search here....">
@@ -231,22 +232,22 @@
                                 </div>
                             @endforeach --}}
 
-                                @foreach ($users as $user)
+                                @foreach ($userModals as $userModal)
                                     <div class="d-flex align-items-center">
                                         <div class="avatar-xs flex-shrink-0 me-3">
                                             <img src="{{ URL::asset('assets/images/users/avatar-2.jpg') }}"
                                                 alt="" class="img-fluid rounded-circle">
                                         </div>
                                         <div class="flex-grow-1">
-                                            <label for="member{{ $user->id }}" class="form-check-label fs-13 mb-0">
-                                                {{ $user->name }}
+                                            <label for="member{{ $userModal->id }}" class="form-check-label fs-13 mb-0">
+                                                {{ $userModal->name }}
                                             </label>
                                         </div>
                                         <div class="flex-shrink-0">
                                             <input wire:model.defer="members" class="form-check-input" type="checkbox"
-                                                id="member{{ $user->id }}"
-                                                value={{ $pegawais->where('id_user', $user->id)->first()->id }}
-                                                {{ $presensis->where('id_rapat', $rapat_id)->pluck('id_pegawai')->contains($pegawais->where('id_user', $user->id)->first()->id)? 'checked': '' }}>
+                                                id="member{{ $userModal->id }}"
+                                                value={{ $pegawais->where('id_user', $userModal->id)->first()->id }}
+                                                {{ $presensis->where('id_rapat', $rapat_id)->pluck('id_pegawai')->contains($pegawais->where('id_user', $userModal->id)->first()->id)? 'checked': '' }}>
                                             {{-- <button type="button" class="btn btn-light btn-sm">Add</button> --}}
                                         </div>
                                         {{-- </div> --}}

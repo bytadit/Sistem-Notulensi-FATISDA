@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Role;
 
 class RegisterController extends Controller
 {
@@ -73,13 +74,15 @@ class RegisterController extends Controller
         //     $avatarPath = public_path('/images/');
         //     $avatar->move($avatarPath, $avatarName);
         // }
-
-        return User::create([
+        $roleUser = Role::where('name', 'user')->get();
+        $user = User::create([
             'username' => $data['username'],
             'name' => $data['fullname'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             // 'avatar' =>  $avatarName,
         ]);
+        $user->addRole($roleUser);
+
     }
 }

@@ -23,7 +23,7 @@ class DaftarRapatEdit extends Component
     public $judul_rapat, $kategori_rapat, $topik_rapat,
     $bentuk_rapat, $lokasi_rapat, $waktu_mulai, $waktu_selesai,
     $notulis, $penanggung_jawab, $prioritas, $deskripsi, $old_judul_rapat,
-    $status_rapat, $rapat_id, $team, $members = [];
+    $status_rapat, $rapat_id, $team, $members = [], $petinggis = [], $notulis_pegawai, $penanggung_jawab_pegawai;
 
 protected $messages = [
     'judul_rapat.required' => 'Judul Rapat tidak boleh kosong!',
@@ -59,6 +59,9 @@ public function mount(Rapat $rapat)
     $this->status_rapat = $rapat->status;
     $this->team = request()->team;
     $this->members = Presensi::where('id_rapat', $rapat->id)->pluck('id_pegawai');
+    $this->notulis_pegawai = JabatanPegawai::where('id', $this->notulis)->where('id_team', $this->team)->first()->id_pegawai;
+    $this->penanggung_jawab_pegawai = JabatanPegawai::where('id', $this->penanggung_jawab)->where('id_team', $this->team)->first()->id_pegawai;
+    $this->petinggis = [$this->notulis_pegawai, $this->penanggung_jawab_pegawai];
 
 }
 public function updated($fields)
@@ -130,6 +133,21 @@ public function updateRapat()
             'deskripsi' => $this->deskripsi,
             'status' => $this->status_rapat,
         ]);
+        $petinggis = $this->petinggis;
+        $data = [];
+        $num = 0;
+        $jabatanPeserta = ['Notulis', 'Penanggung Jawab'];
+        if (!empty($this->petinggis)) {
+            foreach ($petinggis as $petinggi) {
+                $data[$petinggi] = ['jabatan_peserta' => $jabatanPeserta[$num]];
+                $num+=1;
+            }
+            $this_rapat->pegawai()->sync($data);
+            $data = [];
+            $num = 0;
+        } else {
+            $this_rapat->pegawai()->detach();
+        }
     }
     $this->resetInput();
     $this->emit('rapatUpdated', $this_rapat);
@@ -158,7 +176,9 @@ public function render()
             'many_penanggung_jawab' => JabatanPegawai::whereIn('id_team', Team::where('name', 'like', Team::where('id', $this->team)->first()->name . '%')->pluck('id'))->get(),
             'jabatans' => Jabatan::all(),
             'pegawais' => Pegawai::all(),
+            'pejabats' => JabatanPegawai::all(),
             'users' => User::all(),
+            'this_team' => Team::find($this->team),
             'presensis' => Presensi::all()
             // 'jabatans' => Jabatan::with('pegawai')->get(),
             // 'pegawais' => Pegawai::with('jabatan')->get(),

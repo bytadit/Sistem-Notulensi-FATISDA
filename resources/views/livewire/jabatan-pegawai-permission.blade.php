@@ -1,25 +1,19 @@
 <div>
     @section('title')
-        Atur User
+        Atur User Permission
     @endsection
     @component('dashboard.layouts.breadcrumb')
-            @slot('li_1')
-                Menu SuperAdmin
-            @endslot
-            @slot('li_2')
-                Atur User
-            @endslot
-            @slot('li_2_link')
-                {{ route('manage-users') }}
-            @endslot
-            @slot('title')
-                {{$user_name}}
-            @endslot
-                @slot('title_link')
-                    {{route('manage-users.team', ['user' => $user_id ])}}
-                @endslot
-        @slot('subtitle')
-            {{ $team_name }}
+        @slot('li_1')
+            Menu Admin
+        @endslot
+        @slot('li_2')
+            Atur Pejabat
+        @endslot
+        @slot('li_2_link')
+            {{ route('manage-pejabat', ['team' => $team]) }}
+        @endslot
+        @slot('title')
+            Permission {{$user_name}}
         @endslot
     @endcomponent
     @if (session()->has('message'))
@@ -28,7 +22,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
-    <form wire:submit.prevent="updateUser">
+    <form wire:submit.prevent="updatePermission">
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -38,7 +32,7 @@
                             <input wire:model='user_name' type="text" class="form-control" id="user_name"
                                    placeholder="Masukkan Nama User" disabled>
                         </div>
-                        <label class="form-label mb-3">Daftar Roles</label>
+                        <label class="form-label mb-3">Daftar Role User di Unit {{$team_name}}</label>
                         <div class="row">
                             @foreach($roles as $role)
                                 <div class="col-lg-3">
@@ -54,7 +48,7 @@
                                 </div>
                             @endforeach
                         </div>
-                        <label class="form-label mb-3">Daftar Permission</label>
+                        <label class="form-label mb-3">Daftar Permission di Unit {{$team_name}}</label>
                         <div class="row">
                             @foreach($permissions as $permission)
                                 <div class="col-lg-3">

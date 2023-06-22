@@ -18,7 +18,8 @@ class DaftarRapatIndex extends Component
     public function render()
     {
         return view('livewire.daftar-rapat-index', [
-            'meetings' => Rapat::whereIn('id_team', Team::where('name', 'like', Team::where('id', $this->team)->first()->name . '%')->pluck('id'))->get()
+//            'meetings' => Rapat::whereIn('id_team', Team::where('name', 'like', Team::where('id', $this->team)->first()->name . '%')->pluck('id'))->get(),
+            'meetings' => Rapat::where('id_team', $this->team)->get()
         ])->layout('layouts.dashboard');
     }
     public function getRapat($id)

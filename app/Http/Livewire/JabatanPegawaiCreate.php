@@ -23,7 +23,8 @@ class JabatanPegawaiCreate extends Component
             'teams' => Team::where('name', 'like', Team::where('id', $this->team_id)->first()->name . '%')->get(),
             // 'units' => Unit::where('kode', 'like', )
             'jabatans' => Jabatan::latest()->get(),
-            'pegawais' => Pegawai::latest()->get(),
+//            'pegawais' => Pegawai::latest()->get(),
+            'pegawais' => Pegawai::whereNotIn('id', JabatanPegawai::where('id_team', $this->team_nama)->pluck('id_pegawai'))->get(),
             'users' => User::latest()->get()
         ]);
     }
@@ -49,6 +50,10 @@ class JabatanPegawaiCreate extends Component
         $this->team_nama = '';
         $this->jabatan_nama = '';
         $this->pegawai_nama = '';
+    }
+    public function cancel()
+    {
+        $this->resetInput();
     }
     public function storeJabatanPegawai()
     {

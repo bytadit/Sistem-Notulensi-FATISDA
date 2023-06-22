@@ -13,19 +13,22 @@ return [
 
     'roles_structure' => [
         'superadministrator' => [
-            'users' => 'c,r,u,d',
-            'payments' => 'c,r,u,d',
-            'profile' => 'r,u',
+//            'users' => 'c,r,u,d',
+//            'payments' => 'c,r,u,d',
+//            'profile' => 'r,u',
         ],
         'administrator' => [
-            'users' => 'c,r,u,d',
-            'profile' => 'r,u',
+//            'users' => 'c,r,u,d',
+//            'profile' => 'r,u',
         ],
         'user' => [
-            'profile' => 'r,u',
+//            'profile' => 'r,u',
         ],
-        'role_name' => [
-            'module_1_name' => 'c,r,u,d',
+        'penanggung-jawab' => [
+            'rapat' => 'p,au',
+        ],
+        'notulis' => [
+            'rapat' => 'n',
         ],
     ],
 
@@ -34,5 +37,8 @@ return [
         'r' => 'read',
         'u' => 'update',
         'd' => 'delete',
+        'p' => 'pimpin',
+        'n' => 'notulis',
+        'au' => 'assign-users'
     ],
 ];

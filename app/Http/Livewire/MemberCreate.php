@@ -8,6 +8,7 @@ use App\Models\Presensi;
 use App\Models\Pegawai;
 use App\Models\User;
 use App\Models\Jabatan;
+use App\Models\Team;
 use App\Models\JabatanPegawai;
 
 class MemberCreate extends Component
@@ -19,7 +20,8 @@ class MemberCreate extends Component
             'rapats' => Rapat::all(),
             'pegawais' => Pegawai::all(),
             'users' => User::all(),
-            'userModals' => User::whereIn('id', Pegawai::whereIn('id', Presensi::where('id_rapat', $this->rapat_id)->where('jabatan_peserta', '==', 'Penanggung Jawab')->orWhere('jabatan_peserta', '==', 'Notulis')->pluck('id_pegawai'))->pluck('id_user'))->get(),
+            'this_team' => Team::find($this->team),
+//            'userModals' => User::whereIn('id', Pegawai::whereIn('id', Presensi::where('id_rapat', $this->rapat_id)->where('jabatan_peserta', '==', 'Penanggung Jawab')->orWhere('jabatan_peserta', '==', 'Notulis')->pluck('id_pegawai'))->pluck('id_user'))->get(),
             'pejabats' => JabatanPegawai::all(),
             'jabatans' => Jabatan::all(),
             'presensis' => Presensi::where('id_rapat', $this->rapat_id)->get()
@@ -33,7 +35,7 @@ class MemberCreate extends Component
         $rapat_presen = Rapat::findOrFail($this->rapat_id);
         if (!empty($this->members)) {
             foreach ($members as $member) {
-                $data[$member] = ['jabatan_peserta' => 'Anggota Rapat'];
+                $data[$member] = ['jabatan_peserta' => Jabatan::where('id', JabatanPegawai::where('id_pegawai', $member)->first()->id_jabatan)->first()->nama];
 //                $data[$member] = ['jabatan_peserta' => Jabatan::where('id', JabatanPegawai::where('id_pegawai', $member)->first()->id_jabatan)->first()->nama];
             }
             $rapat_presen->pegawai()->sync($data);

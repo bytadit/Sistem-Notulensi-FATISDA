@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Role;
+use App\Models\Pegawai;
 
 class RegisterController extends Controller
 {
@@ -30,7 +31,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::LOGIN;
+//    protected $redirectTo = RouteServiceProvider::LOGIN;
 
     /**
      * Create a new controller instance.
@@ -82,7 +83,11 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             // 'avatar' =>  $avatarName,
         ]);
+        Pegawai::create([
+            'id_user' => $user->id
+        ]);
         $user->addRole($roleUser);
+        return redirect('/login');
 
     }
 }

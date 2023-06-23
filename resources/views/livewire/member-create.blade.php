@@ -1,13 +1,13 @@
 <div>
     @section('title')
-        Atur Anggota Rapat
+        Atur Peserta Rapat
     @endsection
     @component('dashboard.layouts.breadcrumb')
         @slot('li_1')
             Menu Admin
         @endslot
         @slot('left_title')
-            Anggota Rapat
+            Peserta Rapat
         @endslot
         @slot('li_2')
             Daftar Rapat
@@ -22,7 +22,7 @@
             {{ route('daftar-rapat.show', ['team' => $team, 'rapat' => $rapat_slug]) }}
         @endslot
         @slot('subtitle')
-            Daftar Anggota
+            Daftar Peserta Rapat
         @endslot
     @endcomponent
     @if (session()->has('message'))
@@ -46,12 +46,13 @@
                             <tr>
                                 <th>No.</th>
                                 <th>Nama</th>
-                                <th>Jabatan</th>
+                                <th>Jabatan Peserta</th>
+                                <th>Role Rapat</th>
                                 <th>Status Konfirmasi</th>
                                 <th>Detail Konfirmasi</th>
                                 <th>Status Kehadiran</th>
                                 <th>Detail Kehadiran</th>
-                                <th>Aksi</th>
+{{--                                <th>Aksi</th>--}}
                             </tr>
                         </thead>
                         <tbody>
@@ -61,6 +62,15 @@
                                     <td>{{ $users->where('id', $pegawais->where('id', $presensi->id_pegawai)->first()->id_user)->first()->name }}
                                     </td>
                                     <td>{{ $presensi->jabatan_peserta }}</td>
+                                    <td>
+                                        @if($users->find($pegawais->where('id', $presensi->id_pegawai)->first()->id_user)->hasRole('penanggung-jawab', $this_team) == true)
+                                            Penanggung Jawab
+                                        @elseif($users->find($pegawais->where('id', $presensi->id_pegawai)->first()->id_user)->hasRole('notulis', $this_team) == true)
+                                            Notulis
+                                        @else
+                                            Anggota
+                                        @endif
+                                    </td>
                                     <td><span class="badge
                                         @if ($presensi->status_konfirmasi == 0)
                                             bg-danger
@@ -107,7 +117,7 @@
                                     </span>
                                 </td>
                                     <td>{{ $presensi->detail_kehadiran == null ? 'Belum Terisi' : $presensi->detail_kehadiran }}</td>
-                                    <td>{{ $presensi->id }}</td>
+{{--                                    <td>{{ $presensi->id }}</td>--}}
 
                                     {{-- <td>{{ $rapat->kategoriRapat->nama }}</td> --}}
                                     {{-- <td>{{ $rapat->topikRapat->nama }}</td>
@@ -180,7 +190,7 @@
             <form wire:submit.prevent="storeMembers">
                 <div class="modal-content">
                     <div class="modal-header p-3 ps-4 bg-soft-success">
-                        <h5 class="modal-title" id="inviteMembersModalLabel">Anggota Rapat</h5>
+                        <h5 class="modal-title" id="inviteMembersModalLabel">Peserta Rapat</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body p-4">
@@ -190,36 +200,6 @@
                                 placeholder="Search here....">
                             <i class="ri-search-line search-icon"></i>
                         </div>
-                        <div class="mb-4 d-flex align-items-center">
-                            {{-- <div class="me-2">
-                        <h5 class="mb-0 fs-13">Anggota :</h5>
-                    </div> --}}
-                            {{-- <div class="avatar-group justify-content-center">
-                        <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip"
-                            data-bs-trigger="hover" data-bs-placement="top" title="Brent Gonzalez">
-                            <div class="avatar-xs">
-                                <img src="{{ URL::asset('assets/images/users/avatar-3.jpg') }}" alt=""
-                                    class="rounded-circle img-fluid">
-                            </div>
-                        </a>
-                        <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip"
-                            data-bs-trigger="hover" data-bs-placement="top" title="Sylvia Wright">
-                            <div class="avatar-xs">
-                                <div class="avatar-title rounded-circle bg-secondary">
-                                    S
-                                </div>
-                            </div>
-                        </a>
-                        <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip"
-                            data-bs-trigger="hover" data-bs-placement="top" title="Ellen Smith">
-                            <div class="avatar-xs">
-                                <img src="{{ URL::asset('assets/images/users/avatar-4.jpg') }}" alt=""
-                                    class="rounded-circle img-fluid">
-                            </div>
-                        </a>
-                    </div> --}}
-                        </div>
-
                         <div class="mx-n4 px-4" data-simplebar style="max-height: 225px;">
                             <div class="vstack gap-3">
 
@@ -232,24 +212,26 @@
                                 </div>
                             @endforeach --}}
 
-                                @foreach ($userModals as $userModal)
+                                @foreach ($users as $user)
                                     <div class="d-flex align-items-center">
-                                        <div class="avatar-xs flex-shrink-0 me-3">
-                                            <img src="{{ URL::asset('assets/images/users/avatar-2.jpg') }}"
-                                                alt="" class="img-fluid rounded-circle">
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <label for="member{{ $userModal->id }}" class="form-check-label fs-13 mb-0">
-                                                {{ $userModal->name }}
-                                            </label>
-                                        </div>
-                                        <div class="flex-shrink-0">
-                                            <input wire:model.defer="members" class="form-check-input" type="checkbox"
-                                                id="member{{ $userModal->id }}"
-                                                value={{ $pegawais->where('id_user', $userModal->id)->first()->id }}
-                                                {{ $presensis->where('id_rapat', $rapat_id)->pluck('id_pegawai')->contains($pegawais->where('id_user', $userModal->id)->first()->id)? 'checked': '' }}>
-                                            {{-- <button type="button" class="btn btn-light btn-sm">Add</button> --}}
-                                        </div>
+                                        @if($user->hasRole('penanggung-jawab', $this_team) == false && $user->hasRole('notulis', $this_team) == false && in_array($pegawais->where('id_user',$user->id)->first()->id, $pejabats->where('id_team', $team)->pluck('id_pegawai')->toArray()) == true)
+                                            <div class="avatar-xs flex-shrink-0 me-3">
+                                                <img src="{{ URL::asset('assets/images/users/avatar-2.jpg') }}"
+                                                    alt="" class="img-fluid rounded-circle">
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <label for="member{{ $user->id }}" class="form-check-label fs-13 mb-0">
+                                                    {{ $user->name }}
+                                                </label>
+                                            </div>
+                                            <div class="flex-shrink-0">
+                                                <input wire:model.defer="members" class="form-check-input" type="checkbox"
+                                                    id="member{{ $user->id }}"
+                                                    value={{ $pegawais->where('id_user', $user->id)->first()->id }}
+                                                    {{ $presensis->where('id_rapat', $rapat_id)->pluck('id_pegawai')->contains($pegawais->where('id_user', $user->id)->first()->id)? 'checked': '' }}>
+                                                {{-- <button type="button" class="btn btn-light btn-sm">Add</button> --}}
+                                            </div>
+                                        @endif
                                         {{-- </div> --}}
                                     </div>
                                 @endforeach

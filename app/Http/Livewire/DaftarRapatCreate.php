@@ -113,11 +113,12 @@ class DaftarRapatCreate extends Component
         $petinggis = $this->petinggis;
         $data = [];
         $num = 0;
-        $jabatanPeserta = ['Notulis', 'Penanggung Jawab'];
+//        $jabatanPeserta = ['Notulis', 'Penanggung Jawab'];
 //        $rapat_presen = Rapat::findOrFail($daftar_rapat->id);
         if (!empty($this->petinggis)) {
             foreach ($petinggis as $petinggi) {
-                $data[$petinggi] = ['jabatan_peserta' => $jabatanPeserta[$num]];
+//                $data[$petinggi] = ['jabatan_peserta' => $jabatanPeserta[$num]];
+                $data[$petinggi] = ['jabatan_peserta' => Jabatan::where('id', JabatanPegawai::where('id_pegawai', $petinggi)->first()->id_jabatan)->first()->nama];
                 $num+=1;
             }
             $daftar_rapat->pegawai()->sync($data);

@@ -36,7 +36,7 @@
         <div class="row g-4">
             <div class="col-auto">
                 <div class="avatar-lg">
-                    <img src="@if ($old_path != '') {{ Storage::url($old_path) }}@else{{ URL::asset('assets/images/users/avatar-1.jpg') }} @endif" alt="user-img" class="img-thumbnail rounded-circle" />
+                    <img src="@if ($old_path != '') {{ Storage::url($old_path) }}@else{{ asset('assets/images/users/avatar-1.jpg') }} @endif" alt="user-img" class="rounded-circle avatar-xl img-thumbnail user-profile-image shadow" />
                 </div>
             </div>
             <!--end col-->

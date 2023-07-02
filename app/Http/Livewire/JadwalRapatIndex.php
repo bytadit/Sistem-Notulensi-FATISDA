@@ -6,10 +6,12 @@ use Livewire\Component;
 use App\Models\Rapat;
 use App\Models\Presensi;
 use App\Models\Pegawai;
+use App\Models\User;
+use App\Models\Team;
 
 class JadwalRapatIndex extends Component
 {
-    public $statusUpdate = false, $rapat, $team;
+    public $statusUpdate = false, $rapat, $team, $user, $this_team;
     public function render()
     {
         return view('livewire.jadwal-rapat-index', [
@@ -24,6 +26,8 @@ class JadwalRapatIndex extends Component
     public function mount()
     {
         $this->team = request()->team;
+        $this->this_team = Team::find($this->team);
+        $this->user = User::find(auth()->user()->id);
     }
     // public function getKategoriRapat($id)
     // {

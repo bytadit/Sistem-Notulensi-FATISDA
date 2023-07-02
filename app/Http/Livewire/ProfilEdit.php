@@ -7,6 +7,8 @@ use App\Models\Pegawai;
 use Livewire\Component;
 use Illuminate\Http\Request;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Storage;
+
 
 class ProfilEdit extends Component
 {
@@ -69,21 +71,13 @@ class ProfilEdit extends Component
         $this->validate([
             'nama_lengkap' => 'required',
         ]);
-
-        // if ($this->user_id != null && $this->pegawai_id != null) {
             $this_user = User::find($this->user_id);
-            // if ($this->email != $this_user->email) {
-            //     $this_user->email = $this->email;
-            // }
-            // if ($this->username != $this_user->username) {
-            //     $this_user->username = $this->username;
-            // }
             $this_user->username = $this->username;
             $this_user->email = $this->email;
             $this_user->name = $this->nama_lengkap;
             $this_user->save();
             $this_pegawai = Pegawai::where('id_user', $this->user_id);
-            $path_photo = $this->path_photo->store('public/profil');
+            $path_photo = $this->path_photo->store('public/storage/profil');
             $this_pegawai->update([
                 'nip' => $this->nip,
                 'alamat' => $this->alamat,
@@ -91,26 +85,11 @@ class ProfilEdit extends Component
                 'id_user' => $this->user_id,
                 'path_photo' => $path_photo
             ]);
-        // }
-
-        // if($request->hasFile('path_photo')){
-        //     $filename = $request->image->getClientOriginalName();
-        //     $request->path_photo->storeAs('images',$filename,'public');
-        //     $this_pegawai = Pegawai::where('id_user', $this->user_id);
-        //     $this_pegawai->update(['path_photo'=>$filename]);
-        // }
-
-        // if($request->hasFile('path_photo')){
-        //     $filename = $request->path_photo->getClientOriginalName();
-        //     $request->path_photo->storeAs('images',$filename,'public');
-        //     $this_pegawai = Pegawai::where('id_user', $this->user_id);
-        //     $this_pegawai->update(['path_photo'=>$filename]);
-        // }
+            Storage::delete('/'.$this->old_path);
 
         $this->resetInput();
         $this->emit('profilStored', $this_user);
         return redirect()->route('profil-saya')->with('message', 'Profil Anda Telah Diperbarui');
-        // $this->dispatchBrowserEvent('close-create-modal');
     }
     public function batal()
     {

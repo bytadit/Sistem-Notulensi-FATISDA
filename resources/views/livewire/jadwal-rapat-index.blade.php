@@ -128,11 +128,36 @@
                                             <button class="btn btn-sm btn-danger remove-item-btn" data-bs-toggle="modal" data-bs-target="#deleteRecordModal">Remove</button>
                                         </div> --}}
                                         <span class="cursor-pointer">
-                                            <a class="btn btn-sm btn-info edit-item-btn align-middle" data-bs-toggle="tooltip"
-                                                data-bs-placement="top" title="Lihat Rapat"
-                                                href="{{ route('daftar-rapat.show', ['team' => $team, 'rapat' => $rapat->slug]) }}">
+                                            @if( $user->hasRole('administrator', $this_team))
+                                                <a class="btn btn-sm btn-info edit-item-btn align-middle" data-bs-toggle="tooltip"
+                                                   data-bs-placement="top" title="Lihat Rapat"
+                                                   href="{{ route('daftar-rapat.show', ['team' => $team, 'rapat' => $rapat->slug]) }}">
                                                 <i class="mdi mdi-eye"></i>
                                                 Lihat
+                                            </a>
+                                            @elseif($user->hasRole('user', $this_team))
+                                                <a class="btn btn-sm btn-info edit-item-btn align-middle" data-bs-toggle="tooltip"
+                                                    data-bs-placement="top" title="Lihat Rapat"
+                                                    href="{{ route('jadwal-rapat.show', ['team' => $team, 'rapat' => $rapat->slug]) }}">
+                                                    <i class="mdi mdi-eye"></i>
+                                                    Lihat
+                                                </a>
+                                            @endif
+                                        </span>
+                                        <span class="cursor-pointer">
+                                            <a class="btn btn-sm btn-primary edit-item-btn align-middle" data-bs-toggle="tooltip"
+                                               data-bs-placement="top" title="Konfirmasi Kehadiran"
+                                               href="{{ route('jadwal-rapat.show', ['team' => $team, 'rapat' => $rapat->slug]) }}">
+                                                    <i class="mdi mdi-eye"></i>
+                                                    Konfirmasi Kehadiran
+                                            </a>
+                                        </span>
+                                        <span class="cursor-pointer">
+                                            <a class="btn btn-sm btn-success edit-item-btn align-middle" data-bs-toggle="tooltip"
+                                               data-bs-placement="top" title="Konfirmasi Kehadiran"
+                                               href="{{ route('jadwal-rapat.show', ['team' => $team, 'rapat' => $rapat->slug]) }}">
+                                                    <i class="mdi mdi-eye"></i>
+                                                    Isi Presensi
                                             </a>
                                         </span>
                                         {{-- <span wire:click="editRapat({{ $rapat->id }})" class="cursor-pointer">

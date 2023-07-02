@@ -6,7 +6,9 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('homepage', [
+        'title' => 'Minot - Sistem Notulensi FATISDA'
+    ]);
 });
 Auth::routes();
 
@@ -41,6 +43,9 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'dashboard'], function(){
     });
     Route::group( ['prefix' => 'user'], function () {
         Route::get('/{team}/jadwal-rapat', JadwalRapatIndex::class)->name('jadwal-rapat');
+        Route::get('/{team}/jadwal-rapat/{rapat:slug}', UserJadwalRapatShow::class)->name('jadwal-rapat.show');
+        Route::get('/{team}/jadwal-rapat/{rapat:slug}/notulensi', UserJadwalRapatNotulensi::class)->name('jadwal-rapat.notulensi');
+        Route::get('/{team}/jadwal-rapat/{rapat:slug}/notulensi/edit', UserJadwalRapatNotulensiEdit::class)->name('jadwal-rapat.notulensi-edit');
         // Route::get('/manage-jabatan', JabatanIndex::class)->name('jabatan');
     });
 });

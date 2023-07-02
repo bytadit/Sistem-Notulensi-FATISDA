@@ -81,16 +81,16 @@
                             <div class="col-xl-12 col-lg-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <div class="text-muted">
+                                    <div class="text-dark">
                                         <h6 class="mb-3 fw-semibold text-uppercase">Hasil Rapat</h6>
                                         <div class="mb-3">
                                             <div wire:ignore>
-                                                <textarea wire:model='hasil_rapat' name="hasil_rapat" type="text" id="hasil_rapat"
+                                                <textarea wire:model='hasil_rapat' class="text-dark" name="hasil_rapat" type="text" id="hasil_rapat"
                                                           placeholder="Masukkan Hasil Rapat">
                                                     {!! $hasil_rapat !!}
                                                 </textarea>
                                             </div>
-                                            @error('deskripsi')
+                                            @error('hasil_rapat')
                                             <span class="text-danger text-sm">{{ $message }}</span>
                                             @enderror
                                         </div>
@@ -100,16 +100,16 @@
                             </div>
                             <div class="card">
                                 <div class="card-body">
-                                    <div class="text-muted">
+                                    <div class="text-dark">
                                         <h6 class="mb-3 fw-semibold text-uppercase">Catatan Rapat</h6>
                                         <div class="mb-3">
                                             <div wire:ignore>
-                                                <textarea wire:model='catatan' name="catatan" type="text" id="catatan"
+                                                <textarea wire:model='catatan' class="text-dark" name="catatan" type="text" id="catatan"
                                                           placeholder="Masukkan Catatan Rapat">
                                                     {!! $catatan !!}
                                                 </textarea>
                                             </div>
-                                            @error('deskripsi')
+                                            @error('catatan')
                                             <span class="text-danger text-sm">{{ $message }}</span>
                                             @enderror
                                         </div>

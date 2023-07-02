@@ -74,14 +74,14 @@
     <!-- end row -->
     <div class="row">
         <div class="col-lg-12">
-            <div class="tab-content text-muted">
+            <div class="tab-content text-mud">
                 <div class="tab-pane fade show active" id="project-overview" role="tabpanel">
                     <div class="row">
                         <form wire:submit.prevent="updateNotulensi">
                             <div class="col-xl-12 col-lg-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <div class="text-muted">
+                                        <div class="text-dark">
                                             <h6 class="mb-3 fw-semibold text-uppercase">Hasil Rapat</h6>
                                             <div class="mb-3">
                                                 <div wire:ignore>
@@ -100,7 +100,7 @@
                                 </div>
                                 <div class="card">
                                     <div class="card-body">
-                                        <div class="text-muted">
+                                        <div class="text-dark">
                                             <h6 class="mb-3 fw-semibold text-uppercase">Catatan Rapat</h6>
                                             <div class="mb-3">
                                                 <div wire:ignore>

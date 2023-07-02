@@ -1022,774 +1022,102 @@
                 </div>
                 <!-- end tab pane -->
                 <div class="tab-pane fade" id="notulensi" role="tabpanel">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between">
-                                <h5 class="d-inline card-title mb-3">Notulensi {{$rapats->where('id', $rapat_id)->first()->judul_rapat}}</h5>
-                                @if($user->hasRole('notulis', $this_team))
-                                    @if($notulensi->where('id_rapat', $rapat_id)->count() < 1)
-                                        <a class="btn btn-sm btn-info edit-item-btn align-middle" data-bs-toggle="tooltip"
-                                           data-bs-placement="top" title="Tambah Notulensi"
-                                           href="{{ route('jadwal-rapat.notulensi', ['team' => $team, 'rapat' => $rapat_slug]) }}">
-                                            <i class="ri-edit-box-fill"></i>
-                                            Ubah Notulensi
-                                        </a>
-                                    @else
-                                        <a class="btn btn-sm btn-info edit-item-btn align-middle" data-bs-toggle="tooltip"
-                                           data-bs-placement="top" title="Ubah Notulensi"
-                                           href="{{ route('jadwal-rapat.notulensi-edit', ['team' => $team, 'rapat' => $rapat_slug]) }}">
-                                            <i class="ri-edit-box-fill"></i>
-                                            Ubah Notulensi
-                                        </a>
-                                    @endif
-                                @endif
+                    <div class="d-flex justify-content-end mb-3">
+                        @if($user->hasRole('notulis', $this_team))
+                            @if($notulensi->where('id_rapat', $rapat_id)->count() < 1)
+                                <a class="btn btn-sm btn-info edit-item-btn align-middle" data-bs-toggle="tooltip"
+                                   data-bs-placement="top" title="Tambah Notulensi"
+                                   href="{{ route('jadwal-rapat.notulensi', ['team' => $team, 'rapat' => $rapat_slug]) }}">
+                                    <i class="ri-edit-box-fill"></i>
+                                    Buat Notulensi
+                                </a>
+                            @else
+                                <a class="btn btn-sm btn-info edit-item-btn align-middle" data-bs-toggle="tooltip"
+                                   data-bs-placement="top" title="Ubah Notulensi"
+                                   href="{{ route('jadwal-rapat.notulensi-edit', ['team' => $team, 'rapat' => $rapat_slug]) }}">
+                                    <i class="ri-edit-box-fill"></i>
+                                    Ubah Notulensi
+                                </a>
+                            @endif
+                        @endif
+                    </div>
+                    <div class="col-xxl-4">
+                        <div class="card border card-border-info">
+                            <div class="card-header">
+                                <h6 class="card-title mb-0">Hasil Rapat</h6>
                             </div>
-                            <hr>
-                            <div class="mb-3">
-                                <h6 class="mb-3 fw-semibold text-uppercase">Hasil Rapat</h6>
-                                {!! $hasil_rapat !!}
-                            </div>
-                            <div class="mb-3">
-                                <h6 class="mb-3 fw-semibold text-uppercase">Catatan Rapat</h6>
-                                {!! $catatan !!}
+                            <div class="card-body">
+                                <p class="text-dark">
+                                    {!! $hasil_rapat !!}
+                                </p>
                             </div>
                         </div>
-                        <!--end card-body-->
+                    </div>
+                    <div class="col-xxl-4">
+                        <div class="card border card-border-info">
+                            <div class="card-header">
+                                <h6 class="card-title mb-0">Catatan Rapat</h6>
+                            </div>
+                            <div class="card-body">
+                                <p class="text-dark">
+                                    {!! $catatan !!}
+                                </p>
+                            </div>
+                        </div>
                     </div>
                     <!--end card-->
                 </div>
                 <!-- end tab pane -->
                 <div class="tab-pane fade" id="presensi" role="tabpanel">
                     <div class="row g-4 mb-3">
+                        {{--search--}}
                         <div class="col-sm">
                             <div class="d-flex">
                                 <div class="search-box me-2">
-                                    <input type="text" class="form-control" placeholder="Search member...">
+                                    <input type="text" class="form-control" placeholder="Cari Anggota...">
                                     <i class="ri-search-line search-icon"></i>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-auto">
-                            <div>
-                                <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                        data-bs-target="#inviteMembersModal"><i
-                                        class="ri-share-line me-1 align-bottom"></i>
-                                    Invite Member</button>
-                            </div>
-                        </div>
                     </div>
                     <!-- end row -->
-
                     <div class="team-list list-view-filter">
-                        <div class="card team-box">
-                            <div class="card-body px-4">
-                                <div class="row align-items-center team-row">
-                                    <div class="col team-settings">
-                                        <div class="row align-items-center">
-                                            <div class="col">
-                                                <div class="flex-shrink-0 me-2">
-                                                    <button type="button"
-                                                            class="btn fs-16 p-0 favourite-btn shadow-none">
-                                                        <i class="ri-star-fill"></i>
-                                                    </button>
+                        @foreach($presensis as $presensi)
+                            <div class="card team-box">
+                                <div class="card-body px-4">
+                                    <div class="row align-items-center team-row">
+                                        {{--                                    start--}}
+                                        <div class="col-lg-4 col">
+                                            <div class="team-profile-img">
+                                                <div class="avatar-lg img-thumbnail rounded-circle shadow object-cover">
+                                                    <img src="{{ Storage::url($pegawais->where('id', $presensi->id_pegawai)->first()->path_photo) }}"
+                                                         alt="" class="img-fluid d-block rounded-circle" />
+                                                </div>
+                                                <div class="team-content">
+                                                    <a href="#" class="d-block">
+                                                        <h5 class="fs-16 mb-1">{{ $users->where('id', $pegawais->where('id', $presensi->id_pegawai)->first()->id_user)->first()->name }}</h5>
+                                                    </a>
+                                                    <p class="text-muted mb-0">{{ $presensi->jabatan_peserta }}</p>
                                                 </div>
                                             </div>
-                                            <div class="col text-end dropdown">
-                                                <a href="javascript:void(0);" data-bs-toggle="dropdown"
-                                                   aria-expanded="false">
-                                                    <i class="ri-more-fill fs-17"></i>
-                                                </a>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a class="dropdown-item" href="javascript:void(0);"><i
-                                                                class="ri-eye-fill text-muted me-2 align-bottom"></i>View</a>
-                                                    </li>
-                                                    <li><a class="dropdown-item" href="javascript:void(0);"><i
-                                                                class="ri-star-fill text-muted me-2 align-bottom"></i>Favourite</a>
-                                                    </li>
-                                                    <li><a class="dropdown-item" href="javascript:void(0);"><i
-                                                                class="ri-delete-bin-5-fill text-muted me-2 align-bottom"></i>Delete</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-4 col">
-                                        <div class="team-profile-img">
-                                            <div class="avatar-lg img-thumbnail rounded-circle shadow">
-                                                <img src="{{ URL::asset('assets/images/users/avatar-2.jpg') }}"
-                                                     alt="" class="img-fluid d-block rounded-circle" />
-                                            </div>
-                                            <div class="team-content">
-                                                <a href="#" class="d-block">
-                                                    <h5 class="fs-16 mb-1">Nancy Martino</h5>
-                                                </a>
-                                                <p class="text-muted mb-0">Team Leader & HR</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col">
-                                        <div class="row text-muted text-center">
-                                            <div class="col-6 border-end border-end-dashed">
-                                                <h5 class="mb-1">225</h5>
-                                                <p class="text-muted mb-0">Projects</p>
-                                            </div>
-                                            <div class="col-6">
-                                                <h5 class="mb-1">197</h5>
-                                                <p class="text-muted mb-0">Tasks</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 col">
-                                        <div class="text-end">
-                                            <a href="{{ URL::asset('/pages-profile') }}"
-                                               class="btn btn-light view-btn">View Profile</a>
-                                        </div>
+                                        {{--                                    start--}}
+                                        {{--                                        <div class="col-lg-2 col">--}}
+                                        {{--                                            <div class="text-end">--}}
+                                        {{--                                                <a href="{{ URL::asset('/pages-profile') }}"--}}
+                                        {{--                                                    class="btn btn-light view-btn">View Profile</a>--}}
+                                        {{--                                            </div>--}}
+                                        {{--                                        </div>--}}
+                                        {{--                                    end--}}
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <!--end card-->
-                        <div class="card team-box">
-                            <div class="card-body px-4">
-                                <div class="row align-items-center team-row">
-                                    <div class="col team-settings">
-                                        <div class="row align-items-center">
-                                            <div class="col">
-                                                <div class="flex-shrink-0 me-2">
-                                                    <button type="button"
-                                                            class="btn fs-16 p-0 favourite-btn shadow-none active">
-                                                        <i class="ri-star-fill"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div class="col text-end dropdown">
-                                                <a href="javascript:void(0);" data-bs-toggle="dropdown"
-                                                   aria-expanded="false">
-                                                    <i class="ri-more-fill fs-17"></i>
-                                                </a>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a class="dropdown-item" href="javascript:void(0);"><i
-                                                                class="ri-eye-fill text-muted me-2 align-bottom"></i>View</a>
-                                                    </li>
-                                                    <li><a class="dropdown-item" href="javascript:void(0);"><i
-                                                                class="ri-star-fill text-muted me-2 align-bottom"></i>Favourite</a>
-                                                    </li>
-                                                    <li><a class="dropdown-item" href="javascript:void(0);"><i
-                                                                class="ri-delete-bin-5-fill text-muted me-2 align-bottom"></i>Delete</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col">
-                                        <div class="team-profile-img">
-                                            <div class="avatar-lg img-thumbnail rounded-circle shadow">
-                                                <div class="avatar-title bg-soft-danger text-danger rounded-circle">
-                                                    HB
-                                                </div>
-                                            </div>
-                                            <div class="team-content">
-                                                <a href="#" class="d-block">
-                                                    <h5 class="fs-16 mb-1">Henry Baird</h5>
-                                                </a>
-                                                <p class="text-muted mb-0">Full Stack Developer</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col">
-                                        <div class="row text-muted text-center">
-                                            <div class="col-6 border-end border-end-dashed">
-                                                <h5 class="mb-1">352</h5>
-                                                <p class="text-muted mb-0">Projects</p>
-                                            </div>
-                                            <div class="col-6">
-                                                <h5 class="mb-1">376</h5>
-                                                <p class="text-muted mb-0">Tasks</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 col">
-                                        <div class="text-end">
-                                            <a href="{{ URL::asset('/pages-profile') }}"
-                                               class="btn btn-light view-btn">View Profile</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--end card-->
-                        <div class="card team-box">
-                            <div class="card-body px-4">
-                                <div class="row align-items-center team-row">
-                                    <div class="col team-settings">
-                                        <div class="row align-items-center">
-                                            <div class="col">
-                                                <div class="flex-shrink-0 me-2">
-                                                    <button type="button"
-                                                            class="btn fs-16 p-0 favourite-btn shadow-none active">
-                                                        <i class="ri-star-fill"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div class="col text-end dropdown">
-                                                <a href="javascript:void(0);" data-bs-toggle="dropdown"
-                                                   aria-expanded="false">
-                                                    <i class="ri-more-fill fs-17"></i>
-                                                </a>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a class="dropdown-item" href="javascript:void(0);"><i
-                                                                class="ri-eye-fill text-muted me-2 align-bottom"></i>View</a>
-                                                    </li>
-                                                    <li><a class="dropdown-item" href="javascript:void(0);"><i
-                                                                class="ri-star-fill text-muted me-2 align-bottom"></i>Favourite</a>
-                                                    </li>
-                                                    <li><a class="dropdown-item" href="javascript:void(0);"><i
-                                                                class="ri-delete-bin-5-fill text-muted me-2 align-bottom"></i>Delete</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col">
-                                        <div class="team-profile-img">
-                                            <div class="avatar-lg img-thumbnail rounded-circle shadow">
-                                                <img src="{{ URL::asset('assets/images/users/avatar-3.jpg') }}"
-                                                     alt="" class="img-fluid d-block rounded-circle" />
-                                            </div>
-                                            <div class="team-content">
-                                                <a href="#" class="d-block">
-                                                    <h5 class="fs-16 mb-1">Frank Hook</h5>
-                                                </a>
-                                                <p class="text-muted mb-0">Project Manager</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col">
-                                        <div class="row text-muted text-center">
-                                            <div class="col-6 border-end border-end-dashed">
-                                                <h5 class="mb-1">164</h5>
-                                                <p class="text-muted mb-0">Projects</p>
-                                            </div>
-                                            <div class="col-6">
-                                                <h5 class="mb-1">182</h5>
-                                                <p class="text-muted mb-0">Tasks</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 col">
-                                        <div class="text-end">
-                                            <a href="{{ URL::asset('/pages-profile') }}"
-                                               class="btn btn-light view-btn">View Profile</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--end card-->
-                        <div class="card team-box">
-                            <div class="card-body px-4">
-                                <div class="row align-items-center team-row">
-                                    <div class="col team-settings">
-                                        <div class="row align-items-center">
-                                            <div class="col">
-                                                <div class="flex-shrink-0 me-2">
-                                                    <button type="button"
-                                                            class="btn fs-16 p-0 favourite-btn shadow-none">
-                                                        <i class="ri-star-fill"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div class="col text-end dropdown">
-                                                <a href="javascript:void(0);" data-bs-toggle="dropdown"
-                                                   aria-expanded="false">
-                                                    <i class="ri-more-fill fs-17"></i>
-                                                </a>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a class="dropdown-item" href="javascript:void(0);"><i
-                                                                class="ri-eye-fill text-muted me-2 align-bottom"></i>View</a>
-                                                    </li>
-                                                    <li><a class="dropdown-item" href="javascript:void(0);"><i
-                                                                class="ri-star-fill text-muted me-2 align-bottom"></i>Favourite</a>
-                                                    </li>
-                                                    <li><a class="dropdown-item" href="javascript:void(0);"><i
-                                                                class="ri-delete-bin-5-fill text-muted me-2 align-bottom"></i>Delete</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col">
-                                        <div class="team-profile-img">
-                                            <div class="avatar-lg img-thumbnail rounded-circle shadow">
-                                                <img src="{{ URL::asset('assets/images/users/avatar-8.jpg') }}"
-                                                     alt="" class="img-fluid d-block rounded-circle" />
-                                            </div>
-                                            <div class="team-content">
-                                                <a href="#" class="d-block">
-                                                    <h5 class="fs-16 mb-1">Jennifer Carter</h5>
-                                                </a>
-                                                <p class="text-muted mb-0">UI/UX Designer</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col">
-                                        <div class="row text-muted text-center">
-                                            <div class="col-6 border-end border-end-dashed">
-                                                <h5 class="mb-1">225</h5>
-                                                <p class="text-muted mb-0">Projects</p>
-                                            </div>
-                                            <div class="col-6">
-                                                <h5 class="mb-1">197</h5>
-                                                <p class="text-muted mb-0">Tasks</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 col">
-                                        <div class="text-end">
-                                            <a href="{{ URL::asset('/pages-profile') }}"
-                                               class="btn btn-light view-btn">View Profile</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--end card-->
-                        <div class="card team-box">
-                            <div class="card-body px-4">
-                                <div class="row align-items-center team-row">
-                                    <div class="col team-settings">
-                                        <div class="row align-items-center">
-                                            <div class="col">
-                                                <div class="flex-shrink-0 me-2">
-                                                    <button type="button"
-                                                            class="btn fs-16 p-0 favourite-btn shadow-none">
-                                                        <i class="ri-star-fill"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div class="col text-end dropdown">
-                                                <a href="javascript:void(0);" data-bs-toggle="dropdown"
-                                                   aria-expanded="false">
-                                                    <i class="ri-more-fill fs-17"></i>
-                                                </a>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a class="dropdown-item" href="javascript:void(0);"><i
-                                                                class="ri-eye-fill text-muted me-2 align-bottom"></i>View</a>
-                                                    </li>
-                                                    <li><a class="dropdown-item" href="javascript:void(0);"><i
-                                                                class="ri-star-fill text-muted me-2 align-bottom"></i>Favourite</a>
-                                                    </li>
-                                                    <li><a class="dropdown-item" href="javascript:void(0);"><i
-                                                                class="ri-delete-bin-5-fill text-muted me-2 align-bottom"></i>Delete</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col">
-                                        <div class="team-profile-img">
-                                            <div class="avatar-lg img-thumbnail rounded-circle shadow">
-                                                <div class="avatar-title bg-soft-success text-success rounded-circle">
-                                                    ME
-                                                </div>
-                                            </div>
-                                            <div class="team-content">
-                                                <a href="#" class="d-block">
-                                                    <h5 class="fs-16 mb-1">Megan Elmore</h5>
-                                                </a>
-                                                <p class="text-muted mb-0">Team Leader & Web Developer</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col">
-                                        <div class="row text-muted text-center">
-                                            <div class="col-6 border-end border-end-dashed">
-                                                <h5 class="mb-1">201</h5>
-                                                <p class="text-muted mb-0">Projects</p>
-                                            </div>
-                                            <div class="col-6">
-                                                <h5 class="mb-1">263</h5>
-                                                <p class="text-muted mb-0">Tasks</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 col">
-                                        <div class="text-end">
-                                            <a href="{{ URL::asset('/pages-profile') }}"
-                                               class="btn btn-light view-btn">View Profile</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--end card-->
-                        <div class="card team-box">
-                            <div class="card-body px-4">
-                                <div class="row align-items-center team-row">
-                                    <div class="col team-settings">
-                                        <div class="row align-items-center">
-                                            <div class="col">
-                                                <div class="flex-shrink-0 me-2">
-                                                    <button type="button"
-                                                            class="btn fs-16 p-0 favourite-btn shadow-none">
-                                                        <i class="ri-star-fill"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div class="col text-end dropdown">
-                                                <a href="javascript:void(0);" data-bs-toggle="dropdown"
-                                                   aria-expanded="false">
-                                                    <i class="ri-more-fill fs-17"></i>
-                                                </a>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a class="dropdown-item" href="javascript:void(0);"><i
-                                                                class="ri-eye-fill text-muted me-2 align-bottom"></i>View</a>
-                                                    </li>
-                                                    <li><a class="dropdown-item" href="javascript:void(0);"><i
-                                                                class="ri-star-fill text-muted me-2 align-bottom"></i>Favourite</a>
-                                                    </li>
-                                                    <li><a class="dropdown-item" href="javascript:void(0);"><i
-                                                                class="ri-delete-bin-5-fill text-muted me-2 align-bottom"></i>Delete</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col">
-                                        <div class="team-profile-img">
-                                            <div class="avatar-lg img-thumbnail rounded-circle shadow">
-                                                <img src="{{ URL::asset('assets/images/users/avatar-4.jpg') }}"
-                                                     alt="" class="img-fluid d-block rounded-circle" />
-                                            </div>
-                                            <div class="team-content">
-                                                <a href="#" class="d-block">
-                                                    <h5 class="fs-16 mb-1">Alexis Clarke</h5>
-                                                </a>
-                                                <p class="text-muted mb-0">Backend Developer</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col">
-                                        <div class="row text-muted text-center">
-                                            <div class="col-6 border-end border-end-dashed">
-                                                <h5 class="mb-1">132</h5>
-                                                <p class="text-muted mb-0">Projects</p>
-                                            </div>
-                                            <div class="col-6">
-                                                <h5 class="mb-1">147</h5>
-                                                <p class="text-muted mb-0">Tasks</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 col">
-                                        <div class="text-end">
-                                            <a href="{{ URL::asset('/pages-profile') }}"
-                                               class="btn btn-light view-btn">View Profile</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--end card-->
-                        <div class="card team-box">
-                            <div class="card-body px-4">
-                                <div class="row align-items-center team-row">
-                                    <div class="col team-settings">
-                                        <div class="row align-items-center">
-                                            <div class="col">
-                                                <div class="flex-shrink-0 me-2">
-                                                    <button type="button"
-                                                            class="btn fs-16 p-0 favourite-btn shadow-none">
-                                                        <i class="ri-star-fill"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div class="col text-end dropdown">
-                                                <a href="javascript:void(0);" data-bs-toggle="dropdown"
-                                                   aria-expanded="false">
-                                                    <i class="ri-more-fill fs-17"></i>
-                                                </a>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a class="dropdown-item" href="javascript:void(0);"><i
-                                                                class="ri-eye-fill text-muted me-2 align-bottom"></i>View</a>
-                                                    </li>
-                                                    <li><a class="dropdown-item" href="javascript:void(0);"><i
-                                                                class="ri-star-fill text-muted me-2 align-bottom"></i>Favourite</a>
-                                                    </li>
-                                                    <li><a class="dropdown-item" href="javascript:void(0);"><i
-                                                                class="ri-delete-bin-5-fill text-muted me-2 align-bottom"></i>Delete</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col">
-                                        <div class="team-profile-img">
-                                            <div class="avatar-lg img-thumbnail rounded-circle shadow">
-                                                <div class="avatar-title bg-soft-info text-info rounded-circle">
-                                                    NC
-                                                </div>
-                                            </div>
-                                            <div class="team-content">
-                                                <a href="#" class="d-block">
-                                                    <h5 class="fs-16 mb-1">Nathan Cole</h5>
-                                                </a>
-                                                <p class="text-muted mb-0">Front-End Developer</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col">
-                                        <div class="row text-muted text-center">
-                                            <div class="col-6 border-end border-end-dashed">
-                                                <h5 class="mb-1">352</h5>
-                                                <p class="text-muted mb-0">Projects</p>
-                                            </div>
-                                            <div class="col-6">
-                                                <h5 class="mb-1">376</h5>
-                                                <p class="text-muted mb-0">Tasks</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 col">
-                                        <div class="text-end">
-                                            <a href="{{ URL::asset('/pages-profile') }}"
-                                               class="btn btn-light view-btn">View Profile</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--end card-->
-                        <div class="card team-box">
-                            <div class="card-body px-4">
-                                <div class="row align-items-center team-row">
-                                    <div class="col team-settings">
-                                        <div class="row align-items-center">
-                                            <div class="col">
-                                                <div class="flex-shrink-0 me-2">
-                                                    <button type="button"
-                                                            class="btn fs-16 p-0 favourite-btn shadow-none">
-                                                        <i class="ri-star-fill"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div class="col text-end dropdown">
-                                                <a href="javascript:void(0);" data-bs-toggle="dropdown"
-                                                   aria-expanded="false">
-                                                    <i class="ri-more-fill fs-17"></i>
-                                                </a>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a class="dropdown-item" href="javascript:void(0);"><i
-                                                                class="ri-eye-fill text-muted me-2 align-bottom"></i>View</a>
-                                                    </li>
-                                                    <li><a class="dropdown-item" href="javascript:void(0);"><i
-                                                                class="ri-star-fill text-muted me-2 align-bottom"></i>Favourite</a>
-                                                    </li>
-                                                    <li><a class="dropdown-item" href="javascript:void(0);"><i
-                                                                class="ri-delete-bin-5-fill text-muted me-2 align-bottom"></i>Delete</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col">
-                                        <div class="team-profile-img">
-                                            <div class="avatar-lg img-thumbnail rounded-circle shadow">
-                                                <img src="{{ URL::asset('assets/images/users/avatar-7.jpg') }}"
-                                                     alt="" class="img-fluid d-block rounded-circle" />
-                                            </div>
-                                            <div class="team-content">
-                                                <a href="#" class="d-block">
-                                                    <h5 class="fs-16 mb-1">Joseph Parker</h5>
-                                                </a>
-                                                <p class="text-muted mb-0">Team Leader & HR</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col">
-                                        <div class="row text-muted text-center">
-                                            <div class="col-6 border-end border-end-dashed">
-                                                <h5 class="mb-1">64</h5>
-                                                <p class="text-muted mb-0">Projects</p>
-                                            </div>
-                                            <div class="col-6">
-                                                <h5 class="mb-1">93</h5>
-                                                <p class="text-muted mb-0">Tasks</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 col">
-                                        <div class="text-end">
-                                            <a href="{{ URL::asset('/pages-profile') }}"
-                                               class="btn btn-light view-btn">View Profile</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--end card-->
-                        <div class="card team-box">
-                            <div class="card-body px-4">
-                                <div class="row align-items-center team-row">
-                                    <div class="col team-settings">
-                                        <div class="row align-items-center">
-                                            <div class="col">
-                                                <div class="flex-shrink-0 me-2">
-                                                    <button type="button"
-                                                            class="btn fs-16 p-0 favourite-btn shadow-none">
-                                                        <i class="ri-star-fill"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div class="col text-end dropdown">
-                                                <a href="javascript:void(0);" data-bs-toggle="dropdown"
-                                                   aria-expanded="false">
-                                                    <i class="ri-more-fill fs-17"></i>
-                                                </a>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a class="dropdown-item" href="javascript:void(0);"><i
-                                                                class="ri-eye-fill text-muted me-2 align-bottom"></i>View</a>
-                                                    </li>
-                                                    <li><a class="dropdown-item" href="javascript:void(0);"><i
-                                                                class="ri-star-fill text-muted me-2 align-bottom"></i>Favourite</a>
-                                                    </li>
-                                                    <li><a class="dropdown-item" href="javascript:void(0);"><i
-                                                                class="ri-delete-bin-5-fill text-muted me-2 align-bottom"></i>Delete</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col">
-                                        <div class="team-profile-img">
-                                            <div class="avatar-lg img-thumbnail rounded-circle shadow">
-                                                <img src="{{ URL::asset('assets/images/users/avatar-5.jpg') }}"
-                                                     alt="" class="img-fluid d-block rounded-circle" />
-                                            </div>
-                                            <div class="team-content">
-                                                <a href="#" class="d-block">
-                                                    <h5 class="fs-16 mb-1">Erica Kernan</h5>
-                                                </a>
-                                                <p class="text-muted mb-0">Web Designer</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col">
-                                        <div class="row text-muted text-center">
-                                            <div class="col-6 border-end border-end-dashed">
-                                                <h5 class="mb-1">345</h5>
-                                                <p class="text-muted mb-0">Projects</p>
-                                            </div>
-                                            <div class="col-6">
-                                                <h5 class="mb-1">298</h5>
-                                                <p class="text-muted mb-0">Tasks</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 col">
-                                        <div class="text-end">
-                                            <a href="{{ URL::asset('/pages-profile') }}"
-                                               class="btn btn-light view-btn">View Profile</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--end card-->
-                        <div class="card team-box">
-                            <div class="card-body px-4">
-                                <div class="row align-items-center team-row">
-                                    <div class="col team-settings">
-                                        <div class="row align-items-center">
-                                            <div class="col">
-                                                <div class="flex-shrink-0 me-2">
-                                                    <button type="button"
-                                                            class="btn fs-16 p-0 favourite-btn shadow-none">
-                                                        <i class="ri-star-fill"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div class="col text-end dropdown">
-                                                <a href="javascript:void(0);" data-bs-toggle="dropdown"
-                                                   aria-expanded="false">
-                                                    <i class="ri-more-fill fs-17"></i>
-                                                </a>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a class="dropdown-item" href="javascript:void(0);"><i
-                                                                class="ri-eye-fill text-muted me-2 align-bottom"></i>View</a>
-                                                    </li>
-                                                    <li><a class="dropdown-item" href="javascript:void(0);"><i
-                                                                class="ri-star-fill text-muted me-2 align-bottom"></i>Favourite</a>
-                                                    </li>
-                                                    <li><a class="dropdown-item" href="javascript:void(0);"><i
-                                                                class="ri-delete-bin-5-fill text-muted me-2 align-bottom"></i>Delete</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col">
-                                        <div class="team-profile-img">
-                                            <div class="avatar-lg img-thumbnail rounded-circle shadow">
-                                                <div class="avatar-title border bg-light text-primary rounded-circle">
-                                                    DP
-                                                </div>
-                                            </div>
-                                            <div class="team-content">
-                                                <a href="#" class="d-block">
-                                                    <h5 class="fs-16 mb-1">Donald Palmer</h5>
-                                                </a>
-                                                <p class="text-muted mb-0">Wed Developer</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col">
-                                        <div class="row text-muted text-center">
-                                            <div class="col-6 border-end border-end-dashed">
-                                                <h5 class="mb-1">97</h5>
-                                                <p class="text-muted mb-0">Projects</p>
-                                            </div>
-                                            <div class="col-6">
-                                                <h5 class="mb-1">135</h5>
-                                                <p class="text-muted mb-0">Tasks</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 col">
-                                        <div class="text-end">
-                                            <a href="{{ URL::asset('/pages-profile') }}"
-                                               class="btn btn-light view-btn">View Profile</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
                         <!--end card-->
                     </div>
                     <!-- end team list -->
-
-                    <div class="row g-0 text-center text-sm-start align-items-center mb-3">
-                        <div class="col-sm-6">
-                            <div>
-                                <p class="mb-sm-0">Showing 1 to 10 of 12 entries</p>
-                            </div>
-                        </div> <!-- end col -->
-                        <div class="col-sm-6">
-                            <ul
-                                class="pagination pagination-separated justify-content-center justify-content-sm-end mb-sm-0">
-                                <li class="page-item disabled"> <a href="#" class="page-link"><i
-                                            class="mdi mdi-chevron-left"></i></a> </li>
-                                <li class="page-item"> <a href="#" class="page-link">1</a> </li>
-                                <li class="page-item active"> <a href="#" class="page-link">2</a> </li>
-                                <li class="page-item"> <a href="#" class="page-link">3</a> </li>
-                                <li class="page-item"> <a href="#" class="page-link">4</a> </li>
-                                <li class="page-item"> <a href="#" class="page-link">5</a> </li>
-                                <li class="page-item"> <a href="#" class="page-link"><i
-                                            class="mdi mdi-chevron-right"></i></a> </li>
-                            </ul>
-                        </div><!-- end col -->
-                    </div><!-- end row -->
                 </div>
+
                 <!-- end tab pane -->
             </div>
         </div>
@@ -1797,157 +1125,6 @@
     </div>
     <!-- end row -->
     <!-- Modal -->
-    <div class="modal fade" id="inviteMembersModal" tabindex="-1" aria-labelledby="inviteMembersModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content border-0">
-                <div class="modal-header p-3 ps-4 bg-soft-success">
-                    <h5 class="modal-title" id="inviteMembersModalLabel">Members</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                </div>
-                <div class="modal-body p-4">
-                    <div class="search-box mb-3">
-                        <input type="text" class="form-control bg-light border-light"
-                               placeholder="Search here...">
-                        <i class="ri-search-line search-icon"></i>
-                    </div>
-
-                    <div class="mb-4 d-flex align-items-center">
-                        <div class="me-2">
-                            <h5 class="mb-0 fs-13">Members :</h5>
-                        </div>
-                        <div class="avatar-group justify-content-center">
-                            <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip"
-                               data-bs-trigger="hover" data-bs-placement="top" title="Brent Gonzalez">
-                                <div class="avatar-xs">
-                                    <img src="{{ URL::asset('assets/images/users/avatar-3.jpg') }}" alt=""
-                                         class="rounded-circle img-fluid">
-                                </div>
-                            </a>
-                            <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip"
-                               data-bs-trigger="hover" data-bs-placement="top" title="Sylvia Wright">
-                                <div class="avatar-xs">
-                                    <div class="avatar-title rounded-circle bg-secondary">
-                                        S
-                                    </div>
-                                </div>
-                            </a>
-                            <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip"
-                               data-bs-trigger="hover" data-bs-placement="top" title="Ellen Smith">
-                                <div class="avatar-xs">
-                                    <img src="{{ URL::asset('assets/images/users/avatar-4.jpg') }}" alt=""
-                                         class="rounded-circle img-fluid">
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="mx-n4 px-4" data-simplebar style="max-height: 225px;">
-                        <div class="vstack gap-3">
-                            <div class="d-flex align-items-center">
-                                <div class="avatar-xs flex-shrink-0 me-3">
-                                    <img src="{{ URL::asset('assets/images/users/avatar-2.jpg') }}" alt=""
-                                         class="img-fluid rounded-circle">
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h5 class="fs-13 mb-0"><a href="#" class="text-body d-block">Nancy
-                                            Martino</a>
-                                    </h5>
-                                </div>
-                                <div class="flex-shrink-0">
-                                    <button type="button" class="btn btn-light btn-sm">Add</button>
-                                </div>
-                            </div>
-                            <!-- end member item -->
-                            <div class="d-flex align-items-center">
-                                <div class="avatar-xs flex-shrink-0 me-3">
-                                    <div class="avatar-title bg-soft-danger text-danger rounded-circle">
-                                        HB
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h5 class="fs-13 mb-0"><a href="#" class="text-body d-block">Henry
-                                            Baird</a>
-                                    </h5>
-                                </div>
-                                <div class="flex-shrink-0">
-                                    <button type="button" class="btn btn-light btn-sm">Add</button>
-                                </div>
-                            </div>
-                            <!-- end member item -->
-                            <div class="d-flex align-items-center">
-                                <div class="avatar-xs flex-shrink-0 me-3">
-                                    <img src="{{ URL::asset('assets/images/users/avatar-3.jpg') }}" alt=""
-                                         class="img-fluid rounded-circle">
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h5 class="fs-13 mb-0"><a href="#" class="text-body d-block">Frank
-                                            Hook</a></h5>
-                                </div>
-                                <div class="flex-shrink-0">
-                                    <button type="button" class="btn btn-light btn-sm">Add</button>
-                                </div>
-                            </div>
-                            <!-- end member item -->
-                            <div class="d-flex align-items-center">
-                                <div class="avatar-xs flex-shrink-0 me-3">
-                                    <img src="{{ URL::asset('assets/images/users/avatar-4.jpg') }}" alt=""
-                                         class="img-fluid rounded-circle">
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h5 class="fs-13 mb-0"><a href="#" class="text-body d-block">Jennifer
-                                            Carter</a>
-                                    </h5>
-                                </div>
-                                <div class="flex-shrink-0">
-                                    <button type="button" class="btn btn-light btn-sm">Add</button>
-                                </div>
-                            </div>
-                            <!-- end member item -->
-                            <div class="d-flex align-items-center">
-                                <div class="avatar-xs flex-shrink-0 me-3">
-                                    <div class="avatar-title bg-soft-success text-success rounded-circle">
-                                        AC
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h5 class="fs-13 mb-0"><a href="#" class="text-body d-block">Alexis
-                                            Clarke</a>
-                                    </h5>
-                                </div>
-                                <div class="flex-shrink-0">
-                                    <button type="button" class="btn btn-light btn-sm">Add</button>
-                                </div>
-                            </div>
-                            <!-- end member item -->
-                            <div class="d-flex align-items-center">
-                                <div class="avatar-xs flex-shrink-0 me-3">
-                                    <img src="{{ URL::asset('assets/images/users/avatar-7.jpg') }}" alt=""
-                                         class="img-fluid rounded-circle">
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h5 class="fs-13 mb-0"><a href="#" class="text-body d-block">Joseph
-                                            Parker</a>
-                                    </h5>
-                                </div>
-                                <div class="flex-shrink-0">
-                                    <button type="button" class="btn btn-light btn-sm">Add</button>
-                                </div>
-                            </div>
-                            <!-- end member item -->
-                        </div>
-                        <!-- end list -->
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light w-xs" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-success w-xs">Invite</button>
-                </div>
-            </div>
-            <!-- end modal-content -->
-        </div>
-        <!-- modal-dialog -->
-    </div>
     <!-- end modal -->
     @push('scripts')
         <script src="{{ URL::asset('assets/js/pages/project-overview.init.js') }}"></script>

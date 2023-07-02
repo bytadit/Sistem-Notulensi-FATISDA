@@ -66,6 +66,7 @@ class DaftarRapatShow extends Component
             'jabatan_pegawais' => JabatanPegawai::all(),
             'users' => User::all(),
             'rapats' => Rapat::all(),
+            'presensis' => Presensi::where('id_rapat', $this->rapat_id)->get(),
             'members' => Presensi::where('id_rapat', $this->rapat_id)->take(5)->get()
                 // 'jabatans' => Jabatan::with('pegawai')->get(),
                 // 'pegawais' => Pegawai::with('jabatan')->get(),

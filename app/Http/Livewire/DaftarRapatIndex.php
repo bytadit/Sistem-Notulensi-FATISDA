@@ -7,20 +7,36 @@ use App\Models\Team;
 
 class DaftarRapatIndex extends Component
 {
-    public $daftar_rapat_delete_id, $daftar_rapat_old, $daftar_rapat_show_id, $team;
+    public $daftar_rapat_delete_id, $daftar_rapat_old, $daftar_rapat_show_id, $team, $rapat, $status_rapat = [];
     protected $listeners = [
         'rapatStored' => 'handleStored',
     ];
     public function mount()
     {
         $this->team = request()->team;
+        $this->rapat = Rapat::where('id_team', $this->team)->get();
+        $arr_rapat = Rapat::where('id_team', $this->team)->pluck('id');
+        $status_rapat = [];
+        foreach($arr_rapat as $rapat_id){
+            $status_rapat[$rapat_id] = Rapat::where('id', $rapat_id)->first()->status;
+        }
+        $this->status_rapat = $status_rapat;
     }
     public function render()
     {
         return view('livewire.daftar-rapat-index', [
-//            'meetings' => Rapat::whereIn('id_team', Team::where('name', 'like', Team::where('id', $this->team)->first()->name . '%')->pluck('id'))->get(),
             'meetings' => Rapat::where('id_team', $this->team)->get()
         ])->layout('layouts.dashboard');
+    }
+    public function updateStatus()
+    {
+        foreach($this->status_rapat as $rapatId => $status)
+        {
+            Rapat::find($rapatId)->update([
+                'status' => $status
+            ]);
+        }
+        session()->flash('message', 'Status Rapat Berhasil Diperbarui !');
     }
     public function getRapat($id)
     {

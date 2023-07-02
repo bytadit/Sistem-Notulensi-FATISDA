@@ -87,9 +87,9 @@
                         </div>
                         <ul class="nav nav-tabs-custom border-bottom-0" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active fw-semibold" data-bs-toggle="tab" href="#project-overview"
+                                <a class="nav-link active fw-semibold" data-bs-toggle="tab" href="#detail-rapat"
                                    role="tab">
-                                    Ringkasan
+                                    Detail
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -99,13 +99,13 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link fw-semibold" data-bs-toggle="tab" href="#project-documents"
+                                <a class="nav-link fw-semibold" data-bs-toggle="tab" href="#dokumentasi"
                                    role="tab">
                                     Dokumentasi
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link fw-semibold" data-bs-toggle="tab" href="#project-team"
+                                <a class="nav-link fw-semibold" data-bs-toggle="tab" href="#presensi"
                                    role="tab">
                                     Presensi
                                 </a>
@@ -129,7 +129,7 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="tab-content text-muted">
-                <div class="tab-pane fade show active" id="project-overview" role="tabpanel">
+                <div class="tab-pane fade show active" id="detail-rapat" role="tabpanel">
                     <div class="row">
                         <div class="col-xl-9 col-lg-8">
                             <div class="card">
@@ -725,7 +725,7 @@
                     <!-- end row -->
                 </div>
                 <!-- end tab pane -->
-                <div class="tab-pane fade" id="project-documents" role="tabpanel">
+                <div class="tab-pane fade" id="dokumentasi" role="tabpanel">
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex align-items-center mb-4">
@@ -1059,7 +1059,7 @@
                     <!--end card-->
                 </div>
                 <!-- end tab pane -->
-                <div class="tab-pane fade" id="project-team" role="tabpanel">
+                <div class="tab-pane fade" id="presensi" role="tabpanel">
                     <div class="row g-4 mb-3">
                         <div class="col-sm">
                             <div class="d-flex">

@@ -43,6 +43,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'dashboard'], function(){
     });
     Route::group( ['prefix' => 'user'], function () {
         Route::get('/{team}/jadwal-rapat', JadwalRapatIndex::class)->name('jadwal-rapat');
+        Route::get('/{team}/riwayat-rapat', RiwayatRapatIndex::class)->name('riwayat-rapat');
         Route::get('/{team}/jadwal-rapat/{rapat:slug}', UserJadwalRapatShow::class)->name('jadwal-rapat.show');
         Route::get('/{team}/jadwal-rapat/{rapat:slug}/notulensi', UserJadwalRapatNotulensi::class)->name('jadwal-rapat.notulensi');
         Route::get('/{team}/jadwal-rapat/{rapat:slug}/notulensi/edit', UserJadwalRapatNotulensiEdit::class)->name('jadwal-rapat.notulensi-edit');

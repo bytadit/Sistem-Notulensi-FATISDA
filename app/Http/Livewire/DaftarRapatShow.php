@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Notulensi;
 use Livewire\Component;
 use App\Models\Rapat;
 use App\Models\KategoriRapat;
@@ -18,11 +19,16 @@ class DaftarRapatShow extends Component
     public $judul_rapat, $kategori_rapat, $topik_rapat,
     $bentuk_rapat, $lokasi_rapat, $waktu_mulai, $waktu_selesai,
     $notulis, $penanggung_jawab, $prioritas, $deskripsi, $old_judul_rapat,
-    $status_rapat, $rapat_id, $team, $team_nama, $rapat_slug;
+    $status_rapat, $rapat_id, $team, $team_nama, $rapat_slug, $hasil_rapat, $catatan, $notulensi, $this_team, $user;
 
     public function mount(Rapat $rapat)
     {
         $this->rapat_id = $rapat->id;
+        $this->notulensi = Notulensi::all();
+        if(Notulensi::where('id_rapat', $this->rapat_id)->get()->count() != 0){
+            $this->hasil_rapat = Notulensi::where('id_rapat', $this->rapat_id)->first()->hasil_rapat;
+            $this->catatan = Notulensi::where('id_rapat', $this->rapat_id)->first()->catatan;
+        }
         $this->judul_rapat = $rapat->judul_rapat;
         $this->kategori_rapat = $rapat->kategoriRapat->nama;
         $this->topik_rapat = $rapat->topikRapat->nama;
@@ -36,6 +42,8 @@ class DaftarRapatShow extends Component
         $this->deskripsi = $rapat->deskripsi;
         $this->status_rapat = $rapat->status;
         $this->team = request()->team;
+        $this->this_team = Team::find($this->team);
+        $this->user = User::find(auth()->user()->id);
         $this->team_nama = Team::where('id', $this->team)->first()->display_name;
         $this->rapat_slug = Rapat::where('id', $this->rapat_id)->first()->slug;
     }
@@ -57,10 +65,11 @@ class DaftarRapatShow extends Component
             'pegawais' => Pegawai::all(),
             'jabatan_pegawais' => JabatanPegawai::all(),
             'users' => User::all(),
+            'rapats' => Rapat::all(),
             'members' => Presensi::where('id_rapat', $this->rapat_id)->take(5)->get()
-            // 'jabatans' => Jabatan::with('pegawai')->get(),
-            // 'pegawais' => Pegawai::with('jabatan')->get(),
-        ])->layout('layouts.dashboard');
+                // 'jabatans' => Jabatan::with('pegawai')->get(),
+                // 'pegawais' => Pegawai::with('jabatan')->get(),
+            ])->layout('layouts.dashboard');
     }
 
 }

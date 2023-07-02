@@ -176,7 +176,7 @@
                                                     </a>
                                                 </li>
                                                 <li class="nav-item">
-                                                    <a href="#sidebarSignIn" class="nav-link" role="button"
+                                                    <a href="{{ route('riwayat-rapat', ['team' => $team->id]) }}" class="nav-link" role="button"
                                                         aria-expanded="false" aria-controls="sidebarSignIn">
                                                         Riwayat Rapat
                                                     </a>
@@ -185,12 +185,12 @@
                                         </div>
                                     </li>
 
-                                    <li class="nav-item">
-                                        <a class="nav-link menu-link" href="#sidebarPages" role="button"
-                                            aria-expanded="false" aria-controls="sidebarPages">
-                                            <i class="mdi mdi-sticker-text-outline"></i> <span>Statistik Rapat</span>
-                                        </a>
-                                    </li>
+{{--                                    <li class="nav-item">--}}
+{{--                                        <a class="nav-link menu-link" href="#sidebarPages" role="button"--}}
+{{--                                            aria-expanded="false" aria-controls="sidebarPages">--}}
+{{--                                            <i class="mdi mdi-sticker-text-outline"></i> <span>Statistik Rapat</span>--}}
+{{--                                        </a>--}}
+{{--                                    </li>--}}
                                 </ul>
                             </div>
                         </li>

@@ -4,7 +4,7 @@
             Menu User
         @endslot
         @slot('title')
-            Jadwal Rapat
+            Riwayat Rapat
         @endslot
     @endcomponent
     @if(session()->has('message'))
@@ -15,10 +15,10 @@
     @endif
     {{-- modals --}}
     @if($statusUpdate)
-            <livewire:isi-presensi></livewire:isi-presensi>
-        @else
-            <livewire:konfirmasi-kehadiran></livewire:konfirmasi-kehadiran>
-            {{--         <livewire:jadwal-rapat-create></livewire:jadwal-rapat-create> --}}
+        <livewire:isi-presensi></livewire:isi-presensi>
+    @else
+        <livewire:konfirmasi-kehadiran></livewire:konfirmasi-kehadiran>
+        {{--         <livewire:jadwal-rapat-create></livewire:jadwal-rapat-create> --}}
     @endif
     {{-- modal delete --}}
     {{-- <div wire:ignore.self class="modal fade" id="modalDeleteKategori" tabindex="-1" aria-labelledby="modalDeleteKategoriLabel" aria-modal="true">
@@ -49,23 +49,23 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title mb-0">Jadwal Rapat</h5>
+                    <h5 class="card-title mb-0">Riwayat Rapat</h5>
                 </div>
                 <div class="card-body">
                     <table id="scroll-horizontal" class="table nowrap align-middle" style="width:100%">
                         <thead>
-                            <tr>
-                                <th>No.</th>
-                                <th>Prioritas</th>
-                                <th>Judul Rapat</th>
-                                <th>Kategori</th>
-                                <th>Topik</th>
-                                <th>Status</th>
-                                <th>Aksi</th>
-                            </tr>
+                        <tr>
+                            <th>No.</th>
+                            <th>Prioritas</th>
+                            <th>Judul Rapat</th>
+                            <th>Kategori</th>
+                            <th>Topik</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            @foreach ($rapats as $rapat)
+                        @foreach ($rapats as $rapat)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td><span class="badge
@@ -78,14 +78,14 @@
                                                 @endif
                                                 ">
                                                 @if ($rapat->prioritas == 1)
-                                                    Rendah
-                                                @elseif ($rapat->prioritas == 2)
-                                                    Sedang
-                                                @elseif($rapat->prioritas == 3)
-                                                    Tinggi
-                                                @endif
+                                            Rendah
+                                        @elseif ($rapat->prioritas == 2)
+                                            Sedang
+                                        @elseif($rapat->prioritas == 3)
+                                            Tinggi
+                                        @endif
                                             </span>
-                                        </td>
+                                </td>
                                 <td>{{ $rapat->judul_rapat }}</td>
                                 <td>{{ $rapat->kategoriRapat->nama }}</td>
                                 <td>{{ $rapat->topikRapat->nama }}</td>
@@ -119,8 +119,8 @@
                                             </a>
                                             @elseif($user->hasRole('user', $this_team))
                                                 <a class="btn btn-sm btn-info edit-item-btn align-middle" data-bs-toggle="tooltip"
-                                                    data-bs-placement="top" title="Lihat Rapat"
-                                                    href="{{ route('jadwal-rapat.show', ['team' => $team, 'rapat' => $rapat->slug]) }}">
+                                                   data-bs-placement="top" title="Lihat Rapat"
+                                                   href="{{ route('jadwal-rapat.show', ['team' => $team, 'rapat' => $rapat->slug]) }}">
                                                     <i class="mdi mdi-eye"></i>
                                                     Lihat
                                                 </a>
@@ -140,7 +140,10 @@
                                                         Presensi
                                                 </a>
                                             </span>
-                                        @else
+{{--                                        @else--}}
+{{--                                            <span class="btn btn-sm btn-danger edit-item-btn align-middle">--}}
+{{--                                                Rapat Telah Selesai--}}
+{{--                                            </span>--}}
                                         @endif
 
                                         {{-- <span wire:click="editRapat({{ $rapat->id }})" class="cursor-pointer">
@@ -162,7 +165,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            @endforeach
+                        @endforeach
                         </tbody>
                     </table>
                 </div>

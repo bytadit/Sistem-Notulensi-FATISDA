@@ -229,6 +229,22 @@
             $('#modalCreateRole').modal('show')
         });
     </script>
+    <script>
+        window.addEventListener('close-edit-modal', event => {
+            $('#modalPresensi').modal('hide')
+        });
+        window.addEventListener('show-edit-modal', event => {
+            $('#modalPresensi').modal('show')
+        });
+    </script>
+    <script>
+        window.addEventListener('close-edit-modal', event => {
+            $('#modalKonfirmasi').modal('hide')
+        });
+        window.addEventListener('show-edit-modal', event => {
+            $('#modalKonfirmasi').modal('show')
+        });
+    </script>
 
 <script>
     window.addEventListener('close-members-modal', event => {

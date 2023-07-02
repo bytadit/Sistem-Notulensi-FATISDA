@@ -91,23 +91,30 @@
                                 <td>{{ $meeting->judul_rapat }}</td>
                                 <td>{{ $meeting->kategoriRapat->nama }}</td>
                                 <td>{{ $meeting->topikRapat->nama }}</td>
-                                <td><span class="badge
-                                        @if ($meeting->status == 0)
-                                            badge-soft-primary
-                                        @elseif ($meeting->status == 1)
-                                            badge-soft-info
-                                        @elseif($meeting->status == 2)
-                                            badge-soft-danger
-                                        @endif
-                                        ">
-                                        @if ($meeting->status == 0)
-                                            Dijadwalkan
-                                        @elseif ($meeting->status == 1)
-                                            Berlangsung
-                                        @elseif($meeting->status == 2)
-                                            Selesai
-                                        @endif
-                                    </span>
+                                <td>
+                                    <select id="status{{$meeting->id}}" wire:model="status_rapat.{{$meeting->id}}" :key="{{ $meeting->id }}" wire:change="updateStatus" class="form-select"
+                                            aria-label="Pilih Status Rapat">
+                                        <option {{$meeting->status == 0 ? 'selected' : ''}} value=0>Dijadwalkan</option>
+                                        <option {{$meeting->status == 1 ? 'selected' : ''}} value=1>Berlangsung</option>
+                                        <option {{$meeting->status == 2 ? 'selected' : ''}} value=2>Selesai</option>
+                                    </select>
+{{--                                    <span class="badge--}}
+{{--                                        @if ($meeting->status == 0)--}}
+{{--                                            badge-soft-primary--}}
+{{--                                        @elseif ($meeting->status == 1)--}}
+{{--                                            badge-soft-info--}}
+{{--                                        @elseif($meeting->status == 2)--}}
+{{--                                            badge-soft-danger--}}
+{{--                                        @endif--}}
+{{--                                        ">--}}
+{{--                                        @if ($meeting->status == 0)--}}
+{{--                                            Dijadwalkan--}}
+{{--                                        @elseif ($meeting->status == 1)--}}
+{{--                                            Berlangsung--}}
+{{--                                        @elseif($meeting->status == 2)--}}
+{{--                                            Selesai--}}
+{{--                                        @endif--}}
+{{--                                    </span>--}}
                                 </td>
                                 <td>
                                     <div class="d-flex gap-2">

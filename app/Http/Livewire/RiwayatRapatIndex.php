@@ -2,22 +2,20 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\JabatanPegawai;
-use Livewire\Component;
-use App\Models\Rapat;
-use App\Models\Presensi;
 use App\Models\Pegawai;
-use App\Models\User;
+use App\Models\Presensi;
+use App\Models\Rapat;
 use App\Models\Team;
+use App\Models\User;
+use Livewire\Component;
 
-class JadwalRapatIndex extends Component
+class RiwayatRapatIndex extends Component
 {
     public $statusUpdate = false, $rapat, $team, $user, $this_team;
     public function render()
     {
-        return view('livewire.jadwal-rapat-index', [
-            'rapats' => Rapat::whereIn('id', Presensi::where('id_pegawai', Pegawai::where('id_user', auth()->user()->id)->first()->id)->pluck('id_rapat'))->where('id_team', $this->team)->where('status', '<', 2)->get()
-            // 'rapats' => Rapat::all()
+        return view('livewire.riwayat-rapat-index', [
+            'rapats' => Rapat::whereIn('id', Presensi::where('id_pegawai', Pegawai::where('id_user', auth()->user()->id)->first()->id)->pluck('id_rapat'))->where('id_team', $this->team)->where('status', '>', 1)->get()
         ])->layout('layouts.dashboard');
     }
     protected $listeners = [
@@ -51,6 +49,6 @@ class JadwalRapatIndex extends Component
         $this->team = request()->team;
         $this->this_team = Team::find($this->team);
         $this->user = User::find(auth()->user()->id);
-    }
 
+    }
 }

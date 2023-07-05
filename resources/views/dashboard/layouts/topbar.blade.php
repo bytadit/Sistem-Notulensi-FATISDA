@@ -367,7 +367,7 @@
                     <button type="button" class="btn shadow-none" id="page-header-user-dropdown" data-bs-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         <span class="d-flex align-items-center">
-                            <img class="rounded-circle header-profile-user" src="@if (\App\Models\Pegawai::where('id_user', auth()->user()->id)->first()->path_photo != '') {{ Storage::url(\App\Models\Pegawai::where('id_user', auth()->user()->id)->first()->path_photo) }}@else{{ asset('assets/images/users/avatar-1.jpg') }} @endif"
+                            <img class="rounded-circle header-profile-user" src="@if (\App\Models\Pegawai::where('id_user', auth()->user()->id)->first()->path_photo != null) {{ Storage::url(\App\Models\Pegawai::where('id_user', auth()->user()->id)->first()->path_photo) }}@else{{ Storage::url('/assets/images/users/avatar-1.jpg') }} @endif"
                                 alt="Header Avatar">
                             <span class="text-start ms-xl-2">
                                 <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">{{Auth::user()->name}}</span>

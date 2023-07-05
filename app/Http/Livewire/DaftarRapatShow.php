@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Dokumentasi;
 use App\Models\Notulensi;
 use Livewire\Component;
 use App\Models\Rapat;
@@ -13,14 +14,45 @@ use App\Models\Jabatan;
 use App\Models\User;
 use App\Models\Team;
 use App\Models\Presensi;
+use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Storage;
 
 class DaftarRapatShow extends Component
 {
-    public $judul_rapat, $kategori_rapat, $topik_rapat,
-    $bentuk_rapat, $lokasi_rapat, $waktu_mulai, $waktu_selesai,
-    $notulis, $penanggung_jawab, $prioritas, $deskripsi, $old_judul_rapat,
+    use WithFileUploads;
+    public $judul_rapat, $kategori_rapat, $topik_rapat, $dokumentasiUpdate = false,
+    $bentuk_rapat, $lokasi_rapat, $waktu_mulai, $waktu_selesai, $dokumentasi_delete_id, $dokumentasi_old,
+    $notulis, $penanggung_jawab, $prioritas, $deskripsi, $old_judul_rapat, $tab = 'dokumentasi', $old_path,
     $status_rapat, $rapat_id, $team, $team_nama, $rapat_slug, $hasil_rapat, $catatan, $notulensi, $this_team, $user;
 
+    protected $listeners = [
+        'dokumentasiStored' => 'handleDokumentasiStored',
+        'dokumentasiUpdated' => 'handleDokumentasiUpdated'
+    ];
+    public function render()
+    {
+        $getTipeFile = function ($data) {
+            $arrData = explode('.', $data);
+            return $arrData[1];
+        };
+        return view('livewire.daftar-rapat-show', [
+            'getTipeFile' => $getTipeFile,
+            'categories' => KategoriRapat::latest()->get(),
+            'topics' => Topik::latest()->get(),
+            'many_notulis' => JabatanPegawai::all(),
+            'many_penanggung_jawab' => JabatanPegawai::all(),
+            'jabatans' => Jabatan::all(),
+            'pegawais' => Pegawai::all(),
+            'jabatan_pegawais' => JabatanPegawai::all(),
+            'users' => User::all(),
+            'rapats' => Rapat::all(),
+            'presensis' => Presensi::where('id_rapat', $this->rapat_id)->get(),
+            'documents' => Dokumentasi::where('id_rapat', $this->rapat_id)->get(),
+            'members' => Presensi::where('id_rapat', $this->rapat_id)->take(5)->get()
+            // 'jabatans' => Jabatan::with('pegawai')->get(),
+            // 'pegawais' => Pegawai::with('jabatan')->get(),
+        ])->layout('layouts.dashboard');
+    }
     public function mount(Rapat $rapat)
     {
         $this->rapat_id = $rapat->id;
@@ -47,6 +79,57 @@ class DaftarRapatShow extends Component
         $this->team_nama = Team::where('id', $this->team)->first()->display_name;
         $this->rapat_slug = Rapat::where('id', $this->rapat_id)->first()->slug;
     }
+    public function getDokumentasi($id)
+    {
+        $this->dokumentasiUpdate = true;
+        $dokumentasiRapat = Dokumentasi::find($id);
+        $this->emit('getDokumentasi', $dokumentasiRapat);
+    }
+    public function deleteDokumentasiConfirmation($id)
+    {
+        if($id){
+            $this->dokumentasi_delete_id = $id;
+            $dokumentasiRapat = Dokumentasi::find($this->dokumentasi_delete_id);
+            $this->dokumentasi_old = $dokumentasiRapat->nama;
+        }
+    }
+    public function getCreateDokumentasi($id){
+        $this->dokumentasiUpdate = false;
+        $rapat = Rapat::find($id);
+        $this->emit('getCreateDokumentasi', $rapat);
+        $this->dispatchBrowserEvent('show-create-dokumentasi');
+    }
+    public function unduhDokumen($id)
+    {
+        $dokumen = Dokumentasi::find($id);
+        $arrDoc  = explode('dokumen/',$dokumen->path);
+//        return Storage::disk('exports')->download('export.csv');
+        return response()->download(storage_path('/app/public/storage/dokumen/' . $arrDoc[1]));
+    }
+    public function deleteDokumentasi()
+    {
+        $dokumentasiRapat = Dokumentasi::find($this->dokumentasi_delete_id);
+        $this->old_path = Dokumentasi::where('id', $this->dokumentasi_delete_id)->first()->path;
+        Storage::delete('/'.$this->old_path);
+        $dokumentasiRapat->delete();
+        $this->old_path = '';
+        session()->flash('message', 'Dokumen ' . $this->dokumentasi_old . ' Berhasil Dihapus !');
+        $this->dokumentasi_delete_id = '';
+        $this->dokumentasi_old = '';
+        $this->dispatchBrowserEvent('close-delete-dokumentasi');
+    }
+    public function cancel()
+    {
+        $this->dokumentasi_delete_id = '';
+    }
+    public function handleDokumentasiStored($dokumentasi)
+    {
+        session()->flash('message', 'Dokumen ' . $dokumentasi['nama'] . ' Berhasil Ditambahkan !');
+    }
+    public function handleDokumentasiUpdated($kategori_rapat)
+    {
+        session()->flash('message', 'Informasi Dokumen Berhasil Diubah !');
+    }
 
     // protected $listeners = [
     //     'getRapat' => 'showRapat'
@@ -54,23 +137,5 @@ class DaftarRapatShow extends Component
     // public function showRapat($daftarRapat){
     //     $this->judul_rapat = $daftarRapat->judul_rapat;
     // }
-    public function render()
-    {
-    return view('livewire.daftar-rapat-show', [
-            'categories' => KategoriRapat::latest()->get(),
-            'topics' => Topik::latest()->get(),
-            'many_notulis' => JabatanPegawai::all(),
-            'many_penanggung_jawab' => JabatanPegawai::all(),
-            'jabatans' => Jabatan::all(),
-            'pegawais' => Pegawai::all(),
-            'jabatan_pegawais' => JabatanPegawai::all(),
-            'users' => User::all(),
-            'rapats' => Rapat::all(),
-            'presensis' => Presensi::where('id_rapat', $this->rapat_id)->get(),
-            'members' => Presensi::where('id_rapat', $this->rapat_id)->take(5)->get()
-                // 'jabatans' => Jabatan::with('pegawai')->get(),
-                // 'pegawais' => Pegawai::with('jabatan')->get(),
-            ])->layout('layouts.dashboard');
-    }
 
 }

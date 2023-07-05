@@ -245,12 +245,28 @@
             $('#modalKonfirmasi').modal('show')
         });
     </script>
+    <script>
+        window.addEventListener('close-create-dokumentasi', event => {
+            $('#modalCreateDokumentasi').modal('hide')
+        });
+        window.addEventListener('close-delete-dokumentasi', event => {
+            $('#modalDeleteDokumentasi').modal('hide')
+        });
+        window.addEventListener('close-edit-dokumentasi', event => {
+            $('#modalEditDokumentasi').modal('hide')
+        });
+        window.addEventListener('show-edit-dokumentasi', event => {
+            $('#modalEditDokumentasi').modal('show')
+        });
+        window.addEventListener('show-create-dokumentasi', event => {
+            $('#modalCreateDokumentasi').modal('show')
+        });
+    </script>
 
 <script>
     window.addEventListener('close-members-modal', event => {
         $('#inviteMembersModal').modal('hide')
     });
-
 </script>
 </body>
 

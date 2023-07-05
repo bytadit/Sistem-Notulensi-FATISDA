@@ -729,7 +729,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex align-items-center mb-4">
-                                <h5 class="card-title flex-grow-1">Documents</h5>
+                                <h5 class="card-title flex-grow-1">Dokumentasi Rapat</h5>
                             </div>
                             <div class="row">
                                 <div class="col-lg-12">
@@ -1047,8 +1047,12 @@
                                 <h6 class="card-title mb-0">Hasil Rapat</h6>
                             </div>
                             <div class="card-body">
-                                <p class="text-dark">
-                                    {!! $hasil_rapat !!}
+                                <p class="card-text">
+                                    @if($hasil_rapat == '')
+                                        <i>Hasil Rapat Masih Kosong....</i>
+                                    @else
+                                        {!!  $hasil_rapat !!}
+                                    @endif
                                 </p>
                             </div>
                         </div>
@@ -1059,8 +1063,12 @@
                                 <h6 class="card-title mb-0">Catatan Rapat</h6>
                             </div>
                             <div class="card-body">
-                                <p class="text-dark">
-                                    {!! $catatan !!}
+                                <p class="card-text">
+                                    @if($catatan == '')
+                                        <i>Catatan Rapat Masih Kosong....</i>
+                                    @else
+                                        {!! $catatan !!}
+                                    @endif
                                 </p>
                             </div>
                         </div>
@@ -1069,52 +1077,71 @@
                 </div>
                 <!-- end tab pane -->
                 <div class="tab-pane fade" id="presensi" role="tabpanel">
-                    <div class="row g-4 mb-3">
-                        {{--search--}}
-                        <div class="col-sm">
-                            <div class="d-flex">
-                                <div class="search-box me-2">
-                                    <input type="text" class="form-control" placeholder="Cari Anggota...">
-                                    <i class="ri-search-line search-icon"></i>
+                    <!-- end row -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">Peserta {{ $judul_rapat }}</h5>
+                                </div>
+                                <div class="card-body">
+                                    <table id="scroll-horizontal" class="table nowrap align-middle" style="width:100%">
+                                        <thead>
+                                        <tr>
+                                            <th>No.</th>
+                                            <th>Nama</th>
+                                            <th>Jabatan Peserta</th>
+                                            <th>Role Rapat</th>
+                                            <th>Status Kehadiran</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach ($presensis as $presensi)
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $users->where('id', $pegawais->where('id', $presensi->id_pegawai)->first()->id_user)->first()->name }}
+                                                </td>
+                                                <td>{{ $presensi->jabatan_peserta }}</td>
+                                                <td>
+                                                    @if($users->find($pegawais->where('id', $presensi->id_pegawai)->first()->id_user)->hasRole('penanggung-jawab', $this_team) == true)
+                                                        Penanggung Jawab
+                                                    @elseif($users->find($pegawais->where('id', $presensi->id_pegawai)->first()->id_user)->hasRole('notulis', $this_team) == true)
+                                                        Notulis
+                                                    @else
+                                                        Anggota
+                                                    @endif
+                                                </td>
+                                                <td><span class="badge
+                                        @if ($presensi->status_kehadiran == 0)
+                                            bg-danger
+                                        @elseif ($presensi->status_kehadiran  == 1)
+                                            bg-success
+                                        @elseif($presensi->status_kehadiran  == 2)
+                                            bg-warning
+                                        @elseif($presensi->status_kehadiran  == 3)
+                                            bg-dark
+                                        @endif
+                                        ">
+                                        @if ($presensi->status_kehadiran == 0)
+                                                            Tidak Hadir
+                                                        @elseif ($presensi->status_kehadiran == 1)
+                                                            Hadir
+                                                        @elseif($presensi->status_kehadiran == 2)
+                                                            Izin
+                                                        @elseif($presensi->status_kehadiran == 3)
+                                                            Sakit
+                                                        @endif
+                                    </span>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- end row -->
-                    <div class="team-list list-view-filter">
-                        @foreach($presensis as $presensi)
-                            <div class="card team-box">
-                                <div class="card-body px-4">
-                                    <div class="row align-items-center team-row">
-                                        {{--                                    start--}}
-                                        <div class="col-lg-4 col">
-                                            <div class="team-profile-img">
-                                                <div class="avatar-lg img-thumbnail rounded-circle shadow object-cover">
-                                                    <img src="{{ Storage::url($pegawais->where('id', $presensi->id_pegawai)->first()->path_photo) }}"
-                                                         alt="" class="img-fluid d-block rounded-circle" />
-                                                </div>
-                                                <div class="team-content">
-                                                    <a href="#" class="d-block">
-                                                        <h5 class="fs-16 mb-1">{{ $users->where('id', $pegawais->where('id', $presensi->id_pegawai)->first()->id_user)->first()->name }}</h5>
-                                                    </a>
-                                                    <p class="text-muted mb-0">{{ $presensi->jabatan_peserta }}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        {{--                                    start--}}
-                                        {{--                                        <div class="col-lg-2 col">--}}
-                                        {{--                                            <div class="text-end">--}}
-                                        {{--                                                <a href="{{ URL::asset('/pages-profile') }}"--}}
-                                        {{--                                                    class="btn btn-light view-btn">View Profile</a>--}}
-                                        {{--                                            </div>--}}
-                                        {{--                                        </div>--}}
-                                        {{--                                    end--}}
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                        <!--end card-->
-                    </div>
+
                     <!-- end team list -->
                 </div>
 

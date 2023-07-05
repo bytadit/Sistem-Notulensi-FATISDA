@@ -118,29 +118,21 @@
                                 </td>
                                 <td>
                                     <div class="d-flex gap-2">
-                                        {{-- <div class="edit">
-                                            <button class="btn btn-sm btn-success edit-item-btn"
-                                            data-bs-toggle="modal" data-bs-target="#showModal">Edit</button>
-                                        </div> --}}
                                         <span wire:click='deleteConfirmation({{ $meeting->id }})'
                                             class="cursor-pointer" data-bs-toggle="modal"
                                             data-bs-target="#modalDeleteRapat">
                                             <a class="btn btn-sm btn-danger edit-item-btn align-middle" data-toggle="delete"
                                                 data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus Rapat">
                                                 <i class="mdi mdi-trash-can"></i>
-                                                Hapus
+{{--                                                Hapus--}}
                                             </a>
                                         </span>
-
-                                        {{-- <div class="remove">
-                                            <button class="btn btn-sm btn-danger remove-item-btn" data-bs-toggle="modal" data-bs-target="#deleteRecordModal">Remove</button>
-                                        </div> --}}
                                         <span wire:click="getRapat({{ $meeting->id }})" class="cursor-pointer">
                                             <a class="btn btn-sm btn-info edit-item-btn align-middle" data-bs-toggle="tooltip"
                                                 data-bs-placement="top" title="Lihat Rapat"
                                                 href="daftar-rapat/{{ $meeting->slug }}">
                                                 <i class="mdi mdi-eye"></i>
-                                                Lihat
+{{--                                                Lihat--}}
                                             </a>
                                         </span>
                                         <span wire:click="editRapat({{ $meeting->id }})" class="cursor-pointer">
@@ -148,7 +140,7 @@
                                                 data-bs-placement="top" title="Ubah Data"
                                                 href="daftar-rapat/{{ $meeting->slug }}/edit">
                                                 <i class="mdi mdi-pencil-box-multiple"></i>
-                                                Ubah
+{{--                                                Ubah--}}
                                             </a>
                                         </span>
                                         <span wire:click="addMembers({{ $meeting->id }})" class="cursor-pointer">
@@ -156,7 +148,6 @@
                                                 data-bs-placement="top" title="Atur Anggota"
                                                 href="{{ route('rapat-members', ['team' => $team, 'rapat' => $meeting->slug]) }}">
                                                 <i class="mdi mdi-account-group"></i>
-                                                Atur Anggota
                                             </a>
                                         </span>
                                     </div>

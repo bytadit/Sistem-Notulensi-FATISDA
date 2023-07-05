@@ -113,6 +113,18 @@
                                 id="menuAdmin{{ Auth::user()->id . $team->name . 'admin' }}">
                                 <ul class="nav nav-sm flex-column">
                                     <li class="nav-item">
+                                        <a class="nav-link  menu-link" href="/dashboard/admin/{{ $team->id }}/kategori-rapat" role="button"
+                                           aria-expanded="false" aria-controls="sidebarApps">
+                                            <i class="mdi mdi-view-grid-plus-outline"></i> <span>Kategori Rapat</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link menu-link" href="/dashboard/admin/{{ $team->id }}/topik-rapat" role="button"
+                                           aria-expanded="false" aria-controls="sidebarLayouts">
+                                            <i class="mdi mdi-view-carousel-outline"></i> <span>Topik Rapat</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a class="nav-link menu-link" href="/dashboard/admin/{{ $team->id }}/manage-pejabat" role="button"
                                             aria-expanded="false" aria-controls="sidebarDashboards">
                                             <i class="mdi mdi-view-grid-plus-outline"></i> <span>Atur Pejabat</span>
@@ -125,18 +137,7 @@
                                         </a>
 
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link  menu-link" href="/dashboard/admin/{{ $team->id }}/kategori-rapat" role="button"
-                                            aria-expanded="false" aria-controls="sidebarApps">
-                                            <i class="mdi mdi-view-grid-plus-outline"></i> <span>Kategori Rapat</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link menu-link" href="/dashboard/admin/{{ $team->id }}/topik-rapat" role="button"
-                                            aria-expanded="false" aria-controls="sidebarLayouts">
-                                            <i class="mdi mdi-view-carousel-outline"></i> <span>Topik Rapat</span>
-                                        </a>
-                                    </li> <!-- end Dashboard Menu -->
+                                    <!-- end Dashboard Menu -->
                                 </ul>
                             </div>
                         </li>

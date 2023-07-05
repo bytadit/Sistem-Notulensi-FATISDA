@@ -5,7 +5,6 @@ use App\Models\KategoriRapat;
 use Livewire\Component;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
 class KategoriRapatCreate extends Component
 {
     public $kategori_rapat, $team;

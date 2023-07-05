@@ -50,8 +50,8 @@ public function mount(Rapat $rapat)
     $this->topik_rapat = $rapat->id_topik;
     $this->bentuk_rapat = $rapat->bentuk_rapat;
     $this->lokasi_rapat = $rapat->lokasi_rapat;
-    $this->waktu_mulai = \Carbon\Carbon::parse($rapat->waktu_mulai)->format('d-m-Y h:i');
-    $this->waktu_selesai = \Carbon\Carbon::parse($rapat->waktu_selesai)->format('d-m-Y h:i');
+    $this->waktu_mulai = \Carbon\Carbon::parse($rapat->waktu_mulai)->format('d-m-Y H:i');
+    $this->waktu_selesai = \Carbon\Carbon::parse($rapat->waktu_selesai)->format('d-m-Y H:i');
     $this->penanggung_jawab = $rapat->id_penanggung_jawab;
     $this->notulis = $rapat->id_notulis;
     $this->prioritas = $rapat->prioritas;
@@ -125,8 +125,8 @@ public function updateRapat()
             'id_topik' => $this->topik_rapat,
             'bentuk_rapat' => $this->bentuk_rapat,
             'lokasi_rapat' => $this->lokasi_rapat,
-            'waktu_mulai' => \Carbon\Carbon::createFromFormat('d-m-Y h:i', $this->waktu_mulai),
-            'waktu_selesai' =>  \Carbon\Carbon::createFromFormat('d-m-Y h:i', $this->waktu_selesai),
+            'waktu_mulai' => \Carbon\Carbon::createFromFormat('d-m-Y H:i', $this->waktu_mulai),
+            'waktu_selesai' =>  \Carbon\Carbon::createFromFormat('d-m-Y H:i', $this->waktu_selesai),
             'id_penanggung_jawab' => $this->penanggung_jawab,
             'id_notulis' => $this->notulis,
             'prioritas' => $this->prioritas,

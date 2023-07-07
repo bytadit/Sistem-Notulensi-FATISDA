@@ -15,7 +15,7 @@ use App\Models\Team;
 
 class ManageUserEdit extends Component
 {
-    public $user_name, $user_id, $user, $role_array = [], $permission_array = [], $old_user, $team, $team_name;
+    public $user_name, $user_delete_id, $user_id, $user, $role_array = [], $permission_array = [], $old_user, $team, $team_name;
     public function render()
     {
         return view('livewire.manage-user-edit', [

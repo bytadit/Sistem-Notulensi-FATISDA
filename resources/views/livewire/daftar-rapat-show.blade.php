@@ -70,7 +70,7 @@
                                                 <div><i class="ri-building-line align-bottom me-1"></i> {{ $team_nama }}
                                                 </div>
                                                 <div class="vr"></div>
-                                                <div><span class="fw-medium">{{ Carbon\Carbon::parse($waktu_mulai)->format('d F, Y g:i A') . ' - ' . Carbon\Carbon::parse($waktu_selesai)->format('d F, Y g:i A') . ''  }}</span></div>
+                                                <div><span class="fw-medium">{{ $waktu_mulai . ' WIB'. ' s/d ' . $waktu_selesai . ' WIB'  }}</span></div>
                                                 {{-- <div class="vr"></div> --}}
                                                 {{-- <div>Waktu Selesai : <span class="fw-medium">{{ Carbon\Carbon::parse($waktu_selesai)->format('d F, Y h:i') . ' WIB' }}</span></div> --}}
                                                 <div class="vr"></div>

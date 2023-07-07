@@ -66,8 +66,8 @@ class DaftarRapatShow extends Component
         $this->topik_rapat = $rapat->topikRapat->nama;
         $this->bentuk_rapat = $rapat->bentuk_rapat;
         $this->lokasi_rapat = $rapat->lokasi_rapat;
-        $this->waktu_mulai = \Carbon\Carbon::parse($rapat->waktu_mulai)->format('d-m-Y h:i');
-        $this->waktu_selesai = \Carbon\Carbon::parse($rapat->waktu_selesai)->format('d-m-Y h:i');
+        $this->waktu_mulai = \Carbon\Carbon::parse($rapat->waktu_mulai)->format('d-m-Y H:i');
+        $this->waktu_selesai = \Carbon\Carbon::parse($rapat->waktu_selesai)->format('d-m-Y H:i');
         $this->penanggung_jawab = $rapat->id_penanggung_jawab;
         $this->notulis = $rapat->id_notulis;
         $this->prioritas = $rapat->prioritas;
@@ -101,10 +101,14 @@ class DaftarRapatShow extends Component
     }
     public function unduhDokumen($id)
     {
+        $getTipeFile = function ($data) {
+            $arrData = explode('.', $data);
+            return $arrData[1];
+        };
         $dokumen = Dokumentasi::find($id);
         $arrDoc  = explode('dokumen/',$dokumen->path);
 //        return Storage::disk('exports')->download('export.csv');
-        return response()->download(storage_path('/app/public/storage/dokumen/' . $arrDoc[1]));
+        return response()->download(storage_path('/app/public/storage/dokumen/' . $arrDoc[1]), $dokumen->nama . '.' . $getTipeFile($dokumen->path));
     }
     public function deleteDokumentasi()
     {

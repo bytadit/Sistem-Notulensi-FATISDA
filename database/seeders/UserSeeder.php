@@ -27,5 +27,35 @@ class UserSeeder extends Seeder
             'name' => 'Tetra Handayani',
             'password' => Hash::make('tetra_123')
         ]);
+        DB::table('users')->insert([
+            'email' => 'user1@staff.uns.ac.id',
+            'username' => 'user1',
+            'name' => 'User 1',
+            'password' => Hash::make('user_123')
+        ]);
+        DB::table('users')->insert([
+            'email' => 'user2@staff.uns.ac.id',
+            'username' => 'user2',
+            'name' => 'User 2',
+            'password' => Hash::make('user_123')
+        ]);
+        DB::table('users')->insert([
+            'email' => 'user3@staff.uns.ac.id',
+            'username' => 'user3',
+            'name' => 'User 3',
+            'password' => Hash::make('user_123')
+        ]);
+        DB::table('users')->insert([
+            'email' => 'user4@staff.uns.ac.id',
+            'username' => 'user4',
+            'name' => 'User 4',
+            'password' => Hash::make('user_123')
+        ]);
+        DB::table('users')->insert([
+            'email' => 'user5@staff.uns.ac.id',
+            'username' => 'user5',
+            'name' => 'User 5',
+            'password' => Hash::make('user_123')
+        ]);
     }
 }

@@ -13,7 +13,7 @@ use Livewire\Component;
 
 class ManageUserTeam extends Component
 {
-    public $statusUpdate = false, $user_team_delete_id, $user_team_old, $team, $user_id, $user_name;
+    public $statusUpdate = false, $user_team_delete_id, $user_team_old, $team, $user_id, $user_delete_id, $user_name;
     public function render()
     {
         return view('livewire.manage-user-team', [

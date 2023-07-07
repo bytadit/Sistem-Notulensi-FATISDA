@@ -16,6 +16,38 @@
             {{ $judul_rapat }}
         @endslot
     @endcomponent
+
+        @if($dokumentasiUpdate)
+            {{-- modal update --}}
+            <livewire:dokumentasi-edit></livewire:dokumentasi-edit>
+        @else
+            {{-- modal create --}}
+            <livewire:dokumentasi-create></livewire:dokumentasi-create>
+        @endif
+
+        {{-- modal delete --}}
+        <div wire:ignore.self class="modal fade" id="modalDeleteDokumentasi" tabindex="-1" aria-labelledby="modalDeleteDokumentasiLabel" aria-modal="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalDeleteDokumentasiLabel">Konfirmasi Penghapusan</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body py-4">
+                        <h6>Apakah yakin ingin menghapus Dokumen <strong>{{ $dokumentasi_old }}</strong> ?</h6>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="col-lg-12">
+                            <div class="hstack gap-2 justify-content-end">
+                                <button wire:click='cancel()'type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
+                                <button wire:click='deleteDokumentasi()'type="submit" class="btn btn-primary">Yakin</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- end modal delete --}}
     <div class="row">
         <div class="col-12">
             <div class="card mt-n4 mx-n4">
@@ -39,7 +71,7 @@
                                                 <div><i class="ri-building-line align-bottom me-1"></i> {{ $team_nama }}
                                                 </div>
                                                 <div class="vr"></div>
-                                                <div><span class="fw-medium">{{ Carbon\Carbon::parse($waktu_mulai)->format('d F, Y h:i') . ' WIB - ' . Carbon\Carbon::parse($waktu_selesai)->format('d F, Y h:i') . ' WIB'  }}</span></div>
+                                                <div><span class="fw-medium">{{ $waktu_mulai . ' WIB'. ' s/d ' . $waktu_selesai . ' WIB'  }}</span></div>
                                                 {{-- <div class="vr"></div> --}}
                                                 {{-- <div>Waktu Selesai : <span class="fw-medium">{{ Carbon\Carbon::parse($waktu_selesai)->format('d F, Y h:i') . ' WIB' }}</span></div> --}}
                                                 <div class="vr"></div>
@@ -725,11 +757,315 @@
                     <!-- end row -->
                 </div>
                 <!-- end tab pane -->
+{{--                <div class="tab-pane fade" id="dokumentasi" role="tabpanel">--}}
+{{--                    <div class="card">--}}
+{{--                        <div class="card-body">--}}
+{{--                            <div class="d-flex align-items-center mb-4">--}}
+{{--                                <h5 class="card-title flex-grow-1">Dokumentasi Rapat</h5>--}}
+{{--                            </div>--}}
+{{--                            <div class="row">--}}
+{{--                                <div class="col-lg-12">--}}
+{{--                                    <div class="table-responsive table-card">--}}
+{{--                                        <table class="table table-borderless align-middle mb-0">--}}
+{{--                                            <thead class="table-light">--}}
+{{--                                            <tr>--}}
+{{--                                                <th scope="col">File Name</th>--}}
+{{--                                                <th scope="col">Type</th>--}}
+{{--                                                <th scope="col">Size</th>--}}
+{{--                                                <th scope="col">Upload Date</th>--}}
+{{--                                                <th scope="col" style="width: 120px;">Action</th>--}}
+{{--                                            </tr>--}}
+{{--                                            </thead>--}}
+{{--                                            <tbody>--}}
+{{--                                            <tr>--}}
+{{--                                                <td>--}}
+{{--                                                    <div class="d-flex align-items-center">--}}
+{{--                                                        <div class="avatar-sm">--}}
+{{--                                                            <div--}}
+{{--                                                                class="avatar-title bg-light text-secondary rounded fs-24 shadow">--}}
+{{--                                                                <i class="ri-folder-zip-line"></i>--}}
+{{--                                                            </div>--}}
+{{--                                                        </div>--}}
+{{--                                                        <div class="ms-3 flex-grow-1">--}}
+{{--                                                            <h5 class="fs-14 mb-0"><a href="javascript:void(0)"--}}
+{{--                                                                                      class="text-dark">Artboard-documents.zip</a>--}}
+{{--                                                            </h5>--}}
+{{--                                                        </div>--}}
+{{--                                                    </div>--}}
+{{--                                                </td>--}}
+{{--                                                <td>Zip File</td>--}}
+{{--                                                <td>4.57 MB</td>--}}
+{{--                                                <td>12 Dec 2021</td>--}}
+{{--                                                <td>--}}
+{{--                                                    <div class="dropdown">--}}
+{{--                                                        <a href="javascript:void(0);"--}}
+{{--                                                           class="btn btn-soft-secondary btn-sm btn-icon shadow-none"--}}
+{{--                                                           data-bs-toggle="dropdown" aria-expanded="true">--}}
+{{--                                                            <i class="ri-more-fill"></i>--}}
+{{--                                                        </a>--}}
+{{--                                                        <ul class="dropdown-menu dropdown-menu-end">--}}
+{{--                                                            <li><a class="dropdown-item"--}}
+{{--                                                                   href="javascript:void(0);"><i--}}
+{{--                                                                        class="ri-eye-fill me-2 align-bottom text-muted"></i>View</a>--}}
+{{--                                                            </li>--}}
+{{--                                                            <li><a class="dropdown-item"--}}
+{{--                                                                   href="javascript:void(0);"><i--}}
+{{--                                                                        class="ri-download-2-fill me-2 align-bottom text-muted"></i>Download</a>--}}
+{{--                                                            </li>--}}
+{{--                                                            <li class="dropdown-divider"></li>--}}
+{{--                                                            <li><a class="dropdown-item"--}}
+{{--                                                                   href="javascript:void(0);"><i--}}
+{{--                                                                        class="ri-delete-bin-5-fill me-2 align-bottom text-muted"></i>Delete</a>--}}
+{{--                                                            </li>--}}
+{{--                                                        </ul>--}}
+{{--                                                    </div>--}}
+{{--                                                </td>--}}
+{{--                                            </tr>--}}
+{{--                                            <tr>--}}
+{{--                                                <td>--}}
+{{--                                                    <div class="d-flex align-items-center">--}}
+{{--                                                        <div class="avatar-sm">--}}
+{{--                                                            <div--}}
+{{--                                                                class="avatar-title bg-light text-danger rounded fs-24 shadow">--}}
+{{--                                                                <i class="ri-file-pdf-fill"></i>--}}
+{{--                                                            </div>--}}
+{{--                                                        </div>--}}
+{{--                                                        <div class="ms-3 flex-grow-1">--}}
+{{--                                                            <h5 class="fs-14 mb-0"><a href="javascript:void(0);"--}}
+{{--                                                                                      class="text-dark">Bank Management System</a>--}}
+{{--                                                            </h5>--}}
+{{--                                                        </div>--}}
+{{--                                                    </div>--}}
+{{--                                                </td>--}}
+{{--                                                <td>PDF File</td>--}}
+{{--                                                <td>8.89 MB</td>--}}
+{{--                                                <td>24 Nov 2021</td>--}}
+{{--                                                <td>--}}
+{{--                                                    <div class="dropdown">--}}
+{{--                                                        <a href="javascript:void(0);"--}}
+{{--                                                           class="btn btn-soft-secondary btn-sm btn-icon shadow-none"--}}
+{{--                                                           data-bs-toggle="dropdown" aria-expanded="true">--}}
+{{--                                                            <i class="ri-more-fill"></i>--}}
+{{--                                                        </a>--}}
+{{--                                                        <ul class="dropdown-menu dropdown-menu-end">--}}
+{{--                                                            <li><a class="dropdown-item"--}}
+{{--                                                                   href="javascript:void(0);"><i--}}
+{{--                                                                        class="ri-eye-fill me-2 align-bottom text-muted"></i>View</a>--}}
+{{--                                                            </li>--}}
+{{--                                                            <li><a class="dropdown-item"--}}
+{{--                                                                   href="javascript:void(0);"><i--}}
+{{--                                                                        class="ri-download-2-fill me-2 align-bottom text-muted"></i>Download</a>--}}
+{{--                                                            </li>--}}
+{{--                                                            <li class="dropdown-divider"></li>--}}
+{{--                                                            <li><a class="dropdown-item"--}}
+{{--                                                                   href="javascript:void(0);"><i--}}
+{{--                                                                        class="ri-delete-bin-5-fill me-2 align-bottom text-muted"></i>Delete</a>--}}
+{{--                                                            </li>--}}
+{{--                                                        </ul>--}}
+{{--                                                    </div>--}}
+{{--                                                </td>--}}
+{{--                                            </tr>--}}
+{{--                                            <tr>--}}
+{{--                                                <td>--}}
+{{--                                                    <div class="d-flex align-items-center">--}}
+{{--                                                        <div class="avatar-sm">--}}
+{{--                                                            <div--}}
+{{--                                                                class="avatar-title bg-light text-secondary rounded fs-24 shadow">--}}
+{{--                                                                <i class="ri-video-line"></i>--}}
+{{--                                                            </div>--}}
+{{--                                                        </div>--}}
+{{--                                                        <div class="ms-3 flex-grow-1">--}}
+{{--                                                            <h5 class="fs-14 mb-0"><a href="javascript:void(0);"--}}
+{{--                                                                                      class="text-dark">Tour-video.mp4</a></h5>--}}
+{{--                                                        </div>--}}
+{{--                                                    </div>--}}
+{{--                                                </td>--}}
+{{--                                                <td>MP4 File</td>--}}
+{{--                                                <td>14.62 MB</td>--}}
+{{--                                                <td>19 Nov 2021</td>--}}
+{{--                                                <td>--}}
+{{--                                                    <div class="dropdown">--}}
+{{--                                                        <a href="javascript:void(0);"--}}
+{{--                                                           class="btn btn-soft-secondary btn-sm btn-icon shadow-none"--}}
+{{--                                                           data-bs-toggle="dropdown" aria-expanded="true">--}}
+{{--                                                            <i class="ri-more-fill"></i>--}}
+{{--                                                        </a>--}}
+{{--                                                        <ul class="dropdown-menu dropdown-menu-end">--}}
+{{--                                                            <li><a class="dropdown-item"--}}
+{{--                                                                   href="javascript:void(0);"><i--}}
+{{--                                                                        class="ri-eye-fill me-2 align-bottom text-muted"></i>View</a>--}}
+{{--                                                            </li>--}}
+{{--                                                            <li><a class="dropdown-item"--}}
+{{--                                                                   href="javascript:void(0);"><i--}}
+{{--                                                                        class="ri-download-2-fill me-2 align-bottom text-muted"></i>Download</a>--}}
+{{--                                                            </li>--}}
+{{--                                                            <li class="dropdown-divider"></li>--}}
+{{--                                                            <li><a class="dropdown-item"--}}
+{{--                                                                   href="javascript:void(0);"><i--}}
+{{--                                                                        class="ri-delete-bin-5-fill me-2 align-bottom text-muted"></i>Delete</a>--}}
+{{--                                                            </li>--}}
+{{--                                                        </ul>--}}
+{{--                                                    </div>--}}
+{{--                                                </td>--}}
+{{--                                            </tr>--}}
+{{--                                            <tr>--}}
+{{--                                                <td>--}}
+{{--                                                    <div class="d-flex align-items-center">--}}
+{{--                                                        <div class="avatar-sm">--}}
+{{--                                                            <div--}}
+{{--                                                                class="avatar-title bg-light text-success rounded fs-24 shadow">--}}
+{{--                                                                <i class="ri-file-excel-fill"></i>--}}
+{{--                                                            </div>--}}
+{{--                                                        </div>--}}
+{{--                                                        <div class="ms-3 flex-grow-1">--}}
+{{--                                                            <h5 class="fs-14 mb-0"><a href="javascript:void(0);"--}}
+{{--                                                                                      class="text-dark">Account-statement.xsl</a>--}}
+{{--                                                            </h5>--}}
+{{--                                                        </div>--}}
+{{--                                                    </div>--}}
+{{--                                                </td>--}}
+{{--                                                <td>XSL File</td>--}}
+{{--                                                <td>2.38 KB</td>--}}
+{{--                                                <td>14 Nov 2021</td>--}}
+{{--                                                <td>--}}
+{{--                                                    <div class="dropdown">--}}
+{{--                                                        <a href="javascript:void(0);"--}}
+{{--                                                           class="btn btn-soft-secondary btn-sm btn-icon shadow-none"--}}
+{{--                                                           data-bs-toggle="dropdown" aria-expanded="true">--}}
+{{--                                                            <i class="ri-more-fill"></i>--}}
+{{--                                                        </a>--}}
+{{--                                                        <ul class="dropdown-menu dropdown-menu-end">--}}
+{{--                                                            <li><a class="dropdown-item"--}}
+{{--                                                                   href="javascript:void(0);"><i--}}
+{{--                                                                        class="ri-eye-fill me-2 align-bottom text-muted"></i>View</a>--}}
+{{--                                                            </li>--}}
+{{--                                                            <li><a class="dropdown-item"--}}
+{{--                                                                   href="javascript:void(0);"><i--}}
+{{--                                                                        class="ri-download-2-fill me-2 align-bottom text-muted"></i>Download</a>--}}
+{{--                                                            </li>--}}
+{{--                                                            <li class="dropdown-divider"></li>--}}
+{{--                                                            <li><a class="dropdown-item"--}}
+{{--                                                                   href="javascript:void(0);"><i--}}
+{{--                                                                        class="ri-delete-bin-5-fill me-2 align-bottom text-muted"></i>Delete</a>--}}
+{{--                                                            </li>--}}
+{{--                                                        </ul>--}}
+{{--                                                    </div>--}}
+{{--                                                </td>--}}
+{{--                                            </tr>--}}
+{{--                                            <tr>--}}
+{{--                                                <td>--}}
+{{--                                                    <div class="d-flex align-items-center">--}}
+{{--                                                        <div class="avatar-sm">--}}
+{{--                                                            <div--}}
+{{--                                                                class="avatar-title bg-light text-warning rounded fs-24 shadow">--}}
+{{--                                                                <i class="ri-folder-fill"></i>--}}
+{{--                                                            </div>--}}
+{{--                                                        </div>--}}
+{{--                                                        <div class="ms-3 flex-grow-1">--}}
+{{--                                                            <h5 class="fs-14 mb-0"><a href="javascript:void(0);"--}}
+{{--                                                                                      class="text-dark">Project Screenshots--}}
+{{--                                                                    Collection</a></h5>--}}
+{{--                                                        </div>--}}
+{{--                                                    </div>--}}
+{{--                                                </td>--}}
+{{--                                                <td>Floder File</td>--}}
+{{--                                                <td>87.24 MB</td>--}}
+{{--                                                <td>08 Nov 2021</td>--}}
+{{--                                                <td>--}}
+{{--                                                    <div class="dropdown">--}}
+{{--                                                        <a href="javascript:void(0);"--}}
+{{--                                                           class="btn btn-soft-secondary btn-sm btn-icon shadow-none"--}}
+{{--                                                           data-bs-toggle="dropdown" aria-expanded="true">--}}
+{{--                                                            <i class="ri-more-fill"></i>--}}
+{{--                                                        </a>--}}
+{{--                                                        <ul class="dropdown-menu dropdown-menu-end">--}}
+{{--                                                            <li><a class="dropdown-item"--}}
+{{--                                                                   href="javascript:void(0);"><i--}}
+{{--                                                                        class="ri-eye-fill me-2 align-bottom text-muted"></i>View</a>--}}
+{{--                                                            </li>--}}
+{{--                                                            <li><a class="dropdown-item"--}}
+{{--                                                                   href="javascript:void(0);"><i--}}
+{{--                                                                        class="ri-download-2-fill me-2 align-bottom text-muted"></i>Download</a>--}}
+{{--                                                            </li>--}}
+{{--                                                            <li class="dropdown-divider"></li>--}}
+{{--                                                            <li><a class="dropdown-item"--}}
+{{--                                                                   href="javascript:void(0);"><i--}}
+{{--                                                                        class="ri-delete-bin-5-fill me-2 align-bottom text-muted"></i>Delete</a>--}}
+{{--                                                            </li>--}}
+{{--                                                        </ul>--}}
+{{--                                                    </div>--}}
+{{--                                                </td>--}}
+{{--                                            </tr>--}}
+{{--                                            <tr>--}}
+{{--                                                <td>--}}
+{{--                                                    <div class="d-flex align-items-center">--}}
+{{--                                                        <div class="avatar-sm">--}}
+{{--                                                            <div--}}
+{{--                                                                class="avatar-title bg-light text-danger rounded fs-24 shadow">--}}
+{{--                                                                <i class="ri-image-2-fill"></i>--}}
+{{--                                                            </div>--}}
+{{--                                                        </div>--}}
+{{--                                                        <div class="ms-3 flex-grow-1">--}}
+{{--                                                            <h5 class="fs-14 mb-0"><a href="javascript:void(0);"--}}
+{{--                                                                                      class="text-dark">Velzon-logo.png</a></h5>--}}
+{{--                                                        </div>--}}
+{{--                                                    </div>--}}
+{{--                                                </td>--}}
+{{--                                                <td>PNG File</td>--}}
+{{--                                                <td>879 KB</td>--}}
+{{--                                                <td>02 Nov 2021</td>--}}
+{{--                                                <td>--}}
+{{--                                                    <div class="dropdown">--}}
+{{--                                                        <a href="javascript:void(0);"--}}
+{{--                                                           class="btn btn-soft-secondary btn-sm btn-icon shadow-none"--}}
+{{--                                                           data-bs-toggle="dropdown" aria-expanded="true">--}}
+{{--                                                            <i class="ri-more-fill"></i>--}}
+{{--                                                        </a>--}}
+{{--                                                        <ul class="dropdown-menu dropdown-menu-end">--}}
+{{--                                                            <li><a class="dropdown-item"--}}
+{{--                                                                   href="javascript:void(0);"><i--}}
+{{--                                                                        class="ri-eye-fill me-2 align-bottom text-muted"></i>View</a>--}}
+{{--                                                            </li>--}}
+{{--                                                            <li><a class="dropdown-item"--}}
+{{--                                                                   href="javascript:void(0);"><i--}}
+{{--                                                                        class="ri-download-2-fill me-2 align-bottom text-muted"></i>Download</a>--}}
+{{--                                                            </li>--}}
+{{--                                                            <li class="dropdown-divider"></li>--}}
+{{--                                                            <li><a class="dropdown-item"--}}
+{{--                                                                   href="javascript:void(0);"><i--}}
+{{--                                                                        class="ri-delete-bin-5-fill me-2 align-bottom text-muted"></i>Delete</a>--}}
+{{--                                                            </li>--}}
+{{--                                                        </ul>--}}
+{{--                                                    </div>--}}
+{{--                                                </td>--}}
+{{--                                            </tr>--}}
+{{--                                            </tbody>--}}
+{{--                                        </table>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="text-center mt-3">--}}
+{{--                                        <a href="javascript:void(0);" class="text-success "><i--}}
+{{--                                                class="mdi mdi-loading mdi-spin fs-20 align-middle me-2"></i> Load more--}}
+{{--                                        </a>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+
+
+
                 <div class="tab-pane fade" id="dokumentasi" role="tabpanel">
                     <div class="card">
                         <div class="card-body">
-                            <div class="d-flex align-items-center mb-4">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
                                 <h5 class="card-title flex-grow-1">Dokumentasi Rapat</h5>
+
+                                @if($user->hasRole('notulis', $this_team))
+                                    <button wire:click='getCreateDokumentasi({{$rapat_id}})' type="button" class="btn btn-sm btn-info edit-item-btn align-middle" data-bs-toggle="modal" data-bs-target="#modalCreateDokumentasi">
+                                        Tambah Dokumentasi +
+                                    </button>
+                                @endif
                             </div>
                             <div class="row">
                                 <div class="col-lg-12">
@@ -737,289 +1073,104 @@
                                         <table class="table table-borderless align-middle mb-0">
                                             <thead class="table-light">
                                             <tr>
-                                                <th scope="col">File Name</th>
-                                                <th scope="col">Type</th>
-                                                <th scope="col">Size</th>
-                                                <th scope="col">Upload Date</th>
-                                                <th scope="col" style="width: 120px;">Action</th>
+                                                <th scope="col">Nama Dokumen</th>
+                                                <th scope="col">Tipe</th>
+                                                <th scope="col">Ukuran</th>
+                                                <th scope="col">Tanggal Upload</th>
+                                                <th scope="col" style="width: 120px;">Aksi</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="avatar-sm">
-                                                            <div
-                                                                class="avatar-title bg-light text-secondary rounded fs-24 shadow">
-                                                                <i class="ri-folder-zip-line"></i>
+                                            @foreach($documents as $document)
+                                                <tr>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="avatar-sm">
+                                                                <div
+                                                                    class="avatar-title bg-light text-secondary rounded fs-24 shadow">
+                                                                    <i class="ri-folder-zip-line"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="ms-3 flex-grow-1">
+                                                                <h5 class="fs-14 mb-0"><a href="javascript:void(0)"
+                                                                                          class="text-dark">{{$document->nama}}</a>
+                                                                </h5>
                                                             </div>
                                                         </div>
-                                                        <div class="ms-3 flex-grow-1">
-                                                            <h5 class="fs-14 mb-0"><a href="javascript:void(0)"
-                                                                                      class="text-dark">Artboard-documents.zip</a>
-                                                            </h5>
+                                                    </td>
+                                                    <td>
+                                                        {{$getTipeFile($document->path)}}
+                                                    </td>
+                                                    <td>{{ number_format(Storage::size($document->path) /  1048576, 2)}} MB</td>
+                                                    <td>{{$document->created_at->format('d-m-Y')}}</td>
+                                                    <td>
+                                                        <div class="d-flex gap-2">
+                                        <span wire:click='deleteDokumentasiConfirmation({{ $document->id }})'
+                                              class="cursor-pointer" data-bs-toggle="modal"
+                                              data-bs-target="#modalDeleteDokumentasi">
+                                            <a class="btn btn-sm btn-danger edit-item-btn align-middle" data-toggle="delete"
+                                               data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus Dokumen">
+                                                <i class="mdi mdi-trash-can"></i>
+{{--                                                Hapus--}}
+                                            </a>
+                                        </span>
+                                                            {{--                                                            <span wire:click="getDokumentasi({{ $document->id }})" class="cursor-pointer">--}}
+                                                            {{--                                            <a class="btn btn-sm btn-info edit-item-btn align-middle" data-bs-toggle="tooltip"--}}
+                                                            {{--                                               data-bs-placement="top" title="Lihat Dokumen"--}}
+                                                            {{--                                               href="daftar-rapat/{{ $document->id }}">--}}
+                                                            {{--                                                <i class="mdi mdi-eye"></i>--}}
+                                                            {{--                                                Lihat--}}
+                                                            {{--                                            </a>--}}
+                                                            {{--                                        </span>--}}
+                                                            {{--                                                            <span wire:click="editDokumentasi({{ $document->id }})" class="cursor-pointer" data-bs-toggle="modal"--}}
+                                                            {{--                                                                  data-bs-target="#modalEditDokumentasi">--}}
+                                                            {{--                                            <a class="btn btn-sm btn-warning edit-item-btn align-middle" data-bs-toggle="tooltip"--}}
+                                                            {{--                                               data-bs-placement="top" title="Ubah Data">--}}
+                                                            {{--                                                <i class="mdi mdi-pencil-box-multiple"></i>--}}
+                                                            {{--                                                Ubah--}}
+                                                            {{--                                            </a>--}}
+                                                            {{--                                        </span>--}}
+                                                            <span wire:click="getDokumentasi({{ $document->id }})" class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#modalEditDokumentasi">
+                                            <a class="btn btn-sm btn-warning edit-item-btn align-middle" data-bs-toggle="tooltip"
+                                               data-bs-placement="right" title="Ubah Data">
+                                                <i class="mdi mdi-pencil-box-multiple"></i>
+                                            </a>
+                                        </span>
+                                                            <span wire:click="unduhDokumen({{$document->id}})" class="cursor-pointer">
+                                            <button class="btn btn-sm btn-success edit-item-btn align-middle" data-bs-toggle="tooltip"
+                                                    data-bs-placement="top" title="Unduh Dokumen"
+                                            >
+                                                <i class="mdi mdi-download"></i>
+{{--                                                Lihat--}}
+                                            </button>
+                                        </span>
+                                                            {{--                                                            <span wire:click="addMembers({{ $meeting->id }})" class="cursor-pointer">--}}
+                                                            {{--                                            <a class="btn btn-sm btn-success edit-item-btn align-middle" data-bs-toggle="tooltip"--}}
+                                                            {{--                                               data-bs-placement="top" title="Atur Anggota"--}}
+                                                            {{--                                               href="{{ route('rapat-members', ['team' => $team, 'rapat' => $meeting->slug]) }}">--}}
+                                                            {{--                                                <i class="mdi mdi-account-group"></i>--}}
+                                                            {{--                                            </a>--}}
+                                                            {{--                                        </span>--}}
                                                         </div>
-                                                    </div>
-                                                </td>
-                                                <td>Zip File</td>
-                                                <td>4.57 MB</td>
-                                                <td>12 Dec 2021</td>
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <a href="javascript:void(0);"
-                                                           class="btn btn-soft-secondary btn-sm btn-icon shadow-none"
-                                                           data-bs-toggle="dropdown" aria-expanded="true">
-                                                            <i class="ri-more-fill"></i>
-                                                        </a>
-                                                        <ul class="dropdown-menu dropdown-menu-end">
-                                                            <li><a class="dropdown-item"
-                                                                   href="javascript:void(0);"><i
-                                                                        class="ri-eye-fill me-2 align-bottom text-muted"></i>View</a>
-                                                            </li>
-                                                            <li><a class="dropdown-item"
-                                                                   href="javascript:void(0);"><i
-                                                                        class="ri-download-2-fill me-2 align-bottom text-muted"></i>Download</a>
-                                                            </li>
-                                                            <li class="dropdown-divider"></li>
-                                                            <li><a class="dropdown-item"
-                                                                   href="javascript:void(0);"><i
-                                                                        class="ri-delete-bin-5-fill me-2 align-bottom text-muted"></i>Delete</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="avatar-sm">
-                                                            <div
-                                                                class="avatar-title bg-light text-danger rounded fs-24 shadow">
-                                                                <i class="ri-file-pdf-fill"></i>
-                                                            </div>
-                                                        </div>
-                                                        <div class="ms-3 flex-grow-1">
-                                                            <h5 class="fs-14 mb-0"><a href="javascript:void(0);"
-                                                                                      class="text-dark">Bank Management System</a>
-                                                            </h5>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>PDF File</td>
-                                                <td>8.89 MB</td>
-                                                <td>24 Nov 2021</td>
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <a href="javascript:void(0);"
-                                                           class="btn btn-soft-secondary btn-sm btn-icon shadow-none"
-                                                           data-bs-toggle="dropdown" aria-expanded="true">
-                                                            <i class="ri-more-fill"></i>
-                                                        </a>
-                                                        <ul class="dropdown-menu dropdown-menu-end">
-                                                            <li><a class="dropdown-item"
-                                                                   href="javascript:void(0);"><i
-                                                                        class="ri-eye-fill me-2 align-bottom text-muted"></i>View</a>
-                                                            </li>
-                                                            <li><a class="dropdown-item"
-                                                                   href="javascript:void(0);"><i
-                                                                        class="ri-download-2-fill me-2 align-bottom text-muted"></i>Download</a>
-                                                            </li>
-                                                            <li class="dropdown-divider"></li>
-                                                            <li><a class="dropdown-item"
-                                                                   href="javascript:void(0);"><i
-                                                                        class="ri-delete-bin-5-fill me-2 align-bottom text-muted"></i>Delete</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="avatar-sm">
-                                                            <div
-                                                                class="avatar-title bg-light text-secondary rounded fs-24 shadow">
-                                                                <i class="ri-video-line"></i>
-                                                            </div>
-                                                        </div>
-                                                        <div class="ms-3 flex-grow-1">
-                                                            <h5 class="fs-14 mb-0"><a href="javascript:void(0);"
-                                                                                      class="text-dark">Tour-video.mp4</a></h5>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>MP4 File</td>
-                                                <td>14.62 MB</td>
-                                                <td>19 Nov 2021</td>
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <a href="javascript:void(0);"
-                                                           class="btn btn-soft-secondary btn-sm btn-icon shadow-none"
-                                                           data-bs-toggle="dropdown" aria-expanded="true">
-                                                            <i class="ri-more-fill"></i>
-                                                        </a>
-                                                        <ul class="dropdown-menu dropdown-menu-end">
-                                                            <li><a class="dropdown-item"
-                                                                   href="javascript:void(0);"><i
-                                                                        class="ri-eye-fill me-2 align-bottom text-muted"></i>View</a>
-                                                            </li>
-                                                            <li><a class="dropdown-item"
-                                                                   href="javascript:void(0);"><i
-                                                                        class="ri-download-2-fill me-2 align-bottom text-muted"></i>Download</a>
-                                                            </li>
-                                                            <li class="dropdown-divider"></li>
-                                                            <li><a class="dropdown-item"
-                                                                   href="javascript:void(0);"><i
-                                                                        class="ri-delete-bin-5-fill me-2 align-bottom text-muted"></i>Delete</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="avatar-sm">
-                                                            <div
-                                                                class="avatar-title bg-light text-success rounded fs-24 shadow">
-                                                                <i class="ri-file-excel-fill"></i>
-                                                            </div>
-                                                        </div>
-                                                        <div class="ms-3 flex-grow-1">
-                                                            <h5 class="fs-14 mb-0"><a href="javascript:void(0);"
-                                                                                      class="text-dark">Account-statement.xsl</a>
-                                                            </h5>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>XSL File</td>
-                                                <td>2.38 KB</td>
-                                                <td>14 Nov 2021</td>
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <a href="javascript:void(0);"
-                                                           class="btn btn-soft-secondary btn-sm btn-icon shadow-none"
-                                                           data-bs-toggle="dropdown" aria-expanded="true">
-                                                            <i class="ri-more-fill"></i>
-                                                        </a>
-                                                        <ul class="dropdown-menu dropdown-menu-end">
-                                                            <li><a class="dropdown-item"
-                                                                   href="javascript:void(0);"><i
-                                                                        class="ri-eye-fill me-2 align-bottom text-muted"></i>View</a>
-                                                            </li>
-                                                            <li><a class="dropdown-item"
-                                                                   href="javascript:void(0);"><i
-                                                                        class="ri-download-2-fill me-2 align-bottom text-muted"></i>Download</a>
-                                                            </li>
-                                                            <li class="dropdown-divider"></li>
-                                                            <li><a class="dropdown-item"
-                                                                   href="javascript:void(0);"><i
-                                                                        class="ri-delete-bin-5-fill me-2 align-bottom text-muted"></i>Delete</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="avatar-sm">
-                                                            <div
-                                                                class="avatar-title bg-light text-warning rounded fs-24 shadow">
-                                                                <i class="ri-folder-fill"></i>
-                                                            </div>
-                                                        </div>
-                                                        <div class="ms-3 flex-grow-1">
-                                                            <h5 class="fs-14 mb-0"><a href="javascript:void(0);"
-                                                                                      class="text-dark">Project Screenshots
-                                                                    Collection</a></h5>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>Floder File</td>
-                                                <td>87.24 MB</td>
-                                                <td>08 Nov 2021</td>
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <a href="javascript:void(0);"
-                                                           class="btn btn-soft-secondary btn-sm btn-icon shadow-none"
-                                                           data-bs-toggle="dropdown" aria-expanded="true">
-                                                            <i class="ri-more-fill"></i>
-                                                        </a>
-                                                        <ul class="dropdown-menu dropdown-menu-end">
-                                                            <li><a class="dropdown-item"
-                                                                   href="javascript:void(0);"><i
-                                                                        class="ri-eye-fill me-2 align-bottom text-muted"></i>View</a>
-                                                            </li>
-                                                            <li><a class="dropdown-item"
-                                                                   href="javascript:void(0);"><i
-                                                                        class="ri-download-2-fill me-2 align-bottom text-muted"></i>Download</a>
-                                                            </li>
-                                                            <li class="dropdown-divider"></li>
-                                                            <li><a class="dropdown-item"
-                                                                   href="javascript:void(0);"><i
-                                                                        class="ri-delete-bin-5-fill me-2 align-bottom text-muted"></i>Delete</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="avatar-sm">
-                                                            <div
-                                                                class="avatar-title bg-light text-danger rounded fs-24 shadow">
-                                                                <i class="ri-image-2-fill"></i>
-                                                            </div>
-                                                        </div>
-                                                        <div class="ms-3 flex-grow-1">
-                                                            <h5 class="fs-14 mb-0"><a href="javascript:void(0);"
-                                                                                      class="text-dark">Velzon-logo.png</a></h5>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>PNG File</td>
-                                                <td>879 KB</td>
-                                                <td>02 Nov 2021</td>
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <a href="javascript:void(0);"
-                                                           class="btn btn-soft-secondary btn-sm btn-icon shadow-none"
-                                                           data-bs-toggle="dropdown" aria-expanded="true">
-                                                            <i class="ri-more-fill"></i>
-                                                        </a>
-                                                        <ul class="dropdown-menu dropdown-menu-end">
-                                                            <li><a class="dropdown-item"
-                                                                   href="javascript:void(0);"><i
-                                                                        class="ri-eye-fill me-2 align-bottom text-muted"></i>View</a>
-                                                            </li>
-                                                            <li><a class="dropdown-item"
-                                                                   href="javascript:void(0);"><i
-                                                                        class="ri-download-2-fill me-2 align-bottom text-muted"></i>Download</a>
-                                                            </li>
-                                                            <li class="dropdown-divider"></li>
-                                                            <li><a class="dropdown-item"
-                                                                   href="javascript:void(0);"><i
-                                                                        class="ri-delete-bin-5-fill me-2 align-bottom text-muted"></i>Delete</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div class="text-center mt-3">
-                                        <a href="javascript:void(0);" class="text-success "><i
-                                                class="mdi mdi-loading mdi-spin fs-20 align-middle me-2"></i> Load more
-                                        </a>
-                                    </div>
+                                    {{--                                    <div class="text-center mt-3">--}}
+                                    {{--                                        <a href="javascript:void(0);" class="text-success "><i--}}
+                                    {{--                                                class="mdi mdi-loading mdi-spin fs-20 align-middle me-2"></i> Load more--}}
+                                    {{--                                        </a>--}}
+                                    {{--                                    </div>--}}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+
+
                 <!-- end tab pane -->
                 <div class="tab-pane fade" id="notulensi" role="tabpanel">
                     <div class="d-flex justify-content-end mb-3">

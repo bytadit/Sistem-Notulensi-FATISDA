@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('pegawai', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_user');
-            $table->string('nip');
-            $table->string('alamat');
+            $table->string('nip')->nullable();
+            $table->string('alamat')->nullable();
             $table->string('no_wa')->nullable();
             $table->string('path_photo')->nullable();
             $table->timestamps();

@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('dokumentasi', function (Blueprint $table) {
             $table->id();
-            $table->string('jenis_dokumentasi');
-            $table->string('path_doc');
+            $table->string('nama');
+            $table->string('path');
             $table->timestamps();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();

@@ -16,9 +16,13 @@ return new class extends Migration
             $table->string('judul_rapat')->nullable();
             $table->dateTime('waktu_mulai')->nullable();
             $table->dateTime('waktu_selesai')->nullable();
-            $table->tinyInteger('bentuk_rapat')->nullable()->comment('online or offline');
+            $table->string('slug')->nullable();
+            $table->text('deskripsi')->nullable();
+            $table->boolean('is_draft')->default(0);
+            $table->tinyInteger('prioritas')->comment('1:rendah; 2:sedang: 3:tinggi');
+            $table->string('bentuk_rapat')->nullable()->comment('online or offline');
             $table->string('lokasi_rapat')->nullable()->comment('bisa berisi link jika online');
-            $table->tinyInteger('status')->nullable()->comment('0: Belum Terlaksana, 1: Telah Terlaksana, 2: Ditunda, 3: Batal');
+            $table->tinyInteger('status')->nullable()->comment('0: Dijadwalkan, 1: Berlangsung, 2: Selesai');
             $table->unsignedBigInteger('id_kategori_rapat')->nullable();
             $table->unsignedBigInteger('id_penanggung_jawab')->nullable()->onDelete;
             $table->unsignedBigInteger('id_notulis')->nullable();
@@ -28,8 +32,6 @@ return new class extends Migration
             $table->unsignedBigInteger('deleted_by')->nullable();
 
             $table->foreign('id_kategori_rapat')->references('id')->on('kategori_rapat')->onDelete('set null');
-            $table->foreign('id_penanggung_jawab')->references('id')->on('pegawai')->onDelete('set null');
-            $table->foreign('id_notulis')->references('id')->on('pegawai')->onDelete('set null');
 
         });
     }

@@ -41,6 +41,9 @@ Role Notulis adalah role yang hanya bisa diassign oleh Administrator di suatu Un
 2. Livewire v2.12.3
 3. Laratrust by Santigarcor
 4. Velzon Premium by ThemeForest
+
+![image](https://drive.google.com/uc?export=view&id=16RiDV-_ouYY8Rjv-J9w7YxoZPeZnOKnx)
+
    
 
     
